@@ -44,6 +44,12 @@ final class LocationPoint {
     var coordinate: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
+
+    func distance(to other: LocationPoint) -> Double {
+        let from = CLLocation(latitude: latitude, longitude: longitude)
+        let to = CLLocation(latitude: other.latitude, longitude: other.longitude)
+        return from.distance(from: to)
+    }
 }
 
 extension LocationPoint {

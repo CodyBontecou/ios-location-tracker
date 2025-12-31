@@ -13,6 +13,7 @@ final class LocationViewModel {
     var todayVisits: [Visit] = []
     var allVisits: [Visit] = []
     var locationPoints: [LocationPoint] = []
+    var todayLocationPoints: [LocationPoint] = []
 
     // UI State
     var selectedDate: Date = Date()
@@ -37,6 +38,7 @@ final class LocationViewModel {
         loadTodayVisits()
         loadAllVisits()
         loadLocationPoints()
+        loadTodayLocationPoints()
     }
 
     func loadTodayVisits() {
@@ -83,10 +85,71 @@ final class LocationViewModel {
         }
     }
 
+    func loadTodayLocationPoints() {
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: Date())
+        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
+
+        let predicate = #Predicate<LocationPoint> { point in
+            point.timestamp >= startOfDay && point.timestamp < endOfDay
+        }
+
+        var descriptor = FetchDescriptor<LocationPoint>(predicate: predicate)
+        descriptor.sortBy = [SortDescriptor(\.timestamp, order: .forward)]
+
+        do {
+            todayLocationPoints = try modelContext.fetch(descriptor)
+        } catch {
+            print("Failed to fetch today's location points: \(error)")
+            todayLocationPoints = []
+        }
+    }
+
     // MARK: - Computed Properties
 
     var currentVisit: Visit? {
         todayVisits.first { $0.isCurrentVisit }
+    }
+
+    // Today's tracking stats
+    var todayTrackingDuration: TimeInterval {
+        guard let first = todayLocationPoints.first,
+              let last = todayLocationPoints.last else { return 0 }
+        return last.timestamp.timeIntervalSince(first.timestamp)
+    }
+
+    var todayDistanceTraveled: Double {
+        guard todayLocationPoints.count > 1 else { return 0 }
+        var total: Double = 0
+        for i in 1..<todayLocationPoints.count {
+            let prev = todayLocationPoints[i-1]
+            let curr = todayLocationPoints[i]
+            total += prev.distance(to: curr)
+        }
+        return total
+    }
+
+    var formattedTodayTrackingDuration: String {
+        let minutes = Int(todayTrackingDuration / 60)
+        if minutes < 60 {
+            return "\(minutes) min"
+        } else {
+            let hours = minutes / 60
+            let mins = minutes % 60
+            if mins == 0 {
+                return "\(hours)h"
+            }
+            return "\(hours)h \(mins)m"
+        }
+    }
+
+    var formattedTodayDistance: String {
+        if todayDistanceTraveled < 1000 {
+            return "\(Int(todayDistanceTraveled)) m"
+        } else {
+            let km = todayDistanceTraveled / 1000
+            return String(format: "%.1f km", km)
+        }
     }
 
     var visitsGroupedByDay: [(Date, [Visit])] {

@@ -9,7 +9,7 @@ struct TodayView: View {
             Group {
                 if !viewModel.locationManager.hasLocationPermission {
                     PermissionRequestView(locationManager: viewModel.locationManager)
-                } else if viewModel.todayVisits.isEmpty {
+                } else if viewModel.todayVisits.isEmpty && viewModel.todayLocationPoints.isEmpty {
                     EmptyTodayView(isTracking: viewModel.locationManager.isTrackingEnabled)
                 } else {
                     visitsList
@@ -23,9 +23,11 @@ struct TodayView: View {
             }
             .onAppear {
                 viewModel.loadTodayVisits()
+                viewModel.loadTodayLocationPoints()
             }
             .refreshable {
                 viewModel.loadTodayVisits()
+                viewModel.loadTodayLocationPoints()
             }
             .navigationDestination(item: $selectedVisit) { visit in
                 VisitDetailView(visit: visit, viewModel: viewModel)
@@ -35,6 +37,15 @@ struct TodayView: View {
 
     private var visitsList: some View {
         List {
+            // Tracking Activity Section
+            if !viewModel.todayLocationPoints.isEmpty {
+                Section {
+                    TrackingActivityCard(viewModel: viewModel)
+                } header: {
+                    Text("Tracking Activity")
+                }
+            }
+
             if let currentVisit = viewModel.currentVisit {
                 Section {
                     CurrentVisitCard(visit: currentVisit)
@@ -161,15 +172,180 @@ struct EmptyTodayView: View {
 
     var body: some View {
         ContentUnavailableView {
-            Label("No Visits Yet", systemImage: "mappin.slash")
+            Label("No Activity Yet", systemImage: "location.slash")
         } description: {
             if isTracking {
-                Text("Your visits will appear here as you move throughout the day.")
+                Text("Your location activity will appear here. Enable continuous tracking to record your path.")
             } else {
-                Text("Enable location tracking in Settings to start recording your visits.")
+                Text("Enable location tracking in Settings to start recording your activity.")
             }
         }
     }
+}
+
+struct TrackingActivityCard: View {
+    let viewModel: LocationViewModel
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            // Stats row
+            HStack(spacing: 20) {
+                StatItem(
+                    icon: "point.topleft.down.to.point.bottomright.curvepath",
+                    value: viewModel.formattedTodayDistance,
+                    label: "Distance"
+                )
+
+                StatItem(
+                    icon: "clock",
+                    value: viewModel.formattedTodayTrackingDuration,
+                    label: "Duration"
+                )
+
+                StatItem(
+                    icon: "mappin.circle",
+                    value: "\(viewModel.todayLocationPoints.count)",
+                    label: "Points"
+                )
+            }
+
+            // Timeline
+            if viewModel.todayLocationPoints.count >= 2 {
+                Divider()
+                TrackingTimeline(points: viewModel.todayLocationPoints)
+            }
+        }
+        .padding(.vertical, 4)
+    }
+}
+
+struct StatItem: View {
+    let icon: String
+    let value: String
+    let label: String
+
+    var body: some View {
+        VStack(spacing: 4) {
+            Image(systemName: icon)
+                .font(.title3)
+                .foregroundStyle(.blue)
+            Text(value)
+                .font(.headline)
+            Text(label)
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity)
+    }
+}
+
+struct TrackingTimeline: View {
+    let points: [LocationPoint]
+
+    private var segments: [TimelineSegment] {
+        guard points.count >= 2 else { return [] }
+
+        var result: [TimelineSegment] = []
+        var segmentStart = points[0]
+        var segmentPoints: [LocationPoint] = [segmentStart]
+        var isMoving = false
+
+        for i in 1..<points.count {
+            let prev = points[i-1]
+            let curr = points[i]
+            let distance = prev.distance(to: curr)
+            let timeDiff = curr.timestamp.timeIntervalSince(prev.timestamp)
+            let speed = timeDiff > 0 ? distance / timeDiff : 0
+
+            // Consider moving if speed > 1 m/s (3.6 km/h)
+            let currentlyMoving = speed > 1.0
+
+            if currentlyMoving != isMoving && segmentPoints.count > 1 {
+                // State changed, save current segment
+                result.append(TimelineSegment(
+                    startTime: segmentStart.timestamp,
+                    endTime: prev.timestamp,
+                    isMoving: isMoving,
+                    pointCount: segmentPoints.count
+                ))
+                segmentStart = prev
+                segmentPoints = [prev]
+                isMoving = currentlyMoving
+            }
+            segmentPoints.append(curr)
+        }
+
+        // Add final segment
+        if let last = points.last, segmentPoints.count > 1 {
+            result.append(TimelineSegment(
+                startTime: segmentStart.timestamp,
+                endTime: last.timestamp,
+                isMoving: isMoving,
+                pointCount: segmentPoints.count
+            ))
+        }
+
+        return result
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            if let first = points.first, let last = points.last {
+                HStack {
+                    Text(first.timestamp.formatted(date: .omitted, time: .shortened))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Text(last.timestamp.formatted(date: .omitted, time: .shortened))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+
+                // Visual timeline bar
+                GeometryReader { geo in
+                    let totalDuration = last.timestamp.timeIntervalSince(first.timestamp)
+                    HStack(spacing: 1) {
+                        ForEach(segments) { segment in
+                            let segmentDuration = segment.endTime.timeIntervalSince(segment.startTime)
+                            let width = totalDuration > 0 ? (segmentDuration / totalDuration) * geo.size.width : 0
+                            RoundedRectangle(cornerRadius: 2)
+                                .fill(segment.isMoving ? Color.blue : Color.blue.opacity(0.3))
+                                .frame(width: max(2, width))
+                        }
+                    }
+                }
+                .frame(height: 8)
+
+                // Legend
+                HStack(spacing: 16) {
+                    HStack(spacing: 4) {
+                        RoundedRectangle(cornerRadius: 2)
+                            .fill(Color.blue)
+                            .frame(width: 12, height: 8)
+                        Text("Moving")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
+                    HStack(spacing: 4) {
+                        RoundedRectangle(cornerRadius: 2)
+                            .fill(Color.blue.opacity(0.3))
+                            .frame(width: 12, height: 8)
+                        Text("Stationary")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            }
+        }
+    }
+}
+
+struct TimelineSegment: Identifiable {
+    let id = UUID()
+    let startTime: Date
+    let endTime: Date
+    let isMoving: Bool
+    let pointCount: Int
 }
 
 struct PermissionRequestView: View {
