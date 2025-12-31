@@ -4,7 +4,7 @@ import SwiftData
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var viewModel: LocationViewModel?
-    @State private var locationManager = LocationManager()
+    @State private var locationManager: LocationManager?
 
     var body: some View {
         Group {
@@ -34,11 +34,13 @@ struct ContentView: View {
                 ProgressView("Loading...")
             }
         }
-        .onAppear {
+        .task {
             if viewModel == nil {
+                let manager = LocationManager()
+                locationManager = manager
                 viewModel = LocationViewModel(
                     modelContext: modelContext,
-                    locationManager: locationManager
+                    locationManager: manager
                 )
             }
         }

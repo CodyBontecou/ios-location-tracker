@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A1000001212F000100000001 /* LocationTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000001212F000000000001 /* LocationTrackerApp.swift */; };
-		A1000019212F000100000019 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000019212F000000000019 /* AppDelegate.swift */; };
 		A1000002212F000100000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002212F000000000002 /* ContentView.swift */; };
 		A1000003212F000100000003 /* Visit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000003212F000000000003 /* Visit.swift */; };
 		A1000004212F000100000004 /* LocationPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004212F000000000004 /* LocationPoint.swift */; };
@@ -23,12 +22,12 @@
 		A100000D212F00010000000D /* VisitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000D212F00000000000D /* VisitDetailView.swift */; };
 		A100000E212F00010000000E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A100000E212F00000000000E /* Assets.xcassets */; };
 		A100000F212F00010000000F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A100000F212F00000000000F /* Preview Assets.xcassets */; };
+		A1000019212F000100000019 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000019212F000000000019 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A1000000212F000000000000 /* LocationTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocationTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1000001212F000000000001 /* LocationTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTrackerApp.swift; sourceTree = "<group>"; };
-		A1000019212F000000000019 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1000002212F000000000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A1000003212F000000000003 /* Visit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Visit.swift; sourceTree = "<group>"; };
 		A1000004212F000000000004 /* LocationPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPoint.swift; sourceTree = "<group>"; };
@@ -44,6 +43,7 @@
 		A100000E212F00000000000E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A100000F212F00000000000F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A1000010212F000000000010 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1000019212F000000000019 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +57,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A1000011212F000000000011 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				A100000F212F00000000000F /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		A1FFFFF8212EFFFFFFFF0000 = {
 			isa = PBXGroup;
 			children = (
@@ -137,14 +145,6 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		A1000011212F000000000011 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				A100000F212F00000000000F /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -173,7 +173,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 2610;
 				TargetAttributes = {
 					A1FFFFFA212EFFFFFFFF0000 = {
 						CreatedOnToolsVersion = 15.0;
@@ -270,6 +270,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 67KC823C9A;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -293,6 +294,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -333,6 +335,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 67KC823C9A;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -349,6 +352,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};

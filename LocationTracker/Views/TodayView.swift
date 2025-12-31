@@ -350,7 +350,7 @@ struct TimelineSegment: Identifiable {
 }
 
 struct PermissionRequestView: View {
-    @Bindable var locationManager: LocationManager
+    @ObservedObject var locationManager: LocationManager
 
     var body: some View {
         VStack(spacing: 24) {

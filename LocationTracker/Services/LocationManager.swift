@@ -10,23 +10,9 @@ final class LocationManager: NSObject, ObservableObject {
 
     // Published state
     @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
-    @Published var isTrackingEnabled: Bool = false {
-        didSet {
-            UserDefaults.standard.set(isTrackingEnabled, forKey: "isTrackingEnabled")
-            updateTrackingState()
-        }
-    }
-    @Published var isContinuousTrackingEnabled: Bool = false {
-        didSet {
-            UserDefaults.standard.set(isContinuousTrackingEnabled, forKey: "isContinuousTrackingEnabled")
-            updateContinuousTracking()
-        }
-    }
-    @Published var continuousTrackingAutoOffHours: Double = 2.0 {
-        didSet {
-            UserDefaults.standard.set(continuousTrackingAutoOffHours, forKey: "continuousTrackingAutoOffHours")
-        }
-    }
+    @Published var isTrackingEnabled: Bool = false
+    @Published var isContinuousTrackingEnabled: Bool = false
+    @Published var continuousTrackingAutoOffHours: Double = 2.0
     @Published var currentLocation: CLLocation?
     @Published var lastError: String?
 
@@ -90,11 +76,15 @@ final class LocationManager: NSObject, ObservableObject {
         }
 
         isTrackingEnabled = true
+        UserDefaults.standard.set(isTrackingEnabled, forKey: "isTrackingEnabled")
+        updateTrackingState()
     }
 
     func stopTracking() {
         isTrackingEnabled = false
         isContinuousTrackingEnabled = false
+        UserDefaults.standard.set(isTrackingEnabled, forKey: "isTrackingEnabled")
+        UserDefaults.standard.set(isContinuousTrackingEnabled, forKey: "isContinuousTrackingEnabled")
     }
 
     private func updateTrackingState() {
@@ -114,6 +104,7 @@ final class LocationManager: NSObject, ObservableObject {
         guard hasLocationPermission else { return }
 
         isContinuousTrackingEnabled = true
+        UserDefaults.standard.set(isContinuousTrackingEnabled, forKey: "isContinuousTrackingEnabled")
         continuousTrackingStartTime = Date()
 
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -136,6 +127,7 @@ final class LocationManager: NSObject, ObservableObject {
 
     func disableContinuousTracking() {
         isContinuousTrackingEnabled = false
+        UserDefaults.standard.set(isContinuousTrackingEnabled, forKey: "isContinuousTrackingEnabled")
         continuousTrackingTimer?.invalidate()
         continuousTrackingTimer = nil
         continuousTrackingStartTime = nil
@@ -172,11 +164,12 @@ final class LocationManager: NSObject, ObservableObject {
 
         // Check if this is a departure update for an existing visit
         let arrivalDate = clVisit.arrivalDate
-        let coordinate = clVisit.coordinate
+        let latitude = clVisit.coordinate.latitude
+        let longitude = clVisit.coordinate.longitude
 
         let predicate = #Predicate<Visit> { visit in
-            visit.latitude == coordinate.latitude &&
-            visit.longitude == coordinate.longitude &&
+            visit.latitude == latitude &&
+            visit.longitude == longitude &&
             visit.departedAt == nil
         }
 
@@ -192,8 +185,8 @@ final class LocationManager: NSObject, ObservableObject {
             } else if clVisit.arrivalDate != Date.distantPast {
                 // Create new visit
                 let visit = Visit(
-                    latitude: coordinate.latitude,
-                    longitude: coordinate.longitude,
+                    latitude: latitude,
+                    longitude: longitude,
                     arrivedAt: arrivalDate
                 )
 

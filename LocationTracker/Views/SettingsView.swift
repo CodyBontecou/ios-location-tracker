@@ -133,7 +133,10 @@ struct SettingsView: View {
 
             Picker("Auto-off Duration", selection: Binding(
                 get: { viewModel.locationManager.continuousTrackingAutoOffHours },
-                set: { viewModel.locationManager.continuousTrackingAutoOffHours = $0 }
+                set: {
+                    viewModel.locationManager.continuousTrackingAutoOffHours = $0
+                    UserDefaults.standard.set($0, forKey: "continuousTrackingAutoOffHours")
+                }
             )) {
                 Text("30 minutes").tag(0.5)
                 Text("1 hour").tag(1.0)
