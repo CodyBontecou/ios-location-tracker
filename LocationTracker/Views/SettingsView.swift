@@ -139,6 +139,7 @@ struct SettingsView: View {
                 Text("2 hours").tag(2.0)
                 Text("4 hours").tag(4.0)
                 Text("8 hours").tag(8.0)
+                Text("Never").tag(0.0)
             }
         } header: {
             Text("High-Accuracy Mode")

@@ -46,8 +46,9 @@ final class LocationManager: NSObject, ObservableObject {
         // Restore saved state
         isTrackingEnabled = UserDefaults.standard.bool(forKey: "isTrackingEnabled")
         isContinuousTrackingEnabled = UserDefaults.standard.bool(forKey: "isContinuousTrackingEnabled")
-        continuousTrackingAutoOffHours = UserDefaults.standard.double(forKey: "continuousTrackingAutoOffHours")
-        if continuousTrackingAutoOffHours == 0 {
+        if UserDefaults.standard.object(forKey: "continuousTrackingAutoOffHours") != nil {
+            continuousTrackingAutoOffHours = UserDefaults.standard.double(forKey: "continuousTrackingAutoOffHours")
+        } else {
             continuousTrackingAutoOffHours = 2.0
         }
 
@@ -119,12 +120,16 @@ final class LocationManager: NSObject, ObservableObject {
         locationManager.distanceFilter = 10 // Update every 10 meters
         locationManager.startUpdatingLocation()
 
-        // Set auto-off timer
-        let autoOffInterval = continuousTrackingAutoOffHours * 3600
+        // Set auto-off timer (skip if set to "Never" which is 0)
         continuousTrackingTimer?.invalidate()
-        continuousTrackingTimer = Timer.scheduledTimer(withTimeInterval: autoOffInterval, repeats: false) { [weak self] _ in
-            Task { @MainActor in
-                self?.disableContinuousTracking()
+        continuousTrackingTimer = nil
+
+        if continuousTrackingAutoOffHours > 0 {
+            let autoOffInterval = continuousTrackingAutoOffHours * 3600
+            continuousTrackingTimer = Timer.scheduledTimer(withTimeInterval: autoOffInterval, repeats: false) { [weak self] _ in
+                Task { @MainActor in
+                    self?.disableContinuousTracking()
+                }
             }
         }
     }
@@ -152,6 +157,8 @@ final class LocationManager: NSObject, ObservableObject {
     }
 
     var continuousTrackingRemainingTime: TimeInterval? {
+        // Return nil if auto-off is set to "Never" (0)
+        guard continuousTrackingAutoOffHours > 0 else { return nil }
         guard let startTime = continuousTrackingStartTime else { return nil }
         let elapsed = Date().timeIntervalSince(startTime)
         let total = continuousTrackingAutoOffHours * 3600
