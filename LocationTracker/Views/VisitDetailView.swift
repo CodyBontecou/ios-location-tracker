@@ -1,5 +1,6 @@
 import SwiftUI
 import MapKit
+import SwiftData
 
 struct VisitDetailView: View {
     @Bindable var visit: Visit

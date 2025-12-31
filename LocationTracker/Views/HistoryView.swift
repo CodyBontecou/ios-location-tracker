@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 struct HistoryView: View {
     @Bindable var viewModel: LocationViewModel

@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 struct TodayView: View {
     @Bindable var viewModel: LocationViewModel

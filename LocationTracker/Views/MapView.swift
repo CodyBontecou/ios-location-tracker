@@ -1,5 +1,6 @@
 import SwiftUI
 import MapKit
+import SwiftData
 
 struct LocationMapView: View {
     @Bindable var viewModel: LocationViewModel
