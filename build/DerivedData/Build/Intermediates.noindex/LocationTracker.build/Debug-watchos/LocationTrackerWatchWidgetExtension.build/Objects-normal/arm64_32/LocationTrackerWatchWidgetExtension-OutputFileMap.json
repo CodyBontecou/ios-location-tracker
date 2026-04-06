@@ -1,0 +1,39 @@
+{
+  "" : {
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidgetExtension-primary.dia",
+    "emit-module-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidgetExtension-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidgetExtension-primary-emit-module.dia",
+    "pch" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidgetExtension-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidgetExtension-primary.swiftdeps"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTrackerWatchWidget/LocationTrackerWatchWidget.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidget.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidget.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidget.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidget.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidget.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidget.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidget.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidget~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTrackerWatchWidget/LocationTrackerWatchWidgetBundle.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidgetBundle.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidgetBundle.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidgetBundle.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidgetBundle.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidgetBundle.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidgetBundle.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidgetBundle.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/LocationTrackerWatchWidgetBundle~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/Shared/SharedLocationData.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/SharedLocationData.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/SharedLocationData.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/SharedLocationData.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/SharedLocationData.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/SharedLocationData.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/SharedLocationData.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/SharedLocationData.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-watchos/LocationTrackerWatchWidgetExtension.build/Objects-normal/arm64_32/SharedLocationData~partial.swiftmodule"
+  }
+}

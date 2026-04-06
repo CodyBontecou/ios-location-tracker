@@ -1,0 +1,104 @@
+{
+  "source": "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/Views/TodayView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "All Points",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "No Data Points",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Location points will appear here as they're tracked.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld points",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "±%lldm",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 95
+        }
+      },
+      {
+        "comment": "",
+        "key": "±%lldm",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 143
+        }
+      },
+      {
+        "comment": "",
+        "key": "Location Access Required",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 161
+        }
+      },
+      {
+        "comment": "",
+        "key": "Location Tracker needs access to your location to record the places you visit throughout the day.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 165
+        }
+      },
+      {
+        "comment": "",
+        "key": "Location access was denied. Please enable it in Settings.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 172
+        }
+      },
+      {
+        "comment": "",
+        "key": "Open Settings",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 177
+        }
+      },
+      {
+        "comment": "",
+        "key": "\"Always\" permission enables background tracking",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 191
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allow Always",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 186
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,8 @@
+Target dependency graph (4 targets)
+Target 'LocationTracker' in project 'LocationTracker'
+➜ Explicit dependency on target 'LocationTrackerWidgetExtension' in project 'LocationTracker'
+➜ Explicit dependency on target 'LocationTrackerWatch' in project 'LocationTracker'
+Target 'LocationTrackerWatch' in project 'LocationTracker'
+➜ Explicit dependency on target 'LocationTrackerWatchWidgetExtension' in project 'LocationTracker'
+Target 'LocationTrackerWatchWidgetExtension' in project 'LocationTracker' (no dependencies)
+Target 'LocationTrackerWidgetExtension' in project 'LocationTracker' (no dependencies)

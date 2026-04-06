@@ -1,0 +1,199 @@
+{
+  "" : {
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationTracker-primary.dia",
+    "emit-module-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationTracker-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationTracker-primary-emit-module.dia",
+    "pch" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationTracker-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationTracker-primary.swiftdeps"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/AppDelegate.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/AppDelegate.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/AppDelegate.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/AppDelegate.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/AppDelegate.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/AppDelegate.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/AppDelegate.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/AppDelegate.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/AppDelegate~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/LocationTrackerApp.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationTrackerApp.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationTrackerApp.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationTrackerApp.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationTrackerApp.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationTrackerApp.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationTrackerApp.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationTrackerApp.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationTrackerApp~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/Models/LocationActivityAttributes.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationActivityAttributes.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationActivityAttributes.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationActivityAttributes.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationActivityAttributes.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationActivityAttributes.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationActivityAttributes.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationActivityAttributes.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationActivityAttributes~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/Models/LocationPoint.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationPoint.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationPoint.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationPoint.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationPoint.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationPoint.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationPoint.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationPoint.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationPoint~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/Models/Visit.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/Visit.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/Visit.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/Visit.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/Visit.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/Visit.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/Visit.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/Visit.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/Visit~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/Services/GeocodingService.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/GeocodingService.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/GeocodingService.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/GeocodingService.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/GeocodingService.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/GeocodingService.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/GeocodingService.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/GeocodingService.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/GeocodingService~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/Services/LiveActivityManager.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LiveActivityManager.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LiveActivityManager.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LiveActivityManager.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LiveActivityManager.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LiveActivityManager.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LiveActivityManager.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LiveActivityManager.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LiveActivityManager~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/Services/LocationManager.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationManager.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationManager.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationManager.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationManager.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationManager.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationManager.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationManager.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationManager~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/Utilities/ExportService.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/ExportService.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/ExportService.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/ExportService.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/ExportService.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/ExportService.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/ExportService.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/ExportService.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/ExportService~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/ViewModels/LocationViewModel.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationViewModel.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationViewModel.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationViewModel.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationViewModel.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationViewModel.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationViewModel.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationViewModel.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/LocationViewModel~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/Views/ContentView.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/ContentView.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/ContentView.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/ContentView.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/ContentView.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/ContentView.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/ContentView~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/Views/MapView.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/MapView.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/MapView.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/MapView.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/MapView.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/MapView.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/MapView.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/MapView.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/MapView~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/Views/SessionPathMapView.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SessionPathMapView.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SessionPathMapView.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SessionPathMapView.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SessionPathMapView.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SessionPathMapView.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SessionPathMapView.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SessionPathMapView.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SessionPathMapView~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/Views/SettingsView.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SettingsView.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SettingsView.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SettingsView.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SettingsView.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SettingsView.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SettingsView.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SettingsView.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SettingsView~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/Views/TodayView.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/TodayView.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/TodayView.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/TodayView.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/TodayView.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/TodayView.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/TodayView.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/TodayView.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/TodayView~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/Views/TrackingView.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/TrackingView.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/TrackingView.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/TrackingView.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/TrackingView.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/TrackingView.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/TrackingView.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/TrackingView.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/TrackingView~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/Views/VisitDetailView.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/VisitDetailView.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/VisitDetailView.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/VisitDetailView.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/VisitDetailView.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/VisitDetailView.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/VisitDetailView.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/VisitDetailView.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/VisitDetailView~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/Shared/SharedLocationData.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SharedLocationData.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SharedLocationData.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SharedLocationData.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SharedLocationData.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SharedLocationData.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SharedLocationData.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SharedLocationData.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/SharedLocationData~partial.swiftmodule"
+  },
+  "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/codybontecou/dev/ios-location-tracker/build/DerivedData/Build/Intermediates.noindex/LocationTracker.build/Debug-iphoneos/LocationTracker.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  }
+}

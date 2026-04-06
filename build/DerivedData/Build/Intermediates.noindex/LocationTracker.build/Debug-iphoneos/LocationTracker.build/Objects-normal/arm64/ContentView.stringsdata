@@ -1,0 +1,48 @@
+{
+  "source": "/Users/codybontecou/dev/ios-location-tracker/LocationTracker/Views/ContentView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Loading...",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "Data",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Track",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Map",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "Settings",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 30
+        }
+      }
+    ]
+  },
+  "version": 1
+}

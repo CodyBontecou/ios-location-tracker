@@ -1,0 +1,104 @@
+{
+  "source": "/Users/codybontecou/dev/ios-location-tracker/LocationTrackerWatchWidget/LocationTrackerWatchWidget.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Location Tracker",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 63
+        }
+      },
+      {
+        "comment": "",
+        "key": "View your tracking status and today's stats.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 111
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 115
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ left",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 178
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 171
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld pts • %@",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 214
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld visits • %@",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 216
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tracking Off",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 218
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld pts",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 236
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld visits",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 238
+        }
+      },
+      {
+        "comment": "",
+        "key": "Off",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 240
+        }
+      }
+    ]
+  },
+  "version": 1
+}

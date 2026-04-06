@@ -1,0 +1,72 @@
+{
+  "source": "/Users/codybontecou/dev/ios-location-tracker/LocationTrackerWidget/LocationTrackerLiveActivity.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tracking since %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 59
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tracking Location",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 112
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld pts",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 117
+        }
+      },
+      {
+        "comment": "",
+        "key": "elapsed",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 140
+        }
+      },
+      {
+        "comment": "",
+        "key": "remaining",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 133
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stop Tracking",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 152
+        }
+      }
+    ]
+  },
+  "version": 1
+}
