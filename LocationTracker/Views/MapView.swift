@@ -8,6 +8,7 @@ struct LocationMapView: View {
     @State private var showingFilters = false
     @State private var showTravelPath = true
     @State private var showPointMarkers = true
+    @State private var showStartEndMarkers = true
     @State private var cameraPosition: MapCameraPosition = .userLocation(fallback: .automatic)
     
     // Minimum distance in meters between points to show as markers
@@ -49,7 +50,30 @@ struct LocationMapView: View {
                     if showTravelPath && !filteredPoints.isEmpty {
                         let coordinates = filteredPoints.map { $0.coordinate }
                         MapPolyline(coordinates: coordinates)
-                            .stroke(.blue.opacity(0.5), lineWidth: 3)
+                            .stroke(
+                                LinearGradient(
+                                    colors: [.blue.opacity(0.3), .blue.opacity(0.7), .blue],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                ),
+                                lineWidth: 4
+                            )
+                    }
+                    
+                    // Start marker (oldest point in range)
+                    if showStartEndMarkers, let firstPoint = filteredPoints.first {
+                        Annotation("", coordinate: firstPoint.coordinate) {
+                            PathStartMarker(timestamp: firstPoint.timestamp)
+                        }
+                    }
+                    
+                    // End marker (newest point in range, if different from start)
+                    if showStartEndMarkers, 
+                       let lastPoint = filteredPoints.last,
+                       filteredPoints.count > 1 {
+                        Annotation("", coordinate: lastPoint.coordinate) {
+                            PathEndMarker(timestamp: lastPoint.timestamp)
+                        }
                     }
                     
                     // Point markers (spaced apart)
@@ -116,6 +140,10 @@ struct LocationMapView: View {
                         
                         Toggle(isOn: $showPointMarkers) {
                             Label("Show Point Markers", systemImage: "circle.fill")
+                        }
+                        
+                        Toggle(isOn: $showStartEndMarkers) {
+                            Label("Show Start/End Markers", systemImage: "flag.fill")
                         }
 
                         Button {
@@ -186,6 +214,76 @@ struct Triangle: Shape {
         path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
         path.closeSubpath()
         return path
+    }
+}
+
+// MARK: - Path Start/End Markers
+
+struct PathStartMarker: View {
+    let timestamp: Date
+    @State private var showingTooltip = false
+    
+    var body: some View {
+        VStack(spacing: 2) {
+            if showingTooltip {
+                Text(timestamp.formatted(date: .abbreviated, time: .shortened))
+                    .font(.caption2)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 2)
+                    .background(.ultraThinMaterial, in: Capsule())
+                    .transition(.scale.combined(with: .opacity))
+            }
+            
+            ZStack {
+                Circle()
+                    .fill(.green)
+                    .frame(width: 28, height: 28)
+                
+                Image(systemName: "flag.fill")
+                    .font(.system(size: 14))
+                    .foregroundStyle(.white)
+            }
+            .shadow(color: .green.opacity(0.4), radius: 4, y: 2)
+        }
+        .onTapGesture {
+            withAnimation(.spring(duration: 0.2)) {
+                showingTooltip.toggle()
+            }
+        }
+    }
+}
+
+struct PathEndMarker: View {
+    let timestamp: Date
+    @State private var showingTooltip = false
+    
+    var body: some View {
+        VStack(spacing: 2) {
+            if showingTooltip {
+                Text(timestamp.formatted(date: .abbreviated, time: .shortened))
+                    .font(.caption2)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 2)
+                    .background(.ultraThinMaterial, in: Capsule())
+                    .transition(.scale.combined(with: .opacity))
+            }
+            
+            ZStack {
+                Circle()
+                    .fill(.red)
+                    .frame(width: 28, height: 28)
+                
+                Image(systemName: "flag.checkered")
+                    .font(.system(size: 14))
+                    .foregroundStyle(.white)
+            }
+            .shadow(color: .red.opacity(0.4), radius: 4, y: 2)
+        }
+        .onTapGesture {
+            withAnimation(.spring(duration: 0.2)) {
+                showingTooltip.toggle()
+            }
+        }
     }
 }
 

@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import MapKit
 
 struct TrackingView: View {
     @Bindable var viewModel: LocationViewModel
@@ -38,6 +39,11 @@ struct TrackingView: View {
                 // Stats when tracking
                 if isContinuousTracking {
                     statsSection
+                }
+                
+                // Mini map showing current session path
+                if isContinuousTracking && !viewModel.sessionLocationPoints.isEmpty {
+                    sessionMapView
                 }
                 
                 Spacer()
@@ -185,6 +191,19 @@ struct TrackingView: View {
             RoundedRectangle(cornerRadius: 16)
                 .fill(.ultraThinMaterial)
         )
+    }
+    
+    // MARK: - Session Map View
+    
+    private var sessionMapView: some View {
+        SessionPathMapView(points: viewModel.sessionLocationPoints)
+            .frame(height: 200)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color.secondary.opacity(0.3), lineWidth: 1)
+            )
+            .padding(.horizontal)
     }
     
     // MARK: - Auto-Off Indicator
