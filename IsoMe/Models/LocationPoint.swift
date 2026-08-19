@@ -59,11 +59,11 @@ final class LocationPoint {
     }
 
     var accessibilityCoordinateSummary: String {
-        String(format: "Latitude %.4f, longitude %.4f", latitude, longitude)
+        String(format: String(localized: "Latitude %.4f, longitude %.4f"), latitude, longitude)
     }
 
     var accessibilityAccuracySummary: String {
-        String(format: "Accuracy about %.0f meters", horizontalAccuracy)
+        String(format: String(localized: "Accuracy about %.0f meters"), horizontalAccuracy)
     }
 
     var accessibilityValue: String {
@@ -74,11 +74,11 @@ final class LocationPoint {
         ]
 
         if let speed {
-            parts.append(String(format: "Speed %.1f meters per second", speed))
+            parts.append(String(format: String(localized: "Speed %.1f meters per second"), speed))
         }
 
         if isOutlier {
-            parts.append("Marked as an outlier")
+            parts.append(String(localized: "Marked as an outlier"))
         }
 
         return parts.joined(separator: ". ")

@@ -19,13 +19,13 @@ struct ExportOptions: Codable, Equatable {
 
         var label: String {
             switch self {
-            case .allTime: return "ALL TIME"
-            case .today: return "TODAY"
-            case .yesterday: return "YESTERDAY"
-            case .last7Days: return "LAST 7 DAYS"
-            case .last30Days: return "LAST 30 DAYS"
-            case .thisMonth: return "THIS MONTH"
-            case .custom: return "CUSTOM"
+            case .allTime: return String(localized: "ALL TIME")
+            case .today: return String(localized: "TODAY")
+            case .yesterday: return String(localized: "YESTERDAY")
+            case .last7Days: return String(localized: "LAST 7 DAYS")
+            case .last30Days: return String(localized: "LAST 30 DAYS")
+            case .thisMonth: return String(localized: "THIS MONTH")
+            case .custom: return String(localized: "CUSTOM")
             }
         }
     }

@@ -118,9 +118,20 @@ struct ExportView: View {
                         .padding(.bottom, 170)
                     }
                 } else {
-                    ScrollView {
-                        exportSections
-                            .padding(.bottom, 32)
+                    ScrollViewReader { proxy in
+                        ScrollView {
+                            exportSections
+                                .padding(.bottom, 32)
+                        }
+                        #if DEBUG
+                        .onAppear {
+                            if ProcessInfo.processInfo.arguments.contains("--demo-export-filters") {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                                    proxy.scrollTo("export-date-range", anchor: .top)
+                                }
+                            }
+                        }
+                        #endif
                     }
                     .safeAreaInset(edge: .bottom, spacing: 0) {
                         exportFooter
@@ -167,7 +178,9 @@ struct ExportView: View {
                     totalFileCount: splitFileCount
                 )
             }
-            .onAppear { ensurePointDataIfNeeded() }
+            .onAppear {
+                ensurePointDataIfNeeded()
+            }
             .onChange(of: storeManager.isPurchased) { _, _ in ensurePointDataIfNeeded() }
             .onChange(of: options) { _, _ in persistExportPreferences() }
             .onChange(of: options.dataKind.rawValue) { _, _ in ensurePointDataIfNeeded() }
@@ -192,6 +205,7 @@ struct ExportView: View {
             filenameSection
             outputSection
             dateRangeSection
+                .id("export-date-range")
             timeOfDaySection
             if showsVisitFields || showsPointFields { filtersSection }
             if showsVisitFields { visitFieldsSection }
@@ -576,7 +590,7 @@ struct ExportView: View {
     }
 
     private var lastRunText: String {
-        guard let last = dailyScheduler.lastRun else { return "NEVER" }
+        guard let last = dailyScheduler.lastRun else { return String(localized: "NEVER") }
         let fmt = DateFormatter()
         fmt.dateStyle = .short
         fmt.timeStyle = .short
@@ -672,23 +686,24 @@ struct ExportView: View {
                 safetyPolicy: .preserveCurrentBehavior
             )
         }
-        guard let first = previews.first else { return "INVALID PATH" }
+        guard let first = previews.first else { return String(localized: "INVALID PATH") }
         guard previews.count > 1 else { return first }
-        return "\(first) + \(previews.count - 1) more"
+        return String(localized: "\(first) + \(previews.count - 1) more")
     }
 
     private var previewDestinationLabel: String {
         if exportFolderManager.hasDefaultFolder && useDefaultExportFolder {
-            return "Default folder: \(exportFolderManager.selectedFolderName ?? "Selected Folder")"
+            let folderName = exportFolderManager.selectedFolderName ?? String(localized: "Selected Folder")
+            return String(localized: "Default folder: \(folderName)")
         }
-        return "Share sheet"
+        return String(localized: "Share sheet")
     }
 
     private var previewDestinationRootName: String {
         if exportFolderManager.hasDefaultFolder && useDefaultExportFolder {
             return exportFolderManager.selectedFolderName ?? "Selected Folder"
         }
-        return "Share Sheet"
+        return String(localized: "Share Sheet")
     }
 
     private func presetButton(_ title: LocalizedStringKey, isSelected: Bool, action: @escaping () -> Void) -> some View {
@@ -752,7 +767,7 @@ struct ExportView: View {
                                 options.datePreset = preset
                             } label: {
                                 HStack {
-                                    Text(LocalizedStringKey(preset.label))
+                                    Text(verbatim: preset.label)
                                         .font(TE.mono(.caption, weight: .medium))
                                         .tracking(1)
                                         .foregroundStyle(TE.textPrimary)
@@ -1188,7 +1203,7 @@ struct ExportView: View {
                         }
                     }
                 )
-                ExportToastCenter.shared.show(.success(message: "Share sheet opened"))
+                ExportToastCenter.shared.show(.success(message: String(localized: "Share sheet opened")))
             } catch {
                 viewModel.exportError = error.localizedDescription
                 ExportToastCenter.shared.show(.failure(message: error.localizedDescription))
@@ -1301,7 +1316,7 @@ private struct ExportFormatGrid: View {
         return Button {
             toggleFormat(choice.format)
         } label: {
-            Text(LocalizedStringKey(choice.title))
+            Text(choice.title)
                 .font(TE.mono(.caption2, weight: isSelected ? .bold : .medium))
                 .tracking(dynamicTypeSize.isAccessibilitySize ? 0.5 : 1.5)
                 .foregroundStyle(isSelected ? TE.accent : TE.textMuted)
@@ -1319,11 +1334,11 @@ private struct ExportFormatGrid: View {
 }
 
 private struct ExportFormatChoice: Identifiable {
-    let title: String
+    let title: LocalizedStringKey
     let format: ExportFormat
     var id: String { format.token }
 
-    init(_ title: String, _ format: ExportFormat) {
+    init(_ title: LocalizedStringKey, _ format: ExportFormat) {
         self.title = title
         self.format = format
     }
@@ -1364,7 +1379,7 @@ struct IsoMeExportPreviewView: View {
                     messageView(
                         icon: "doc.text.magnifyingglass",
                         title: "No data to preview",
-                        message: "There is no data for the selected export settings."
+                        message: String(localized: "There is no data for the selected export settings.")
                     )
                 } else {
                     contentList
@@ -1396,7 +1411,7 @@ struct IsoMeExportPreviewView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
-    private func messageView(icon: String, title: String, message: String) -> some View {
+    private func messageView(icon: String, title: LocalizedStringKey, message: String) -> some View {
         VStack(spacing: 12) {
             Image(systemName: icon)
                 .font(.largeTitle.weight(.light))
@@ -1404,7 +1419,7 @@ struct IsoMeExportPreviewView: View {
             Text(title)
                 .font(TE.mono(.headline, weight: .bold))
                 .foregroundStyle(TE.textPrimary)
-            Text(message)
+            Text(verbatim: message)
                 .font(TE.mono(.caption, weight: .medium))
                 .foregroundStyle(TE.textMuted)
                 .multilineTextAlignment(.center)
@@ -1556,7 +1571,7 @@ struct IsoMeExportPreviewView: View {
             previewTotalRecordCount = preview.totalRecordCount
             isLoading = false
         } catch {
-            errorMessage = "Could not build export preview: \(error.localizedDescription)"
+            errorMessage = String(localized: "Could not build export preview: \(error.localizedDescription)")
             isLoading = false
         }
     }
@@ -1619,7 +1634,7 @@ private struct IsoMePreviewRecord: Identifiable {
         } else if splitByDay, let date = record.reference.date {
             title = IsoMeExportPreviewView.dateLabelFormatter.string(from: date)
         } else {
-            title = "Export file"
+            title = String(localized: "Export file")
         }
 
         let aggregateFolderPath = record.files.firstAggregateFolderPath ?? record.files.first?.relativeFolderPath ?? ""
@@ -1703,21 +1718,21 @@ struct ExportToast: Identifiable, Equatable {
     let message: String
 
     static func success(message: String) -> ExportToast {
-        ExportToast(kind: .success, title: "EXPORT SUCCESSFUL", message: message)
+        ExportToast(kind: .success, title: String(localized: "EXPORT SUCCESSFUL"), message: message)
     }
 
     static func success(savedURLs urls: [URL]) -> ExportToast {
         if urls.count == 1, let url = urls.first {
-            return success(message: "Saved to \(url.lastPathComponent)")
+            return success(message: String(localized: "Saved to \(url.lastPathComponent)"))
         }
         if let folder = urls.first?.deletingLastPathComponent().lastPathComponent {
-            return success(message: "Saved \(urls.count) files to \(folder)")
+            return success(message: String(localized: "Saved \(urls.count) files to \(folder)"))
         }
-        return success(message: "Saved \(urls.count) files")
+        return success(message: String(localized: "Saved \(urls.count) files"))
     }
 
     static func failure(message: String) -> ExportToast {
-        ExportToast(kind: .failure, title: "EXPORT FAILED", message: message)
+        ExportToast(kind: .failure, title: String(localized: "EXPORT FAILED"), message: message)
     }
 
     var iconName: String {

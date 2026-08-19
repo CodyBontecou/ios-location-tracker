@@ -41,11 +41,11 @@ final class WebhookManager: ObservableObject {
 
         var label: String {
             switch self {
-            case .none: return "NONE"
-            case .apiKeyQuery: return "API KEY (QUERY)"
-            case .bearer: return "BEARER TOKEN"
-            case .basic: return "BASIC AUTH"
-            case .customHeader: return "CUSTOM HEADER"
+            case .none: return String(localized: "NONE")
+            case .apiKeyQuery: return String(localized: "API KEY (QUERY)")
+            case .bearer: return String(localized: "BEARER TOKEN")
+            case .basic: return String(localized: "BASIC AUTH")
+            case .customHeader: return String(localized: "CUSTOM HEADER")
             }
         }
     }
@@ -60,10 +60,10 @@ final class WebhookManager: ObservableObject {
 
         var label: String {
             switch self {
-            case .realtime: return "REAL-TIME"
-            case .batchCount: return "BY COUNT"
-            case .batchTime: return "BY TIME"
-            case .manual: return "MANUAL"
+            case .realtime: return String(localized: "REAL-TIME")
+            case .batchCount: return String(localized: "BY COUNT")
+            case .batchTime: return String(localized: "BY TIME")
+            case .manual: return String(localized: "MANUAL")
             }
         }
     }
@@ -349,7 +349,7 @@ final class WebhookManager: ObservableObject {
             throw WebhookError.httpError(0)
         }
         if (200...299).contains(httpResponse.statusCode) {
-            return "Connected (HTTP \(httpResponse.statusCode))"
+            return String(localized: "Connected (HTTP \(httpResponse.statusCode))")
         } else if httpResponse.statusCode == 401 {
             throw WebhookError.unauthorized
         } else {
@@ -595,11 +595,11 @@ enum WebhookError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL:
-            return "Invalid URL"
+            return String(localized: "Invalid URL")
         case .httpError(let code):
-            return "Server returned HTTP \(code)"
+            return String(localized: "Server returned HTTP \(code)")
         case .unauthorized:
-            return "Unauthorized (HTTP 401). Check your credentials."
+            return String(localized: "Unauthorized (HTTP 401). Check your credentials.")
         }
     }
 }

@@ -1,70 +1,240 @@
 {
   "sourceLanguage": "en",
   "strings": {
-    "Tracking": {
+    "%lld": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tracking"
+            "value": "%lld"
           }
         },
-        "ru": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Отслеживание"
+            "value": "%lld"
           }
         },
-        "ja": {
+        "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "トラッキング"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Suivi"
+            "value": "%lld"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Seguimiento"
+            "value": "%lld"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "ट्रैकिंग"
+            "value": "%lld"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "跟踪"
+            "value": "%lld"
+          }
+        }
+      }
+    },
+    "%lldh %lldm": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lldh %2$lldm"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld ح %2$lld م"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld ঘন্টা %2$lld মি"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld h %2$lld m"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld h %2$lld m"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld h %2$lld मी"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld h %2$lld m"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld h %2$lld m"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld ч %2$lld м"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld小时%2$lld米"
+          }
+        }
+      }
+    },
+    "%lldm": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldm"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldm"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldm"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldm"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldm"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldm"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldm"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldm"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldm"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldm"
           }
         }
       }
     },
     "Stop": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قف"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "থামো"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Stop"
           }
         },
-        "ar": {
+        "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "توقف"
+            "value": "Detener"
           }
         },
-        "bn": {
+        "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "বন্ধ করুন"
+            "value": "Arrêt"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "रुकना"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "停止"
           }
         },
         "pt-BR": {
@@ -76,31 +246,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Остановить"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "停止"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrêter"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Detener"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "रोकें"
+            "value": "Останавливаться"
           }
         },
         "zh-Hans": {
@@ -111,194 +257,130 @@
         }
       }
     },
-    "Visits": {
+    "Tracking": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visits"
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "الزيارات"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "পরিদর্শন"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Visitas"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Посещения"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "訪問"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Visites"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "访问"
+            "value": "Tracking"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visitas"
+            "value": "Seguimiento"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suivi"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "विजिट"
+            "value": "ट्रैकिंग"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "トラッキング"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отслеживание"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "追踪"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تتبع"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ট্র্যাকিং"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monitorando"
           }
         }
       }
     },
-    "Continuous": {
+    "Tracking since %@": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Continuous"
+            "value": "Tracking since %@"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "مستمر"
+            "value": "التتبع منذ %@"
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "ক্রমাগত"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Contínuo"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Непрерывное"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "継続"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Continu"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "连续"
+            "value": "%@ থেকে ট্র্যাক করা হচ্ছে"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Continuo"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "निरंतर"
-          }
-        }
-      }
-    },
-    "Tracking Stopped": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tracking Stopped"
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "توقف التتبع"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ট্র্যাকিং বন্ধ হয়েছে"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rastreamento Parado"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отслеживание остановлено"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "トラッキング停止"
+            "value": "Seguimiento desde %@"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Suivi arrêté"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Seguimiento detenido"
+            "value": "Suivi depuis %@"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "ट्रैकिंग बंद हुई"
+            "value": "%@ से ट्रैकिंग"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@以降の追跡"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rastreando desde %@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отслеживание с %@"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "跟踪已停止"
+            "value": "自%@开始追踪"
           }
         }
       }

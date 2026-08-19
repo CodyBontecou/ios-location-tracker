@@ -138,18 +138,18 @@ final class Visit {
 
     var formattedDuration: String {
         guard let minutes = durationMinutes else {
-            return "Still here"
+            return String(localized: "Still here")
         }
 
         if minutes < 60 {
-            return "\(Int(minutes)) min"
+            return String(localized: "\(Int(minutes)) min")
         } else {
             let hours = Int(minutes / 60)
             let remainingMinutes = Int(minutes.truncatingRemainder(dividingBy: 60))
             if remainingMinutes == 0 {
-                return "\(hours)h"
+                return String(localized: "\(hours)h")
             }
-            return "\(hours)h \(remainingMinutes)m"
+            return String(localized: "\(hours)h \(remainingMinutes)m")
         }
     }
 
@@ -162,11 +162,11 @@ final class Visit {
             let departure = formatter.string(from: departedAt)
             return "\(arrival) - \(departure)"
         }
-        return "\(arrival) - now"
+        return String(localized: "\(arrival) - now")
     }
 
     var automaticDisplayName: String {
-        locationName ?? address ?? "Unknown Location"
+        locationName ?? address ?? String(localized: "Unknown Location")
     }
 
     var normalizedCustomName: String? {
@@ -194,9 +194,9 @@ final class Visit {
 
     var accessibilityLabel: String {
         if isCurrentVisit {
-            return "Current visit at \(displayName)"
+            return String(localized: "Current visit at \(displayName)")
         }
-        return "Visit at \(displayName)"
+        return String(localized: "Visit at \(displayName)")
     }
 
     var accessibilityValue: String {
@@ -222,9 +222,9 @@ enum VisitSource: String, Codable, CaseIterable {
 
     var displayName: String {
         switch self {
-        case .automatic: return "Automatic"
-        case .manual: return "Manual"
-        case .imported: return "Imported"
+        case .automatic: return String(localized: "Automatic")
+        case .manual: return String(localized: "Manual")
+        case .imported: return String(localized: "Imported")
         }
     }
 }
@@ -236,9 +236,9 @@ enum VisitConfirmationStatus: String, Codable, CaseIterable {
 
     var displayName: String {
         switch self {
-        case .unconfirmed: return "Unconfirmed"
-        case .confirmed: return "Confirmed"
-        case .corrected: return "Corrected"
+        case .unconfirmed: return String(localized: "Unconfirmed")
+        case .confirmed: return String(localized: "Confirmed")
+        case .corrected: return String(localized: "Corrected")
         }
     }
 }
@@ -251,10 +251,10 @@ enum VisitPlaceSource: String, Codable, CaseIterable {
 
     var displayName: String {
         switch self {
-        case .coreLocationGeocode: return "Core Location"
-        case .appleMaps: return "Apple Maps"
-        case .userEntered: return "User entered"
-        case .import: return "Import"
+        case .coreLocationGeocode: return String(localized: "Core Location")
+        case .appleMaps: return String(localized: "Apple Maps")
+        case .userEntered: return String(localized: "User entered")
+        case .import: return String(localized: "Import")
         }
     }
 }

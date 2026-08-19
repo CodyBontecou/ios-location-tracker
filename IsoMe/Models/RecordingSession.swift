@@ -114,7 +114,7 @@ struct RecordingSessionSummary: Identifiable {
         let start = timeFormatter.string(from: startedAt)
 
         if isActive {
-            return "\(date) • \(start) – now"
+            return String(localized: "\(date) • \(start) – now")
         }
 
         let end = timeFormatter.string(from: effectiveEndDate)
@@ -128,17 +128,19 @@ struct RecordingSessionSummary: Identifiable {
     var accessibilityValue: String {
         var parts = [
             formattedTimeRange,
-            "Duration \(RecordingSessionFormatter.duration(duration))",
-            "Distance \(DistanceFormatter.format(meters: distanceMeters, usesMetric: true))",
-            "\(pointCount) \(pointCount == 1 ? "point" : "points")"
+            String(localized: "Duration \(RecordingSessionFormatter.duration(duration))"),
+            String(localized: "Distance \(DistanceFormatter.format(meters: distanceMeters, usesMetric: true))"),
+            pointCount == 1
+                ? String(localized: "1 point")
+                : String(localized: "\(pointCount) points")
         ]
 
         if isActive {
-            parts.append("Currently recording")
+            parts.append(String(localized: "Currently recording"))
         }
 
         if isInferred {
-            parts.append("Inferred from a gap in location points")
+            parts.append(String(localized: "Inferred from a gap in location points"))
         }
 
         return parts.joined(separator: ". ")
@@ -156,21 +158,21 @@ enum RecordingSessionSort: String, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .newest: return "Newest"
-        case .oldest: return "Oldest"
-        case .longest: return "Longest"
-        case .distance: return "Distance"
-        case .points: return "Points"
+        case .newest: return String(localized: "Newest")
+        case .oldest: return String(localized: "Oldest")
+        case .longest: return String(localized: "Longest")
+        case .distance: return String(localized: "Distance")
+        case .points: return String(localized: "Points")
         }
     }
 
     var accessibilityLabel: String {
         switch self {
-        case .newest: return "Newest first"
-        case .oldest: return "Oldest first"
-        case .longest: return "Longest duration first"
-        case .distance: return "Longest distance first"
-        case .points: return "Most points first"
+        case .newest: return String(localized: "Newest first")
+        case .oldest: return String(localized: "Oldest first")
+        case .longest: return String(localized: "Longest duration first")
+        case .distance: return String(localized: "Longest distance first")
+        case .points: return String(localized: "Most points first")
         }
     }
 
@@ -226,21 +228,21 @@ enum RecordingSessionGapPreset: String, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .fifteenMinutes: return "15m gaps"
-        case .thirtyMinutes: return "30m gaps"
-        case .oneHour: return "1h gaps"
-        case .twoHours: return "2h gaps"
-        case .fourHours: return "4h gaps"
+        case .fifteenMinutes: return String(localized: "15m gaps")
+        case .thirtyMinutes: return String(localized: "30m gaps")
+        case .oneHour: return String(localized: "1h gaps")
+        case .twoHours: return String(localized: "2h gaps")
+        case .fourHours: return String(localized: "4h gaps")
         }
     }
 
     var settingsLabel: String {
         switch self {
-        case .fifteenMinutes: return "15 minutes"
-        case .thirtyMinutes: return "30 minutes"
-        case .oneHour: return "1 hour"
-        case .twoHours: return "2 hours"
-        case .fourHours: return "4 hours"
+        case .fifteenMinutes: return String(localized: "15 minutes")
+        case .thirtyMinutes: return String(localized: "30 minutes")
+        case .oneHour: return String(localized: "1 hour")
+        case .twoHours: return String(localized: "2 hours")
+        case .fourHours: return String(localized: "4 hours")
         }
     }
 }
@@ -266,11 +268,11 @@ enum RecordingSessionMinimumDurationPreset: String, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .none: return "No minimum"
-        case .fiveMinutes: return "5 minutes"
-        case .fifteenMinutes: return "15 minutes"
-        case .thirtyMinutes: return "30 minutes"
-        case .oneHour: return "1 hour"
+        case .none: return String(localized: "No minimum")
+        case .fiveMinutes: return String(localized: "5 minutes")
+        case .fifteenMinutes: return String(localized: "15 minutes")
+        case .thirtyMinutes: return String(localized: "30 minutes")
+        case .oneHour: return String(localized: "1 hour")
         }
     }
 }
@@ -383,15 +385,15 @@ enum RecordingSessionFormatter {
         let seconds = totalSeconds % 60
 
         if hours > 0 {
-            if minutes == 0 { return "\(hours)h" }
-            return "\(hours)h \(minutes)m"
+            if minutes == 0 { return String(localized: "\(hours)h") }
+            return String(localized: "\(hours)h \(minutes)m")
         }
 
         if minutes > 0 {
-            return "\(minutes)m"
+            return String(localized: "\(minutes)m")
         }
 
-        return "\(seconds)s"
+        return String(localized: "\(seconds)s")
     }
 
     static func clockDuration(_ interval: TimeInterval) -> String {

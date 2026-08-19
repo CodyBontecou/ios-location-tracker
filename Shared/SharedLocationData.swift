@@ -90,8 +90,8 @@ extension SharedLocationData {
         let hours = Int(remaining) / 3600
         let minutes = (Int(remaining) % 3600) / 60
         if hours > 0 {
-            return "\(hours)h \(minutes)m"
+            return String(localized: "\(hours)h \(minutes)m")
         }
-        return "\(minutes)m"
+        return String(localized: "\(minutes)m")
     }
 }

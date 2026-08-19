@@ -313,7 +313,7 @@ struct ContentView: View {
         }
     }
 
-    private func statItem(value: String, label: String, icon: String) -> some View {
+    private func statItem(value: String, label: LocalizedStringKey, icon: String) -> some View {
         VStack(alignment: .leading, spacing: 5) {
             Image(systemName: icon)
                 .font(.caption.weight(.semibold))
@@ -419,7 +419,7 @@ private struct WatchSectionHeader: View {
 
 private struct WatchInfoPill: View {
     let icon: String
-    let text: String
+    let text: LocalizedStringKey
     let color: Color
 
     var body: some View {

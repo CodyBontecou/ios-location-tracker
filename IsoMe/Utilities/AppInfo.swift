@@ -14,7 +14,7 @@ enum AppInfo {
     }
 
     static var platformDisplay: String {
-        "iOS \(UIDevice.current.systemVersion)"
+        String(localized: "iOS \(UIDevice.current.systemVersion)")
     }
 
     static var deviceModel: String {
@@ -22,10 +22,6 @@ enum AppInfo {
     }
 
     static var fullDeviceInfo: String {
-        """
-        App: iso.me \(versionDisplay)
-        Platform: \(platformDisplay)
-        Device: \(deviceModel)
-        """
+        String(localized: "App: iso.me \(versionDisplay)\nPlatform: \(platformDisplay)\nDevice: \(deviceModel)")
     }
 }

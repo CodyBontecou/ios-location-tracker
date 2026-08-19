@@ -208,7 +208,7 @@ struct WebhookSettingsView: View {
             TECard {
                 webhookPickerRow("TYPE", selection: $webhook.authType, mutedTitle: true) {
                     ForEach(WebhookManager.AuthType.allCases) { type in
-                        Text(LocalizedStringKey(type.label)).tag(type)
+                        Text(verbatim: type.label).tag(type)
                     }
                 }
 
@@ -329,7 +329,7 @@ struct WebhookSettingsView: View {
                     showDivider: webhook.sendMode == .batchCount || webhook.sendMode == .batchTime
                 ) {
                     ForEach(WebhookManager.SendMode.allCases) { mode in
-                        Text(LocalizedStringKey(mode.label)).tag(mode)
+                        Text(verbatim: mode.label).tag(mode)
                     }
                 }
 
@@ -413,7 +413,7 @@ struct WebhookSettingsView: View {
     }
 
     private var lastSentText: String {
-        guard let last = webhook.lastSentAt else { return "NEVER" }
+        guard let last = webhook.lastSentAt else { return String(localized: "NEVER") }
         let fmt = DateFormatter()
         fmt.dateStyle = .short
         fmt.timeStyle = .short
@@ -476,7 +476,7 @@ struct WebhookSettingsView: View {
 
     // MARK: - Responsive Rows
 
-    private func rowTitle(_ title: String, muted: Bool = false) -> some View {
+    private func rowTitle(_ title: LocalizedStringKey, muted: Bool = false) -> some View {
         Text(title)
             .font(TE.mono(muted ? .caption2 : .caption, weight: muted ? .semibold : .medium))
             .tracking(usesAccessibilityLayout ? 0.5 : 1)
@@ -485,7 +485,7 @@ struct WebhookSettingsView: View {
     }
 
     private func webhookPickerRow<SelectionValue: Hashable, Content: View>(
-        _ title: String,
+        _ title: LocalizedStringKey,
         selection: Binding<SelectionValue>,
         showDivider: Bool = true,
         mutedTitle: Bool = false,
@@ -520,7 +520,7 @@ struct WebhookSettingsView: View {
     }
 
     private func webhookValueRow(
-        _ title: String,
+        _ title: LocalizedStringKey,
         value: String,
         valueColor: Color = TE.textMuted,
         showDivider: Bool = true

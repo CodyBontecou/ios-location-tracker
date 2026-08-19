@@ -166,11 +166,11 @@ enum ExportFolderError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .accessDenied:
-            return "Unable to access the export folder. Please reselect it."
+            return String(localized: "Unable to access the export folder. Please reselect it.")
         case .writeFailure:
-            return "Failed to write file to the export folder."
+            return String(localized: "Failed to write file to the export folder.")
         case .noDefaultFolder:
-            return "No default export folder is set."
+            return String(localized: "No default export folder is set.")
         }
     }
 }

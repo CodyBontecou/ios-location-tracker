@@ -225,17 +225,17 @@ struct ImportService {
         let json: [String: Any]
         do {
             guard let parsed = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-                throw ImportError.invalidData("Expected JSON object at root")
+                throw ImportError.invalidData(String(localized: "Expected JSON object at root"))
             }
             json = parsed
         } catch let error as ImportError {
             throw error
         } catch {
-            throw ImportError.parsingFailed("Invalid JSON: \(error.localizedDescription)")
+            throw ImportError.parsingFailed(String(localized: "Invalid JSON: \(error.localizedDescription)"))
         }
 
         guard let visitsArray = json["visits"] as? [[String: Any]] else {
-            throw ImportError.invalidData("Missing 'visits' array")
+            throw ImportError.invalidData(String(localized: "Missing 'visits' array"))
         }
 
         return try visitsArray.enumerated().map { index, dict in
@@ -243,7 +243,7 @@ struct ImportService {
                   let longitude = dict["longitude"] as? Double,
                   let arrivedAtStr = dict["arrivedAt"] as? String,
                   let arrivedAt = parseISO8601Date(arrivedAtStr) else {
-                throw ImportError.invalidData("Visit at index \(index) missing required fields (latitude, longitude, arrivedAt)")
+                throw ImportError.invalidData(String(localized: "Visit at index \(index) missing required fields (latitude, longitude, arrivedAt)"))
             }
 
             let departedAt: Date? = (dict["departedAt"] as? String).flatMap { parseISO8601Date($0) }
@@ -281,23 +281,23 @@ struct ImportService {
         let json: [String: Any]
         do {
             guard let parsed = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-                throw ImportError.invalidData("Expected JSON object at root")
+                throw ImportError.invalidData(String(localized: "Expected JSON object at root"))
             }
             json = parsed
         } catch let error as ImportError {
             throw error
         } catch {
-            throw ImportError.parsingFailed("Invalid JSON: \(error.localizedDescription)")
+            throw ImportError.parsingFailed(String(localized: "Invalid JSON: \(error.localizedDescription)"))
         }
 
         guard let pointsArray = json["points"] as? [[String: Any]] else {
-            throw ImportError.invalidData("Missing 'points' array")
+            throw ImportError.invalidData(String(localized: "Missing 'points' array"))
         }
 
         return try pointsArray.enumerated().map { index, dict in
             guard let latitude = dict["latitude"] as? Double,
                   let longitude = dict["longitude"] as? Double else {
-                throw ImportError.invalidData("Point at index \(index) missing latitude/longitude")
+                throw ImportError.invalidData(String(localized: "Point at index \(index) missing latitude/longitude"))
             }
 
             let timestamp: Date
@@ -306,7 +306,7 @@ struct ImportService {
             } else if let tsUnix = dict["timestampUnix"] as? Double {
                 timestamp = Date(timeIntervalSince1970: tsUnix)
             } else {
-                throw ImportError.invalidData("Point at index \(index) missing timestamp")
+                throw ImportError.invalidData(String(localized: "Point at index \(index) missing timestamp"))
             }
 
             return ImportedLocationPoint(
@@ -325,41 +325,41 @@ struct ImportService {
 
     private static func importVisitsFromCSV(data: Data) throws -> [ImportedVisit] {
         guard let content = String(data: data, encoding: .utf8) else {
-            throw ImportError.invalidData("Could not read file as UTF-8 text")
+            throw ImportError.invalidData(String(localized: "Could not read file as UTF-8 text"))
         }
 
         let rows = parseCSVRows(content)
         guard rows.count > 1 else {
-            throw ImportError.invalidData("CSV file has no data rows")
+            throw ImportError.invalidData(String(localized: "CSV file has no data rows"))
         }
 
         let header = rows[0]
         guard header.contains("arrived_at") && header.contains("latitude") else {
-            throw ImportError.invalidData("CSV header doesn't match expected visit format")
+            throw ImportError.invalidData(String(localized: "CSV header doesn't match expected visit format"))
         }
 
         let colIndex = Dictionary(uniqueKeysWithValues: header.enumerated().map { ($1, $0) })
 
         return try rows.dropFirst().enumerated().compactMap { rowIndex, fields in
             guard fields.count >= header.count else {
-                throw ImportError.invalidData("Row \(rowIndex + 2): expected \(header.count) columns, found \(fields.count)")
+                throw ImportError.invalidData(String(localized: "Row \(rowIndex + 2): expected \(header.count) columns, found \(fields.count)"))
             }
 
             guard let arrivedAtCol = colIndex["arrived_at"],
                   let latCol = colIndex["latitude"],
                   let lonCol = colIndex["longitude"] else {
-                throw ImportError.invalidData("Missing required columns")
+                throw ImportError.invalidData(String(localized: "Missing required columns"))
             }
 
             guard let arrivedAt = parseISO8601Date(fields[arrivedAtCol]) else {
-                throw ImportError.invalidData("Row \(rowIndex + 2): invalid arrived_at date")
+                throw ImportError.invalidData(String(localized: "Row \(rowIndex + 2): invalid arrived_at date"))
             }
 
             guard let latitude = Double(fields[latCol]) else {
-                throw ImportError.invalidData("Row \(rowIndex + 2): invalid latitude")
+                throw ImportError.invalidData(String(localized: "Row \(rowIndex + 2): invalid latitude"))
             }
             guard let longitude = Double(fields[lonCol]) else {
-                throw ImportError.invalidData("Row \(rowIndex + 2): invalid longitude")
+                throw ImportError.invalidData(String(localized: "Row \(rowIndex + 2): invalid longitude"))
             }
 
             let departedAt: Date? = colIndex["departed_at"].flatMap { col in
@@ -407,30 +407,30 @@ struct ImportService {
 
     private static func importLocationPointsFromCSV(data: Data) throws -> [ImportedLocationPoint] {
         guard let content = String(data: data, encoding: .utf8) else {
-            throw ImportError.invalidData("Could not read file as UTF-8 text")
+            throw ImportError.invalidData(String(localized: "Could not read file as UTF-8 text"))
         }
 
         let rows = parseCSVRows(content)
         guard rows.count > 1 else {
-            throw ImportError.invalidData("CSV file has no data rows")
+            throw ImportError.invalidData(String(localized: "CSV file has no data rows"))
         }
 
         let header = rows[0]
         guard header.contains("timestamp") && header.contains("latitude") else {
-            throw ImportError.invalidData("CSV header doesn't match expected location point format")
+            throw ImportError.invalidData(String(localized: "CSV header doesn't match expected location point format"))
         }
 
         let colIndex = Dictionary(uniqueKeysWithValues: header.enumerated().map { ($1, $0) })
 
         return try rows.dropFirst().enumerated().compactMap { rowIndex, fields in
             guard fields.count >= header.count else {
-                throw ImportError.invalidData("Row \(rowIndex + 2): expected \(header.count) columns, found \(fields.count)")
+                throw ImportError.invalidData(String(localized: "Row \(rowIndex + 2): expected \(header.count) columns, found \(fields.count)"))
             }
 
             guard let tsCol = colIndex["timestamp"],
                   let latCol = colIndex["latitude"],
                   let lonCol = colIndex["longitude"] else {
-                throw ImportError.invalidData("Missing required columns")
+                throw ImportError.invalidData(String(localized: "Missing required columns"))
             }
 
             let timestamp: Date
@@ -439,14 +439,14 @@ struct ImportService {
             } else if let unixCol = colIndex["timestamp_unix"], let unix = Double(fields[unixCol]) {
                 timestamp = Date(timeIntervalSince1970: unix)
             } else {
-                throw ImportError.invalidData("Row \(rowIndex + 2): invalid timestamp")
+                throw ImportError.invalidData(String(localized: "Row \(rowIndex + 2): invalid timestamp"))
             }
 
             guard let latitude = Double(fields[latCol]) else {
-                throw ImportError.invalidData("Row \(rowIndex + 2): invalid latitude")
+                throw ImportError.invalidData(String(localized: "Row \(rowIndex + 2): invalid latitude"))
             }
             guard let longitude = Double(fields[lonCol]) else {
-                throw ImportError.invalidData("Row \(rowIndex + 2): invalid longitude")
+                throw ImportError.invalidData(String(localized: "Row \(rowIndex + 2): invalid longitude"))
             }
 
             let altitude: Double? = colIndex["altitude"].flatMap { col in
@@ -483,7 +483,7 @@ struct ImportService {
 
     private static func importVisitsFromMarkdown(data: Data) throws -> [ImportedVisit] {
         guard let content = String(data: data, encoding: .utf8) else {
-            throw ImportError.invalidData("Could not read file as UTF-8 text")
+            throw ImportError.invalidData(String(localized: "Could not read file as UTF-8 text"))
         }
 
         if content.contains("| Arrived | Departed |") {
@@ -581,7 +581,7 @@ struct ImportService {
         flushVisit()
 
         if visits.isEmpty {
-            throw ImportError.invalidData("No visits found in Markdown file")
+            throw ImportError.invalidData(String(localized: "No visits found in Markdown file"))
         }
 
         return visits
@@ -629,15 +629,15 @@ struct ImportService {
             guard let arrivedCol = colIndex["Arrived"],
                   let latCol = colIndex["Lat"],
                   let lonCol = colIndex["Lon"] else {
-                throw ImportError.invalidData("Markdown visit table is missing required columns")
+                throw ImportError.invalidData(String(localized: "Markdown visit table is missing required columns"))
             }
 
             guard let arrivalTime = timeFormatter.date(from: cells[arrivedCol]) else {
-                throw ImportError.invalidData("Invalid Markdown visit arrival time")
+                throw ImportError.invalidData(String(localized: "Invalid Markdown visit arrival time"))
             }
             guard let latitude = Double(cells[latCol]),
                   let longitude = Double(cells[lonCol]) else {
-                throw ImportError.invalidData("Invalid Markdown visit coordinates")
+                throw ImportError.invalidData(String(localized: "Invalid Markdown visit coordinates"))
             }
 
             let departedAt: Date? = colIndex["Departed"].flatMap { col in
@@ -660,7 +660,7 @@ struct ImportService {
         }
 
         if visits.isEmpty {
-            throw ImportError.invalidData("No visits found in Markdown file")
+            throw ImportError.invalidData(String(localized: "No visits found in Markdown file"))
         }
 
         return visits
@@ -670,7 +670,7 @@ struct ImportService {
 
     private static func importLocationPointsFromMarkdown(data: Data) throws -> [ImportedLocationPoint] {
         guard let content = String(data: data, encoding: .utf8) else {
-            throw ImportError.invalidData("Could not read file as UTF-8 text")
+            throw ImportError.invalidData(String(localized: "Could not read file as UTF-8 text"))
         }
 
         var points: [ImportedLocationPoint] = []
@@ -742,7 +742,7 @@ struct ImportService {
         }
 
         if points.isEmpty {
-            throw ImportError.invalidData("No location points found in Markdown file")
+            throw ImportError.invalidData(String(localized: "No location points found in Markdown file"))
         }
 
         return points

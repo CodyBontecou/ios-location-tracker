@@ -24,25 +24,26 @@ SCREEN_CORNER_R = 62
 
 DEVICE_Y = 720
 
-VERB_SIZE_MAX = 256
-VERB_SIZE_MIN = 150
-DESC_SIZE = 124
+VERB_SIZE_MAX = 112
+VERB_SIZE_MIN = 64
+DESC_SIZE_MAX = 64
+DESC_SIZE_MIN = 44
 VERB_DESC_GAP = 20
-DESC_LINE_GAP = 24
-MAX_TEXT_W = int(CANVAS_W * 0.92)
-MAX_VERB_W = int(CANVAS_W * 0.92)
+DESC_LINE_GAP = 14
+MAX_TEXT_W = int(CANVAS_W * 0.84)
+MAX_VERB_W = int(CANVAS_W * 0.84)
 
-DEFAULT_FONT = "/Library/Fonts/SF-Pro-Display-Black.otf"
+DEFAULT_FONT = "/System/Library/Fonts/SFNSMono.ttf"
 FRAME_PATH_DEFAULT = os.path.expanduser(
     "~/.claude-personal/skills/aso-appstore-screenshots/assets/device_frame.png"
 )
 
 FONT_OVERRIDES = {
     "ja": "/System/Library/Fonts/ヒラギノ角ゴシック W8.ttc",
-    "zh-Hans": "/System/Library/Fonts/ヒラギノ角ゴシック W8.ttc",
+    "zh-Hans": "/System/Library/Fonts/Hiragino Sans GB.ttc",
     "hi": "/System/Library/Fonts/Kohinoor.ttc",
     "bn": "/System/Library/Fonts/KohinoorBangla.ttc",
-    "ar": "/System/Library/Fonts/SFArabic.ttf",
+    "ar": "/System/Library/Fonts/Supplemental/Arial Unicode.ttf",
 }
 
 FONT_TTC_INDEX = {
@@ -54,8 +55,11 @@ FONT_TTC_INDEX = {
 
 
 def shape_arabic(text):
-    import arabic_reshaper
-    from bidi.algorithm import get_display
+    try:
+        import arabic_reshaper
+        from bidi.algorithm import get_display
+    except ImportError as error:
+        raise RuntimeError("Arabic composition requires arabic-reshaper and python-bidi") from error
 
     reshaped = arabic_reshaper.reshape(text)
     return get_display(reshaped)
@@ -79,12 +83,29 @@ def load_font(font_path, size, ttc_index=0, variation=None):
     return font
 
 
-def word_wrap(draw, text, font, max_w):
+def word_wrap(draw, text, font, max_w, transform=None):
+    def rendered(value):
+        return transform(value) if transform else value
+
     words = text.split()
     lines, cur = [], ""
     for w in words:
+        if draw.textlength(rendered(w), font=font) > max_w:
+            if cur:
+                lines.append(cur)
+                cur = ""
+            chunk = ""
+            for character in w:
+                candidate = chunk + character
+                if chunk and draw.textlength(rendered(candidate), font=font) > max_w:
+                    lines.append(chunk)
+                    chunk = character
+                else:
+                    chunk = candidate
+            cur = chunk
+            continue
         test = f"{cur} {w}".strip()
-        if draw.textlength(test, font=font) <= max_w:
+        if draw.textlength(rendered(test), font=font) <= max_w:
             cur = test
         else:
             if cur:
@@ -95,19 +116,30 @@ def word_wrap(draw, text, font, max_w):
     return lines
 
 
-def fit_font(text, max_w, size_max, size_min, font_path, ttc_index=0, variation=None):
+def fit_wrapped_font(
+    text,
+    max_w,
+    max_lines,
+    size_max,
+    size_min,
+    font_path,
+    ttc_index=0,
+    variation=None,
+    transform=None,
+):
     dummy = ImageDraw.Draw(Image.new("RGBA", (1, 1)))
     for size in range(size_max, size_min - 1, -4):
         font = load_font(font_path, size, ttc_index, variation)
-        bbox = dummy.textbbox((0, 0), text, font=font)
-        if (bbox[2] - bbox[0]) <= max_w:
+        if len(word_wrap(dummy, text, font, max_w, transform)) <= max_lines:
             return font
     return load_font(font_path, size_min, ttc_index, variation)
 
 
-def draw_centered(draw, y, text, font, fill, max_w=None):
-    lines = word_wrap(draw, text, font, max_w) if max_w else [text]
+def draw_centered(draw, y, text, font, fill, max_w=None, transform=None):
+    lines = word_wrap(draw, text, font, max_w, transform) if max_w else [text]
     for line in lines:
+        if transform:
+            line = transform(line)
         bbox = draw.textbbox((0, 0), line, font=font)
         h = bbox[3] - bbox[1]
         draw.text(
@@ -133,6 +165,7 @@ def compose(
     frame_path=FRAME_PATH_DEFAULT,
     locale=None,
     variation=None,
+    preserve_case=False,
 ):
     bg = hex_to_rgb(bg_hex)
     text_color = hex_to_rgb(text_hex)
@@ -144,20 +177,34 @@ def compose(
     is_cjk_or_indic = locale in {"ja", "zh-Hans", "hi", "bn"}
     # CJK + Indic scripts don't use uppercase; Arabic also has no case.
     def cased(t):
-        return t if (is_arabic or is_cjk_or_indic) else t.upper()
+        return t if (preserve_case or is_arabic or is_cjk_or_indic) else t.upper()
 
-    verb_text = shape_arabic(cased(verb)) if is_arabic else cased(verb)
-    desc_text = shape_arabic(cased(desc)) if is_arabic else cased(desc)
+    verb_text = cased(verb)
+    desc_text = cased(desc)
+    line_transform = shape_arabic if is_arabic else None
 
-    verb_font = fit_font(
-        verb_text, MAX_VERB_W, VERB_SIZE_MAX, VERB_SIZE_MIN, font_path, ttc_index, variation
+    verb_font = fit_wrapped_font(
+        verb_text, MAX_VERB_W, 2, VERB_SIZE_MAX, VERB_SIZE_MIN, font_path, ttc_index, variation,
+        line_transform,
     )
-    desc_font = load_font(font_path, DESC_SIZE, ttc_index, variation)
+    desc_font = fit_wrapped_font(
+        desc_text, MAX_TEXT_W, 3, DESC_SIZE_MAX, DESC_SIZE_MIN, font_path, ttc_index, variation,
+        line_transform,
+    )
 
-    y = 200
-    y = draw_centered(draw, y, verb_text, verb_font, text_color)
+    brand_font = load_font(DEFAULT_FONT, 48)
+    draw_centered(draw, 92, "iso.me", brand_font, text_color)
+
+    y = 190
+    y = draw_centered(
+        draw, y, verb_text, verb_font, text_color,
+        max_w=MAX_VERB_W, transform=line_transform,
+    )
     y += VERB_DESC_GAP
-    draw_centered(draw, y, desc_text, desc_font, text_color, max_w=MAX_TEXT_W)
+    draw_centered(
+        draw, y, desc_text, desc_font, text_color,
+        max_w=MAX_TEXT_W, transform=line_transform,
+    )
 
     device_x = (CANVAS_W - DEVICE_W) // 2
     device_y = DEVICE_Y
@@ -190,9 +237,17 @@ def compose(
 
     canvas = Image.alpha_composite(canvas, scr_layer)
 
-    frame_template = Image.open(frame_path).convert("RGBA")
     frame_layer = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
-    frame_layer.paste(frame_template, (device_x, device_y))
+    if frame_path and os.path.exists(frame_path):
+        frame_template = Image.open(frame_path).convert("RGBA")
+        frame_layer.paste(frame_template, (device_x, device_y))
+    else:
+        ImageDraw.Draw(frame_layer).rounded_rectangle(
+            [device_x, device_y, device_x + DEVICE_W, CANVAS_H + 120],
+            radius=78,
+            outline=(18, 18, 18, 255),
+            width=BEZEL,
+        )
     canvas = Image.alpha_composite(canvas, frame_layer)
 
     canvas.convert("RGB").save(output_path, "PNG")
@@ -211,12 +266,13 @@ def main():
     p.add_argument("--font")
     p.add_argument("--ttc-index", type=int, default=0)
     p.add_argument("--variation")
+    p.add_argument("--preserve-case", action="store_true")
     p.add_argument("--frame", default=FRAME_PATH_DEFAULT)
     args = p.parse_args()
 
     font_path = args.font or FONT_OVERRIDES.get(args.locale, DEFAULT_FONT)
     ttc_index = args.ttc_index or FONT_TTC_INDEX.get(args.locale, 0)
-    variation = args.variation or ("Black" if args.locale == "ar" else None)
+    variation = args.variation
 
     compose(
         args.verb,
@@ -230,6 +286,7 @@ def main():
         frame_path=args.frame,
         locale=args.locale,
         variation=variation,
+        preserve_case=args.preserve_case,
     )
 
 

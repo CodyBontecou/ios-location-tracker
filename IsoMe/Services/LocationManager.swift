@@ -346,7 +346,7 @@ final class LocationManager: NSObject, ObservableObject {
 
             return changedCount
         } catch {
-            lastError = "Failed to reconcile recording sessions: \(error.localizedDescription)"
+            lastError = String(localized: "Failed to reconcile recording sessions: \(error.localizedDescription)")
             return 0
         }
     }
@@ -376,7 +376,7 @@ final class LocationManager: NSObject, ObservableObject {
             activeRecordingSessionID = session.id
             try context.save()
         } catch {
-            lastError = "Failed to start recording session: \(error.localizedDescription)"
+            lastError = String(localized: "Failed to start recording session: \(error.localizedDescription)")
         }
     }
 
@@ -405,7 +405,7 @@ final class LocationManager: NSObject, ObservableObject {
             }
             activeRecordingSessionID = nil
         } catch {
-            lastError = "Failed to end recording session: \(error.localizedDescription)"
+            lastError = String(localized: "Failed to end recording session: \(error.localizedDescription)")
         }
     }
 
@@ -485,7 +485,7 @@ final class LocationManager: NSObject, ObservableObject {
 
             return changedCount
         } catch {
-            lastError = "Failed to reconcile visits: \(error.localizedDescription)"
+            lastError = String(localized: "Failed to reconcile visits: \(error.localizedDescription)")
             return 0
         }
     }
@@ -547,7 +547,7 @@ final class LocationManager: NSObject, ObservableObject {
                 }
             }
         } catch {
-            lastError = "Failed to save visit: \(error.localizedDescription)"
+            lastError = String(localized: "Failed to save visit: \(error.localizedDescription)")
         }
     }
 
@@ -814,7 +814,7 @@ final class LocationManager: NSObject, ObservableObject {
             syncDataToWatch()
             return savedPoints
         } catch {
-            lastError = "Failed to save location points: \(error.localizedDescription)"
+            lastError = String(localized: "Failed to save location points: \(error.localizedDescription)")
             return []
         }
     }
@@ -1006,9 +1006,9 @@ extension LocationManager: CLLocationManagerDelegate {
             if let clError = error as? CLError {
                 switch clError.code {
                 case .denied:
-                    lastError = "Location access denied"
+                    lastError = String(localized: "Location access denied")
                 case .network:
-                    lastError = "Network error"
+                    lastError = String(localized: "Network error")
                 default:
                     lastError = error.localizedDescription
                 }

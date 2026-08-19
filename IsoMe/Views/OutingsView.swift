@@ -29,7 +29,7 @@ struct OutingsView: View {
 
     private var selectedDayTitle: String {
         if Calendar.current.isDateInToday(selectedDate) {
-            return "Today"
+            return String(localized: "Today")
         }
 
         return selectedDate.formatted(date: .complete, time: .omitted)
@@ -386,11 +386,11 @@ struct OutingsView: View {
     private var emptyStateActionLabel: String? {
         if let latestActivityDate,
            !Calendar.current.isDate(latestActivityDate, inSameDayAs: selectedDate) {
-            return "JUMP TO LATEST DATA"
+            return String(localized: "JUMP TO LATEST DATA")
         }
 
         if !Calendar.current.isDateInToday(selectedDate) {
-            return "JUMP TO TODAY"
+            return String(localized: "JUMP TO TODAY")
         }
 
         return nil
@@ -408,14 +408,14 @@ struct OutingsView: View {
 
     private var emptyStateMessage: String {
         if viewModel.locationManager.isTrackingEnabled, Calendar.current.isDateInToday(selectedDate) {
-            return "Tracking is active. New movement will appear here after iso.me saves the first location point."
+            return String(localized: "Tracking is active. New movement will appear here after iso.me saves the first location point.")
         }
 
         if hasAnyTimelineData {
-            return "No visits or movement sessions were found for \(selectedDaySubtitle). Pick another day or enable inferred movement for older GPS history."
+            return String(localized: "No visits or movement sessions were found for \(selectedDaySubtitle). Pick another day or enable inferred movement for older GPS history.")
         }
 
-        return "Start tracking from the Map tab or your Shortcuts automation. Visits and movement sessions will appear here by day."
+        return String(localized: "Start tracking from the Map tab or your Shortcuts automation. Visits and movement sessions will appear here by day.")
     }
 
     private var usesMetricDistanceUnits: Bool {
@@ -485,7 +485,7 @@ private enum TimelineEvent: Identifiable {
 }
 
 private struct OutingOverviewMetric: View {
-    let label: String
+    let label: LocalizedStringKey
     let value: String
     let systemImage: String
 
@@ -537,9 +537,9 @@ private struct TimelineMovementCard: View {
                                 .foregroundStyle(TE.textMuted)
 
                             if session.isActive {
-                                OutingBadge(text: "LIVE", color: TE.success)
+                                OutingBadge(text: String(localized: "LIVE"), color: TE.success)
                             } else if session.isInferred {
-                                OutingBadge(text: "INFERRED", color: TE.warning)
+                                OutingBadge(text: String(localized: "INFERRED"), color: TE.warning)
                             }
                         }
 
@@ -612,13 +612,13 @@ private struct TimelineVisitCard: View {
                             .foregroundStyle(TE.textMuted)
 
                         if isCurrent {
-                            OutingBadge(text: "NOW", color: TE.success)
+                            OutingBadge(text: String(localized: "NOW"), color: TE.success)
                         }
 
                         OutingBadge(text: visit.confirmationStatus.displayName.uppercased(), color: statusColor)
 
                         if visit.source == .manual {
-                            OutingBadge(text: "MANUAL", color: TE.accent)
+                            OutingBadge(text: String(localized: "MANUAL"), color: TE.accent)
                         }
                     }
 
@@ -682,9 +682,9 @@ private struct RecordingSessionCard: View {
                                 .lineLimit(1)
 
                             if session.isActive {
-                                OutingBadge(text: "LIVE", color: TE.success)
+                                OutingBadge(text: String(localized: "LIVE"), color: TE.success)
                             } else if session.isInferred {
-                                OutingBadge(text: "INFERRED", color: TE.warning)
+                                OutingBadge(text: String(localized: "INFERRED"), color: TE.warning)
                             }
                         }
 
@@ -917,9 +917,9 @@ private struct RecordingSessionDetailView: View {
                                 .lineLimit(2)
 
                             if session.isActive {
-                                OutingBadge(text: "LIVE", color: TE.success)
+                                OutingBadge(text: String(localized: "LIVE"), color: TE.success)
                             } else if session.isInferred {
-                                OutingBadge(text: "INFERRED", color: TE.warning)
+                                OutingBadge(text: String(localized: "INFERRED"), color: TE.warning)
                             }
                         }
 
@@ -1485,9 +1485,9 @@ private struct RecordingSessionDetailView: View {
     }
 
     private var deleteConfirmationMessage: String {
-        let deletionMessage = "This outing and its GPS points will be permanently deleted. Visits during this time will be kept."
+        let deletionMessage = String(localized: "This outing and its GPS points will be permanently deleted. Visits during this time will be kept.")
         if session.isActive {
-            return "Tracking will stop. \(deletionMessage)"
+            return String(localized: "Tracking will stop. \(deletionMessage)")
         }
         return deletionMessage
     }
@@ -1497,12 +1497,12 @@ private struct RecordingSessionDetailView: View {
     }
 
     private var exportButtonTitle: String {
-        if !storeManager.isPurchased { return "UNLOCK EXPORT" }
+        if !storeManager.isPurchased { return String(localized: "UNLOCK EXPORT") }
         let formatName = outingExportFormat.displayName.uppercased()
         if exportFolderManager.hasDefaultFolder && useDefaultExportFolder {
-            return "EXPORT \(formatName)"
+            return String(localized: "EXPORT \(formatName)")
         }
-        return "SHARE \(formatName)"
+        return String(localized: "SHARE \(formatName)")
     }
 
     private var outingExportFooterText: LocalizedStringKey {
@@ -1516,7 +1516,7 @@ private struct RecordingSessionDetailView: View {
         }
     }
 
-    private func detailRow(label: String, value: String, showDivider: Bool = true) -> some View {
+    private func detailRow(label: LocalizedStringKey, value: String, showDivider: Bool = true) -> some View {
         TERow(showDivider: showDivider) {
             HStack(spacing: 12) {
                 Text(label)
@@ -1602,7 +1602,7 @@ private struct RecordingSessionDetailView: View {
                         }
                     }
                 )
-                ExportToastCenter.shared.show(.success(message: "Share sheet opened"))
+                ExportToastCenter.shared.show(.success(message: String(localized: "Share sheet opened")))
             }
         } catch {
             viewModel.exportError = error.localizedDescription
@@ -1735,7 +1735,7 @@ private struct OutingBadge: View {
 }
 
 private struct OutingStatChip: View {
-    let label: String
+    let label: LocalizedStringKey
     let value: String
     let systemImage: String
 

@@ -1180,17 +1180,25 @@ struct MapAutoOffPill: View {
     private func formatTime(_ interval: TimeInterval) -> String {
         let hours = Int(interval) / 3600
         let minutes = (Int(interval) % 3600) / 60
-        if hours > 0 { return "\(hours)H \(minutes)M" }
-        return "\(minutes) MIN"
+        if hours > 0 { return String(localized: "\(hours)H \(minutes)M") }
+        return String(localized: "\(minutes) MIN")
     }
 
     private func spokenTime(_ interval: TimeInterval) -> String {
         let hours = Int(interval) / 3600
         let minutes = (Int(interval) % 3600) / 60
         if hours > 0 {
-            return "\(hours) \(hours == 1 ? "hour" : "hours") and \(minutes) \(minutes == 1 ? "minute" : "minutes")"
+            if hours == 1, minutes == 1 {
+                return String(localized: "1 hour and 1 minute")
+            } else if hours == 1 {
+                return String(localized: "1 hour and \(minutes) minutes")
+            } else if minutes == 1 {
+                return String(localized: "\(hours) hours and 1 minute")
+            }
+            return String(localized: "\(hours) hours and \(minutes) minutes")
         }
-        return "\(minutes) \(minutes == 1 ? "minute" : "minutes")"
+        if minutes == 1 { return String(localized: "1 minute") }
+        return String(localized: "\(minutes) minutes")
     }
 }
 
@@ -1349,7 +1357,7 @@ struct PathPointTooltip: View {
             }
 
             if point.isOutlier {
-                PathPointTooltipRow(label: "STATUS", value: "GPS outlier")
+                PathPointTooltipRow(label: "STATUS", value: String(localized: "GPS outlier"))
             }
         }
         .padding(10)
@@ -1384,7 +1392,7 @@ struct PathPointTooltip: View {
 }
 
 struct PathPointTooltipRow: View {
-    let label: String
+    let label: LocalizedStringKey
     let value: String
 
     var body: some View {
@@ -1450,7 +1458,7 @@ struct PathStartMarker: View {
 }
 
 struct PathEndpointTooltip: View {
-    let label: String
+    let label: LocalizedStringKey
     let timestamp: Date
 
     var body: some View {
@@ -1661,7 +1669,7 @@ struct RouteReplayControl: View {
 }
 
 struct RouteReplayStat: View {
-    let label: String
+    let label: LocalizedStringKey
     let value: String
 
     var body: some View {
@@ -1863,10 +1871,10 @@ private struct CurrentPlaceCard: View {
 
     private var title: String {
         if let suggestion { return suggestion.name }
-        if isLoading { return "Finding place…" }
-        if !hasLocationPermission { return "Use location" }
-        if lookupFailed { return "Add this place" }
-        return "Save place"
+        if isLoading { return String(localized: "Finding place…") }
+        if !hasLocationPermission { return String(localized: "Use location") }
+        if lookupFailed { return String(localized: "Add this place") }
+        return String(localized: "Save place")
     }
 
     private var subtitle: String {
@@ -1876,11 +1884,11 @@ private struct CurrentPlaceCard: View {
             }
             return suggestion.distanceLabel
         }
-        if isLoading { return "Checking nearby Apple Maps places" }
-        if !hasLocationPermission { return "Allow location to save a visit" }
-        if lookupFailed { return "You can still add details manually" }
-        if hasFreshLocation { return "Add a visit at your current location" }
-        return "Waiting for fresh GPS accuracy"
+        if isLoading { return String(localized: "Checking nearby Apple Maps places") }
+        if !hasLocationPermission { return String(localized: "Allow location to save a visit") }
+        if lookupFailed { return String(localized: "You can still add details manually") }
+        if hasFreshLocation { return String(localized: "Add a visit at your current location") }
+        return String(localized: "Waiting for fresh GPS accuracy")
     }
 
 }
@@ -2304,7 +2312,7 @@ struct ManualVisitSheet: View {
             if mode == .addPastVisit {
                 errorMessage = String(localized: "Search for the place, choose it on the map, or select a saved location.")
             } else {
-                errorMessage = "Choose a saved location or request a fresh accurate current location."
+                errorMessage = String(localized: "Choose a saved location or request a fresh accurate current location.")
                 locationManager.requestCurrentLocationForManualVisit()
             }
             return
@@ -2643,21 +2651,21 @@ enum MapDatePreset: CaseIterable, Hashable {
 
     var label: String {
         switch self {
-        case .today: return "Today"
-        case .yesterday: return "Yesterday"
-        case .sevenDays: return "7D"
-        case .thirtyDays: return "30D"
-        case .all: return "All"
+        case .today: return String(localized: "Today")
+        case .yesterday: return String(localized: "Yesterday")
+        case .sevenDays: return String(localized: "7D")
+        case .thirtyDays: return String(localized: "30D")
+        case .all: return String(localized: "All")
         }
     }
 
     var accessibilityLabel: String {
         switch self {
-        case .today: return "Today"
-        case .yesterday: return "Yesterday"
-        case .sevenDays: return "Last 7 days"
-        case .thirtyDays: return "Last 30 days"
-        case .all: return "All time"
+        case .today: return String(localized: "Today")
+        case .yesterday: return String(localized: "Yesterday")
+        case .sevenDays: return String(localized: "Last 7 days")
+        case .thirtyDays: return String(localized: "Last 30 days")
+        case .all: return String(localized: "All time")
         }
     }
 
@@ -2772,9 +2780,9 @@ struct QuickFilterBar: View {
                 }
 
                 PresetPill(
-                    label: "Custom",
+                    label: String(localized: "Custom"),
                     icon: "calendar",
-                    accessibilityLabel: "Custom date range",
+                    accessibilityLabel: String(localized: "Custom date range"),
                     isActive: activePreset == nil
                 ) {
                     onSelectCustom()
@@ -2915,7 +2923,7 @@ struct PresetPill: View {
                         .font(.caption.weight(.medium))
                         .accessibilityHidden(true)
                 }
-                Text(label)
+                Text(verbatim: label)
                     .font(.subheadline.weight(.semibold))
             }
             .foregroundStyle(isActive ? Color.white : Color.primary)
@@ -2929,15 +2937,15 @@ struct PresetPill: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(accessibilityLabel ?? label)
-        .accessibilityValue(isActive ? "Selected" : "Not selected")
+        .accessibilityValue(isActive ? String(localized: "Selected") : String(localized: "Not selected"))
         .accessibilityHint("Filters the map date range.")
     }
 }
 
 struct LayerToggleHelp: Identifiable, Equatable {
     let id: String
-    let title: String
-    let message: String
+    let title: LocalizedStringResource
+    let message: LocalizedStringResource
 
     static let visitMarkers = LayerToggleHelp(
         id: "visit-markers",
@@ -3018,7 +3026,7 @@ struct LayerToggleButtonLabel: View {
 struct LayerToggleButton: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let systemImage: String
-    let label: String
+    let label: LocalizedStringResource
     let help: LayerToggleHelp
     @Binding var isOn: Bool
     @Binding var activeHelp: LayerToggleHelp?
@@ -3046,7 +3054,7 @@ struct LayerToggleButton: View {
             .contentShape(Circle())
             .gesture(layerGesture)
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel(label)
+            .accessibilityLabel(Text(label))
             .accessibilityValue(isOn ? "Shown" : "Hidden")
             .accessibilityHint("Double-tap to toggle this map layer. Touch and hold for an explanation.")
             .accessibilityAddTraits(.isButton)
@@ -3214,7 +3222,7 @@ struct RouteReplaySnapshot {
         let duration = RouteReplayCalculator.formattedDuration(totalDuration)
         let distance = DistanceFormatter.format(meters: distanceMeters, usesMetric: true)
         let totalDistance = DistanceFormatter.format(meters: totalDistanceMeters, usesMetric: true)
-        return "Point \(index + 1) of \(totalPointCount). Time \(currentPoint.accessibilityTimestamp). Elapsed \(elapsed) of \(duration). Distance \(distance) of \(totalDistance)."
+        return String(localized: "Point \(index + 1) of \(totalPointCount). Time \(currentPoint.accessibilityTimestamp). Elapsed \(elapsed) of \(duration). Distance \(distance) of \(totalDistance).")
     }
 }
 

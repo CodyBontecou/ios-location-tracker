@@ -39,7 +39,7 @@ final class StoreManager: ObservableObject {
             let products = try await Product.products(for: [Self.lifetimeProductID])
             product = products.first
         } catch {
-            purchaseError = "Failed to load product: \(error.localizedDescription)"
+            purchaseError = String(localized: "Failed to load product: \(error.localizedDescription)")
         }
     }
 
@@ -47,7 +47,7 @@ final class StoreManager: ObservableObject {
 
     func purchase() async {
         guard let product else {
-            purchaseError = "Product not available"
+            purchaseError = String(localized: "Product not available")
             return
         }
 
@@ -64,12 +64,12 @@ final class StoreManager: ObservableObject {
             case .userCancelled:
                 break
             case .pending:
-                purchaseError = "Purchase is pending approval"
+                purchaseError = String(localized: "Purchase is pending approval")
             @unknown default:
                 break
             }
         } catch {
-            purchaseError = "Purchase failed: \(error.localizedDescription)"
+            purchaseError = String(localized: "Purchase failed: \(error.localizedDescription)")
         }
 
         isLoading = false
@@ -84,14 +84,14 @@ final class StoreManager: ObservableObject {
         do {
             try await AppStore.sync()
         } catch {
-            purchaseError = "Restore failed: \(error.localizedDescription)"
+            purchaseError = String(localized: "Restore failed: \(error.localizedDescription)")
             isLoading = false
             return
         }
 
         await checkEntitlement()
         if !isPurchased {
-            purchaseError = "No previous purchase found"
+            purchaseError = String(localized: "No previous purchase found")
         }
         isLoading = false
     }

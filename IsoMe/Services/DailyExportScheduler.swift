@@ -254,10 +254,10 @@ final class DailyExportScheduler: ObservableObject {
 
     private func runExport(now: Date, scheduledFireDate: Date?) async -> RunOutcome {
         guard let container = await waitForModelContainer() else {
-            return fail("No model container attached")
+            return fail(String(localized: "No model container attached"))
         }
         guard ExportFolderManager.shared.hasDefaultFolder else {
-            return fail("No export folder configured")
+            return fail(String(localized: "No export folder configured"))
         }
 
         let context = container.mainContext
@@ -330,7 +330,7 @@ final class DailyExportScheduler: ObservableObject {
             do {
                 try await notificationScheduler.scheduleFallbackNotification(fireDate: fireDate)
             } catch {
-                recordError("Failed to schedule export notification: \(error.localizedDescription)")
+                recordError(String(localized: "Failed to schedule export notification: \(error.localizedDescription)"))
             }
         }
     }
@@ -340,7 +340,7 @@ final class DailyExportScheduler: ObservableObject {
             try await notificationScheduler.sendImmediateRetryNotification(fireDate: fireDate, reason: reason)
             defaults.set(DailyExportNotificationPayload.identifier(for: fireDate), forKey: pendingNotificationIdentifierKey)
         } catch {
-            recordError("Failed to send export retry notification: \(error.localizedDescription)")
+            recordError(String(localized: "Failed to send export retry notification: \(error.localizedDescription)"))
         }
     }
 

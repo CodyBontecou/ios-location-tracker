@@ -22,34 +22,34 @@ enum PhotoLibraryAccessState: String, Equatable {
     var statusLabel: String {
         switch self {
         case .notDetermined:
-            return "Not Connected"
+            return String(localized: "Not Connected")
         case .authorized:
-            return "Connected"
+            return String(localized: "Connected")
         case .limited:
-            return "Limited"
+            return String(localized: "Limited")
         case .denied:
-            return "Denied"
+            return String(localized: "Denied")
         case .restricted:
-            return "Restricted"
+            return String(localized: "Restricted")
         case .unavailable:
-            return "Unavailable"
+            return String(localized: "Unavailable")
         }
     }
 
     var explanation: String {
         switch self {
         case .notDetermined:
-            return "Connect Photos to show pictures on your map and outings. iso.me stores only local photo metadata."
+            return String(localized: "Connect Photos to show pictures on your map and outings. iso.me stores only local photo metadata.")
         case .authorized:
-            return "Photos from your library can appear on the map using photo GPS or nearby iso.me route/visit matches. Photo files stay in Photos."
+            return String(localized: "Photos from your library can appear on the map using photo GPS or nearby iso.me route/visit matches. Photo files stay in Photos.")
         case .limited:
-            return "Only photos you selected for iso.me can appear. Add more in iOS Photos privacy settings."
+            return String(localized: "Only photos you selected for iso.me can appear. Add more in iOS Photos privacy settings.")
         case .denied:
-            return "Photo access is off. Enable it in Settings to show photo pins on the map."
+            return String(localized: "Photo access is off. Enable it in Settings to show photo pins on the map.")
         case .restricted:
-            return "Photo access is restricted on this device."
+            return String(localized: "Photo access is restricted on this device.")
         case .unavailable:
-            return "Photos are unavailable on this device."
+            return String(localized: "Photos are unavailable on this device.")
         }
     }
 

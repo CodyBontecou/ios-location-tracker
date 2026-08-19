@@ -80,8 +80,8 @@ struct UserNotificationDailyExportScheduler: DailyExportNotificationScheduling {
         center.removeDeliveredNotifications(withIdentifiers: [identifier])
 
         let content = makeContent(
-            title: "Daily Export Ready",
-            body: "Tap to run your scheduled iso.me export if it hasn't completed.",
+            title: String(localized: "Daily Export Ready"),
+            body: String(localized: "Tap to run your scheduled iso.me export if it hasn't completed."),
             fireDate: fireDate,
             reason: nil
         )
@@ -101,15 +101,15 @@ struct UserNotificationDailyExportScheduler: DailyExportNotificationScheduling {
 
         let body: String
         if let reason, !reason.isEmpty {
-            body = "Tap to retry your scheduled iso.me export. \(reason)"
+            body = String(localized: "Tap to retry your scheduled iso.me export. \(reason)")
         } else {
-            body = "Tap to retry your scheduled iso.me export."
+            body = String(localized: "Tap to retry your scheduled iso.me export.")
         }
 
         let request = UNNotificationRequest(
             identifier: identifier,
             content: makeContent(
-                title: "Daily Export Needs Attention",
+                title: String(localized: "Daily Export Needs Attention"),
                 body: body,
                 fireDate: fireDate,
                 reason: reason

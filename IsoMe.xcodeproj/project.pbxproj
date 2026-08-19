@@ -100,6 +100,10 @@
 		B2000007212F000100000007 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000003212F000000000003 /* Localizable.xcstrings */; };
 		B2000008212F000100000008 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000004212F000000000004 /* Localizable.xcstrings */; };
 		B2000009212F000100000009 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000005212F000000000005 /* Localizable.xcstrings */; };
+		B200000A212F00010000000A /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000006212F000000000006 /* InfoPlist.xcstrings */; };
+		B200000B212F00010000000B /* AppShortcuts.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000007212F000000000007 /* AppShortcuts.xcstrings */; };
+		B200000C212F00010000000C /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000008212F000000000008 /* InfoPlist.xcstrings */; };
+		B200000D212F00010000000D /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000009212F000000000009 /* InfoPlist.xcstrings */; };
 		FEC10001212F000100000001 /* outings-dashboard.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = FEC10001212F000000000001 /* outings-dashboard.mp4 */; };
 		FEC10002212F000100000002 /* route-replay.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = FEC10002212F000000000002 /* route-replay.mp4 */; };
 		FEC10003212F000100000003 /* map-focus.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = FEC10003212F000000000003 /* map-focus.mp4 */; };
@@ -281,6 +285,10 @@
 		B1000003212F000000000003 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Localizable.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		B1000004212F000000000004 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Localizable.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		B1000005212F000000000005 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Localizable.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		B1000006212F000000000006 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = InfoPlist.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		B1000007212F000000000007 /* AppShortcuts.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = AppShortcuts.xcstrings; sourceTree = "<group>"; };
+		B1000008212F000000000008 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = InfoPlist.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		B1000009212F000000000009 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = InfoPlist.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -425,6 +433,7 @@
 				A1000011212F000000000011 /* Preview Content */,
 				B1000001212F000000000001 /* Localizable.xcstrings */,
 				B1000002212F000000000002 /* InfoPlist.xcstrings */,
+				B1000007212F000000000007 /* AppShortcuts.xcstrings */,
 			);
 			path = IsoMe;
 			sourceTree = "<group>";
@@ -515,6 +524,7 @@
 				A2000006212F000000000006 /* IsoMeWidget.entitlements */,
 				A2000003212F000000000003 /* Info.plist */,
 				B1000003212F000000000003 /* Localizable.xcstrings */,
+				B1000008212F000000000008 /* InfoPlist.xcstrings */,
 			);
 			path = IsoMeWidget;
 			sourceTree = "<group>";
@@ -530,6 +540,7 @@
 				A3000004212F000000000004 /* WatchInfo.plist */,
 				A3000005212F000000000005 /* IsoMeWatch.entitlements */,
 				B1000004212F000000000004 /* Localizable.xcstrings */,
+				B1000006212F000000000006 /* InfoPlist.xcstrings */,
 			);
 			path = IsoMeWatch;
 			sourceTree = "<group>";
@@ -542,6 +553,7 @@
 				A4000003212F000000000003 /* WatchWidgetInfo.plist */,
 				A4000004212F000000000004 /* IsoMeWatchWidget.entitlements */,
 				B1000005212F000000000005 /* Localizable.xcstrings */,
+				B1000009212F000000000009 /* InfoPlist.xcstrings */,
 			);
 			path = IsoMeWatchWidget;
 			sourceTree = "<group>";
@@ -754,6 +766,7 @@
 				FEC1000B212F00010000000B /* remote-past-visits.mp4 in Resources */,
 				B2000005212F000100000005 /* Localizable.xcstrings in Resources */,
 				B2000006212F000100000006 /* InfoPlist.xcstrings in Resources */,
+				B200000B212F00010000000B /* AppShortcuts.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -763,6 +776,7 @@
 			files = (
 				A2000005212F000100000005 /* Assets.xcassets in Resources */,
 				B2000007212F000100000007 /* Localizable.xcstrings in Resources */,
+				B200000C212F00010000000C /* InfoPlist.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -772,6 +786,7 @@
 			files = (
 				A3000003212F000100000003 /* WatchAssets.xcassets in Resources */,
 				B2000008212F000100000008 /* Localizable.xcstrings in Resources */,
+				B200000A212F00010000000A /* InfoPlist.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -780,6 +795,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2000009212F000100000009 /* Localizable.xcstrings in Resources */,
+				B200000D212F00010000000D /* InfoPlist.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1114,7 +1130,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7.4;
+				MARKETING_VERSION = 1.7.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bontecou.isome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1147,7 +1163,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7.4;
+				MARKETING_VERSION = 1.7.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bontecou.isome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1173,7 +1189,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.7.4;
+				MARKETING_VERSION = 1.7.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bontecou.isome.Widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1200,7 +1216,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.7.4;
+				MARKETING_VERSION = 1.7.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bontecou.isome.Widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1227,7 +1243,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7.4;
+				MARKETING_VERSION = 1.7.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bontecou.isome.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1256,7 +1272,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7.4;
+				MARKETING_VERSION = 1.7.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bontecou.isome.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1285,7 +1301,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.7.4;
+				MARKETING_VERSION = 1.7.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bontecou.isome.watchkitapp.Widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1314,7 +1330,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.7.4;
+				MARKETING_VERSION = 1.7.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bontecou.isome.watchkitapp.Widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;

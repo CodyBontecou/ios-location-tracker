@@ -515,7 +515,7 @@ struct PhotoMomentQuickView: View {
         }
     }
 
-    private func detailRow(label: String, value: String, showDivider: Bool = true) -> some View {
+    private func detailRow(label: LocalizedStringKey, value: String, showDivider: Bool = true) -> some View {
         TERow(showDivider: showDivider) {
             HStack(spacing: 12) {
                 Text(label)
@@ -553,7 +553,7 @@ struct PhotoMomentClusterQuickView: View {
 
                     TECard {
                         VStack(spacing: 0) {
-                            detailRow(label: "COUNT", value: "\(cluster.count) PHOTOS")
+                            detailRow(label: "COUNT", value: String(localized: "\(cluster.count) PHOTOS"))
                             detailRow(label: "TAKEN", value: cluster.timeRangeText.uppercased())
                             detailRow(label: "COORDS", value: cluster.coordinateText, showDivider: false)
                         }
@@ -620,7 +620,7 @@ struct PhotoMomentClusterQuickView: View {
         }
     }
 
-    private func detailRow(label: String, value: String, showDivider: Bool = true) -> some View {
+    private func detailRow(label: LocalizedStringKey, value: String, showDivider: Bool = true) -> some View {
         TERow(showDivider: showDivider) {
             HStack(spacing: 12) {
                 Text(label)
@@ -794,7 +794,7 @@ struct PhotoMomentFullScreenView: View {
 
     private func navigationButton(
         systemName: String,
-        label: String,
+        label: LocalizedStringKey,
         action: @escaping () -> Void
     ) -> some View {
         Button(action: action) {
@@ -808,7 +808,7 @@ struct PhotoMomentFullScreenView: View {
                 }
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(label)
+        .accessibilityLabel(Text(label))
     }
 
     private func moveSelection(by delta: Int) {

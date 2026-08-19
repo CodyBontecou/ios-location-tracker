@@ -159,7 +159,7 @@ struct PaywallView: View {
         return (.failed, .unknown)
     }
 
-    private func featureRow(icon: String, text: String) -> some View {
+    private func featureRow(icon: String, text: LocalizedStringKey) -> some View {
         HStack(spacing: 12) {
             Image(systemName: icon)
                 .font(.body.weight(.semibold))

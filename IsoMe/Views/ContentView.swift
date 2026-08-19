@@ -14,7 +14,19 @@ struct ContentView: View {
         Group {
             if let viewModel = viewModel {
                 if hasCompletedOnboarding {
-                    MainTabView(viewModel: viewModel)
+                    Group {
+                        #if DEBUG
+                        if ProcessInfo.processInfo.arguments.contains("--demo-webhook-settings") {
+                            NavigationStack {
+                                WebhookSettingsView()
+                            }
+                        } else {
+                            MainTabView(viewModel: viewModel)
+                        }
+                        #else
+                        MainTabView(viewModel: viewModel)
+                        #endif
+                    }
                         .onAppear {
                             if pendingTrackingStart {
                                 pendingTrackingStart = false
@@ -178,7 +190,7 @@ private struct OnboardingView: View {
 
     @ObservedObject private var locationManager: LocationManager
 
-    @State private var selectedPage = 0
+    @State private var selectedPage: Int
     @State private var startTrackingWhenDone = false
     @State private var isConfiguringAutomaticPhotoSync = false
     @State private var didTrackOnboardingStarted = false
@@ -191,6 +203,19 @@ private struct OnboardingView: View {
         self.viewModel = viewModel
         self.onComplete = onComplete
         _locationManager = ObservedObject(initialValue: viewModel.locationManager)
+        _selectedPage = State(initialValue: Self.initialPageFromLaunchArguments())
+    }
+
+    private static func initialPageFromLaunchArguments() -> Int {
+        #if DEBUG
+        let prefix = "--onboarding-page="
+        if let argument = ProcessInfo.processInfo.arguments.first(where: { $0.hasPrefix(prefix) }),
+           let page = Int(argument.dropFirst(prefix.count)),
+           (0..<5).contains(page) {
+            return page
+        }
+        #endif
+        return 0
     }
 
     var body: some View {
@@ -334,8 +359,8 @@ private struct OnboardingView: View {
                     OnboardingStatusRow(
                         title: "Background tracking",
                         subtitle: locationManager.hasAlwaysPermission
-                            ? "Ready for always-on visit detection"
-                            : "Needs extended location access",
+                            ? String(localized: "Ready for always-on visit detection")
+                            : String(localized: "Needs extended location access"),
                         icon: locationManager.hasAlwaysPermission ? "checkmark.shield.fill" : "exclamationmark.shield.fill",
                         color: locationManager.hasAlwaysPermission ? OnboardingPalette.success : OnboardingPalette.warning
                     )
@@ -543,13 +568,15 @@ private struct OnboardingView: View {
                 OnboardingSummaryRow(
                     icon: "photo.on.rectangle",
                     title: "Photos",
-                    value: automaticPhotoSyncEnabled && viewModel.photoLibraryAccessState.canRead ? "Auto-sync enabled" : "Off"
+                    value: automaticPhotoSyncEnabled && viewModel.photoLibraryAccessState.canRead
+                        ? String(localized: "Auto-sync enabled")
+                        : String(localized: "Off")
                 )
 
                 OnboardingSummaryRow(
                     icon: "lock.fill",
                     title: "Privacy",
-                    value: "Stored on-device"
+                    value: String(localized: "Stored on-device")
                 )
             }
             .onboardingCard(padding: 14, fill: OnboardingPalette.card)
@@ -744,9 +771,9 @@ private struct OnboardingView: View {
 
 private struct LocationOnboardingPageView<AccentContent: View>: View {
     let icon: String
-    let eyebrow: String
-    let title: String
-    let description: String
+    let eyebrow: LocalizedStringKey
+    let title: LocalizedStringKey
+    let description: LocalizedStringKey
     var useAppIcon: Bool = false
     @ViewBuilder let accentContent: () -> AccentContent
 
@@ -782,7 +809,8 @@ private struct LocationOnboardingPageView<AccentContent: View>: View {
             }
 
             VStack(spacing: 12) {
-                Text(eyebrow.uppercased())
+                Text(eyebrow)
+                    .textCase(.uppercase)
                     .font(.onboardingMicro)
                     .tracking(2.5)
                     .foregroundStyle(OnboardingPalette.textMuted)
@@ -814,8 +842,8 @@ private struct LocationOnboardingPageView<AccentContent: View>: View {
 
 private struct OnboardingFeatureCard: View {
     let icon: String
-    let title: String
-    let description: String
+    let title: LocalizedStringKey
+    let description: LocalizedStringKey
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
@@ -848,7 +876,7 @@ private struct OnboardingFeatureCard: View {
 }
 
 private struct OnboardingStatusRow: View {
-    let title: String
+    let title: LocalizedStringKey
     let subtitle: String
     let icon: String
     let color: Color
@@ -879,7 +907,7 @@ private struct OnboardingStatusRow: View {
 
 private struct OnboardingSummaryRow: View {
     let icon: String
-    let title: String
+    let title: LocalizedStringKey
     let value: String
 
     var body: some View {
@@ -905,7 +933,7 @@ private struct OnboardingSummaryRow: View {
 
 private struct OnboardingChecklistRow: View {
     let icon: String
-    let text: String
+    let text: LocalizedStringKey
 
     var body: some View {
         HStack(spacing: 10) {
@@ -1236,6 +1264,19 @@ private enum ScreenshotFeatureDemoSeeder {
         defaults.set(RecordingSessionGapPreset.thirtyMinutes.rawValue, forKey: RecordingSessionInferenceConfiguration.gapPresetKey)
         defaults.set(RecordingSessionMinimumDurationPreset.fiveMinutes.rawValue, forKey: RecordingSessionInferenceConfiguration.minimumDurationPresetKey)
         defaults.set(RecordingSessionMinimumPointCountPreset.two.rawValue, forKey: RecordingSessionInferenceConfiguration.minimumPointCountKey)
+        defaults.set(true, forKey: "webhook.enabled")
+        defaults.set("https://example.com/api/location", forKey: "webhook.url")
+        defaults.set("json", forKey: "webhook.format")
+        defaults.set("none", forKey: "webhook.authType")
+        defaults.set("realtime", forKey: "webhook.sendMode")
+        defaults.set(true, forKey: "webhook.privacyWarningDismissed")
+
+        let webhook = WebhookManager.shared
+        webhook.isEnabled = true
+        webhook.urlString = "https://example.com/api/location"
+        webhook.format = .json
+        webhook.authType = .none
+        webhook.sendMode = .realtime
 
         do {
             try clearExistingData(in: context)

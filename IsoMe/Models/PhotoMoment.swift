@@ -10,11 +10,11 @@ enum PhotoMomentCoordinateSource: String, Codable, CaseIterable {
     var displayName: String {
         switch self {
         case .photoGPS:
-            return "Photo GPS"
+            return String(localized: "Photo GPS")
         case .inferredFromRoute:
-            return "Inferred from route"
+            return String(localized: "Inferred from route")
         case .inferredFromVisit:
-            return "Inferred from visit"
+            return String(localized: "Inferred from visit")
         }
     }
 }
@@ -61,13 +61,18 @@ final class PhotoMoment {
     }
 
     var accessibilityLabel: String {
-        "Photo taken at \(formattedTakenTime)"
+        String(localized: "Photo taken at \(formattedTakenTime)")
     }
 
     var accessibilityValue: String {
         [
             coordinateSource.displayName,
-            String(format: "Latitude %.4f, longitude %.4f", latitude, longitude)
+            String(
+                format: String(localized: "Latitude %.4f, longitude %.4f"),
+                locale: Locale.current,
+                latitude,
+                longitude
+            )
         ].joined(separator: ". ")
     }
 }

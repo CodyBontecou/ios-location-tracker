@@ -33,11 +33,11 @@ enum IsoMeExportKitError: LocalizedError, Equatable {
     var errorDescription: String? {
         switch self {
         case .missingFormat(let id):
-            return "Unsupported export format: \(id)"
+            return String(localized: "Unsupported export format: \(id)")
         case .nonUTF8Payload(let formatID):
-            return "Export payload for \(formatID) was not valid UTF-8 text."
+            return String(localized: "Export payload for \(formatID) was not valid UTF-8 text.")
         case .noDestination:
-            return "No export destination was provided."
+            return String(localized: "No export destination was provided.")
         }
     }
 }
@@ -868,14 +868,14 @@ extension ExportFormat {
 
     var displayName: String {
         switch self {
-        case .json: return "JSON"
-        case .csv: return "CSV"
-        case .markdown: return "Markdown"
-        case .owntracks: return "OwnTracks"
-        case .overland: return "Overland"
-        case .gpx: return "GPX"
-        case .kml: return "KML"
-        case .geojson: return "GeoJSON"
+        case .json: return String(localized: "JSON")
+        case .csv: return String(localized: "CSV")
+        case .markdown: return String(localized: "Markdown")
+        case .owntracks: return String(localized: "OwnTracks")
+        case .overland: return String(localized: "Overland")
+        case .gpx: return String(localized: "GPX")
+        case .kml: return String(localized: "KML")
+        case .geojson: return String(localized: "GeoJSON")
         }
     }
 

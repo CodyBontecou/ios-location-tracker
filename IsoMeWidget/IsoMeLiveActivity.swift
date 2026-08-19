@@ -77,9 +77,9 @@ struct IsoMeLiveActivity: Widget {
         let hours = seconds / 3600
         let minutes = (seconds % 3600) / 60
         if hours > 0 {
-            return "\(hours)h \(minutes)m"
+            return String(localized: "\(hours)h \(minutes)m")
         }
-        return "\(minutes)m"
+        return String(localized: "\(minutes)m")
     }
 
     private func formatDistance(_ meters: Double, usesMetricDistanceUnits: Bool) -> String {
@@ -180,9 +180,9 @@ struct LockScreenView: View {
         let hours = seconds / 3600
         let minutes = (seconds % 3600) / 60
         if hours > 0 {
-            return "\(hours)h \(minutes)m"
+            return String(localized: "\(hours)h \(minutes)m")
         }
-        return "\(minutes)m"
+        return String(localized: "\(minutes)m")
     }
 }
 

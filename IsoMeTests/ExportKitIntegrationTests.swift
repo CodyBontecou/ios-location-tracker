@@ -343,7 +343,7 @@ final class ExportKitIntegrationTests: XCTestCase {
 
         let files = try IsoMeExportKitAdapter.plannedFiles(
             visits: [],
-            points: makePoints(),
+            points: [],
             recordingSessions: [outing],
             options: options,
             filenamePattern: "{date}"

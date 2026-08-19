@@ -170,11 +170,11 @@ struct SessionPathMapView: View {
 
     private var sessionAccessibilitySummary: String {
         if let replaySnapshot {
-            return "Route replay. \(replaySnapshot.accessibilitySummary)"
+            return String(localized: "Route replay. \(replaySnapshot.accessibilitySummary)")
         }
 
         guard let first = points.first else {
-            return "No path points."
+            return String(localized: "No path points.")
         }
 
         var parts = ["\(points.count) \(points.count == 1 ? "point" : "points")"]
@@ -202,16 +202,18 @@ struct SessionPathMapView: View {
 
     private func formattedDistance(_ meters: Double) -> String {
         if meters >= 1_000 {
-            return String(format: "%.1f kilometers", meters / 1_000)
+            let value = String(format: "%.1f", locale: Locale.current, meters / 1_000)
+            return String(localized: "\(value) kilometers")
         }
-        return String(format: "%.0f meters", meters)
+        let value = String(format: "%.0f", locale: Locale.current, meters)
+        return String(localized: "\(value) meters")
     }
 }
 
 // MARK: - Marker Views
 
 struct StartMarker: View {
-    var accessibilityLabel = "Path start"
+    var accessibilityLabel = String(localized: "Path start")
     var accessibilityValue = ""
 
     var body: some View {
@@ -236,7 +238,7 @@ struct StartMarker: View {
 
 struct CurrentLocationMarker: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    var accessibilityLabel = "Current location"
+    var accessibilityLabel = String(localized: "Current location")
     var accessibilityValue = ""
     @State private var isPulsing = false
     

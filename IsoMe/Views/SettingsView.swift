@@ -105,7 +105,7 @@ struct SettingsView: View {
 
     private var purchaseSection: some View {
         VStack(spacing: 0) {
-            TESectionHeader(title: "ISO.ME PRO")
+            TESectionHeader(title: "DATA EXPORT")
 
             TECard {
                 VStack(spacing: 0) {
@@ -198,7 +198,7 @@ struct SettingsView: View {
                     TERow {
                         settingsValueRow(
                             title: "PERMISSION",
-                            value: LocalizedStringKey(permissionStatusText.uppercased()),
+                            value: permissionStatusText.uppercased(),
                             valueColor: permissionStatusColor
                         )
                     }
@@ -668,7 +668,7 @@ struct SettingsView: View {
     // MARK: - Feedback Email
 
     private func sendFeedbackEmail() {
-        let subject = "iso.me Feedback"
+        let subject = String(localized: "iso.me Feedback")
         let footer = """
 
         ---
@@ -716,12 +716,12 @@ struct SettingsView: View {
         .buttonStyle(.plain)
     }
 
-    private func settingsValueRow(title: LocalizedStringKey, value: LocalizedStringKey, valueColor: Color) -> some View {
+    private func settingsValueRow(title: LocalizedStringKey, value: String, valueColor: Color) -> some View {
         Group {
             if dynamicTypeSize.isAccessibilitySize {
                 VStack(alignment: .leading, spacing: 8) {
                     settingsRowLabel(title)
-                    Text(value)
+                    Text(verbatim: value)
                         .font(TE.mono(.caption2, weight: .medium))
                         .tracking(0.5)
                         .foregroundStyle(valueColor)
@@ -732,7 +732,7 @@ struct SettingsView: View {
                 HStack {
                     settingsRowLabel(title)
                     Spacer()
-                    Text(value)
+                    Text(verbatim: value)
                         .font(TE.mono(.caption2, weight: .medium))
                         .tracking(1)
                         .foregroundStyle(valueColor)

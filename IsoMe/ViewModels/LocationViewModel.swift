@@ -794,21 +794,21 @@ final class LocationViewModel {
     var sessionAccessibilitySummary: String {
         let pointCount = sessionLocationPoints.count
         guard pointCount > 0 else {
-            return "No active session path points."
+            return String(localized: "No active session path points.")
         }
 
         var parts = [
-            "\(pointCount) \(pointCount == 1 ? "point" : "points")",
-            "Duration \(formattedSessionTrackingDuration)",
-            "Distance \(formattedSessionDistance)"
+            String(localized: "\(pointCount) \(pointCount == 1 ? "point" : "points")"),
+            String(localized: "Duration \(formattedSessionTrackingDuration)"),
+            String(localized: "Distance \(formattedSessionDistance)")
         ]
 
         if let first = sessionLocationPoints.first {
-            parts.append("Started \(first.accessibilityTimestamp)")
+            parts.append(String(localized: "Started \(first.accessibilityTimestamp)"))
         }
 
         if let last = sessionLocationPoints.last, pointCount > 1 {
-            parts.append("Latest point \(last.accessibilityTimestamp)")
+            parts.append(String(localized: "Latest point \(last.accessibilityTimestamp)"))
         }
 
         return parts.joined(separator: ". ")
@@ -828,14 +828,14 @@ final class LocationViewModel {
     var formattedTodayTrackingDuration: String {
         let minutes = Int(todayTrackingDuration / 60)
         if minutes < 60 {
-            return "\(minutes) min"
+            return String(localized: "\(minutes) min")
         } else {
             let hours = minutes / 60
             let mins = minutes % 60
             if mins == 0 {
-                return "\(hours)h"
+                return String(localized: "\(hours)h")
             }
-            return "\(hours)h \(mins)m"
+            return String(localized: "\(hours)h \(mins)m")
         }
     }
 
@@ -1254,7 +1254,7 @@ final class LocationViewModel {
 
     func importData(from url: URL) throws -> ImportResult {
         guard url.startAccessingSecurityScopedResource() else {
-            throw ImportError.invalidData("Cannot access file")
+            throw ImportError.invalidData(String(localized: "Cannot access file"))
         }
         defer { url.stopAccessingSecurityScopedResource() }
 

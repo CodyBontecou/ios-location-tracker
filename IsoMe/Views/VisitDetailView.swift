@@ -342,7 +342,7 @@ struct VisitDetailView: View {
 
     private func validateEditedTimes() {
         if !isStillHere, departedAt < arrivedAt {
-            timeValidationMessage = "Departure must be after arrival."
+            timeValidationMessage = String(localized: "Departure must be after arrival.")
         } else {
             timeValidationMessage = nil
         }
@@ -352,7 +352,7 @@ struct VisitDetailView: View {
         validateEditedTimes()
         guard timeValidationMessage == nil else { return }
         guard viewModel.updateVisitTimes(visit, arrivedAt: arrivedAt, departedAt: editedDeparture) else {
-            timeValidationMessage = "Departure must be after arrival."
+            timeValidationMessage = String(localized: "Departure must be after arrival.")
             return
         }
         syncEditableStateFromVisit()
@@ -452,10 +452,12 @@ struct VisitDetailView: View {
 private enum VisitDetailDurationFormatter {
     static func format(_ seconds: TimeInterval) -> String {
         let minutes = max(0, Int(seconds / 60))
-        if minutes < 60 { return "\(minutes) min" }
+        if minutes < 60 { return String(localized: "\(minutes) min") }
         let hours = minutes / 60
         let remainingMinutes = minutes % 60
-        return remainingMinutes == 0 ? "\(hours)h" : "\(hours)h \(remainingMinutes)m"
+        return remainingMinutes == 0
+            ? String(localized: "\(hours)h")
+            : String(localized: "\(hours)h \(remainingMinutes)m")
     }
 }
 
