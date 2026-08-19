@@ -479,7 +479,7 @@ struct ExportView: View {
                                 Spacer()
                                 Picker("", selection: Binding(
                                     get: { dailyScheduler.intervalHours },
-                                    set: { dailyScheduler.intervalHours = $0 }
+                                    set: { dailyScheduler.intervalHours = IntervalExportScheduleDateMath.clampIntervalHours($0) }
                                 )) {
                                     Text("ONCE DAILY").tag(0)
                                     ForEach(1...23, id: \.self) { hours in

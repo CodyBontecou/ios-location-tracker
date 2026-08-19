@@ -32,6 +32,7 @@
 		5F000005212F000100000001 /* IntervalExportScheduleDateMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F000005212F000000000001 /* IntervalExportScheduleDateMath.swift */; };
 		5F000006212F000100000001 /* ScheduledExportMergeStrategies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F000006212F000000000001 /* ScheduledExportMergeStrategies.swift */; };
 		5F000007212F000100000001 /* IntervalScheduledExportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F000007212F000000000001 /* IntervalScheduledExportTests.swift */; };
+		5F000008212F000100000001 /* IntervalPickerCrashReproTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F000008212F000000000001 /* IntervalPickerCrashReproTests.swift */; };
 		D6000001212F000100000001 /* PushRegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6000001212F000000000001 /* PushRegistrationManager.swift */; };
 		D6000002212F000100000002 /* DailyExportNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6000002212F000000000002 /* DailyExportNotificationScheduler.swift */; };
 		90802146303082A8BE935D64 /* SessionPathMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE47A9C94C8FC4C2E32835B /* SessionPathMapView.swift */; };
@@ -208,6 +209,7 @@
 		5F000005212F000000000001 /* IntervalExportScheduleDateMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalExportScheduleDateMath.swift; sourceTree = "<group>"; };
 		5F000006212F000000000001 /* ScheduledExportMergeStrategies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledExportMergeStrategies.swift; sourceTree = "<group>"; };
 		5F000007212F000000000001 /* IntervalScheduledExportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalScheduledExportTests.swift; sourceTree = "<group>"; };
+		5F000008212F000000000001 /* IntervalPickerCrashReproTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalPickerCrashReproTests.swift; sourceTree = "<group>"; };
 		D6000001212F000000000001 /* PushRegistrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushRegistrationManager.swift; sourceTree = "<group>"; };
 		D6000002212F000000000002 /* DailyExportNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyExportNotificationScheduler.swift; sourceTree = "<group>"; };
 		76A0A8C8D0C96D0243E02089 /* LocationManagerTrackingTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationManagerTrackingTests.swift; sourceTree = "<group>"; };
@@ -588,6 +590,7 @@
 				6A1234567890ABCDEF000001 /* LocationViewModelPointScalingTests.swift */,
 				D2A10003212F000000000003 /* RemotePastVisitTests.swift */,
 				5F000007212F000000000001 /* IntervalScheduledExportTests.swift */,
+				5F000008212F000000000001 /* IntervalPickerCrashReproTests.swift */,
 			);
 			name = IsoMeTests;
 			path = IsoMeTests;
@@ -922,6 +925,7 @@
 				D5E7A1580000000000000158 /* ExportRoundTripTests.swift in Sources */,
 				E9A100000000000000000004 /* ExportKitIntegrationTests.swift in Sources */,
 				5F000007212F000100000001 /* IntervalScheduledExportTests.swift in Sources */,
+				5F000008212F000100000001 /* IntervalPickerCrashReproTests.swift in Sources */,
 				CB0AF0C284FF821E6D718E7E /* LocationManagerTrackingTests.swift in Sources */,
 				E6120001212F000100000012 /* ExportServiceRoundTripTests.swift in Sources */,
 				F3601C83F23A13A26444AD47 /* SharedLocationDataTests.swift in Sources */,

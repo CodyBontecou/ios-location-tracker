@@ -51,9 +51,10 @@ final class DailyExportScheduler: ObservableObject {
     private var requestNotificationPermissionOnNextSchedule = false
 
     /// Hours between scheduled runs. `0` keeps the legacy once-per-day export.
+    /// Must already be clamped (0…23) when set — `scheduleNextBackgroundRun()`
+    /// runs synchronously from `didSet`, so it must not self-assign here.
     @Published var intervalHours: Int {
         didSet {
-            intervalHours = IntervalExportScheduleDateMath.clampIntervalHours(intervalHours)
             guard intervalHours != oldValue else { return }
             defaults.set(intervalHours, forKey: intervalHoursKey)
             scheduleNextBackgroundRun()
