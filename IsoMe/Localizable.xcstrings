@@ -60510,6 +60510,646 @@
           }
         }
       }
+    },
+    "AUTO EXPORT": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التصدير التلقائي"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "স্বয়ংক্রিয় এক্সপোর্ট"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AUTO EXPORT"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "EXPORTACIÓN AUTOMÁTICA"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "EXPORTATION AUTO"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ऑटो एक्सपोर्ट"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自動エクスポート"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "EXPORTAÇÃO AUTOMÁTICA"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "АВТОЭКСПОРТ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自动导出"
+          }
+        }
+      }
+    },
+    "REPEAT": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التكرار"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "পুনরাবৃত্তি"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REPEAT"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REPETIR"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RÉPÉTER"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "दोहराएँ"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "繰り返し"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REPETIR"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ПОВТОР"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重复"
+          }
+        }
+      }
+    },
+    "ONCE DAILY": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مرة واحدة يوميًا"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "দৈনিক একবার"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ONCE DAILY"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UNA VEZ AL DÍA"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UNE FOIS PAR JOUR"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "दिन में एक बार"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毎日1回"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UMA VEZ POR DIA"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "РАЗ В ДЕНЬ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每天一次"
+          }
+        }
+      }
+    },
+    "EVERY %lld H": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كل %lld ساعة"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "প্রতি %lld ঘণ্টা"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "EVERY %lld H"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CADA %lld H"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TOUTES LES %lld H"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "हर %lld घंटे"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld時間ごと"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A CADA %lld H"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "КАЖДЫЕ %lld Ч"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每 %lld 小时"
+          }
+        }
+      }
+    },
+    "FILE MODE": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "وضع الملف"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ফাইল মোড"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FILE MODE"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MODO DE ARCHIVO"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MODE DE FICHIER"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "फ़ाइल मोड"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ファイルモード"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MODO DE ARQUIVO"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "РЕЖИМ ФАЙЛА"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "文件模式"
+          }
+        }
+      }
+    },
+    "REWRITE": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إعادة كتابة"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "পুনর্লিখন"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REWRITE"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REESCRIBIR"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RÉÉCRIRE"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पुनर्लिखित करें"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "上書き"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REESCREVER"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ПЕРЕЗАПИСЬ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重写"
+          }
+        }
+      }
+    },
+    "APPEND": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إضافة"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "সংযোজন"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "APPEND"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AÑADIR"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AJOUTER"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जोड़ें"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "追記"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ANEXAR"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ДОБАВЛЕНИЕ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "追加"
+          }
+        }
+      }
+    },
+    "Each day keeps one file. Every run rewrites it with everything recorded so far today, so it always stays complete and valid.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يحتفظ كل يوم بملف واحد. تُعيد كل عملية تشغيل كتابته بكل ما تم تسجيله اليوم حتى الآن، لذا يظل مكتملًا وصالحًا دائمًا."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "প্রতিদিন একটি ফাইল থাকে। প্রতিবার চালানোর সময় আজকের এখন পর্যন্ত রেকর্ড করা সবকিছু দিয়ে এটি পুনরায় লেখা হয়, তাই এটি সর্বদা সম্পূর্ণ এবং বৈধ থাকে।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Each day keeps one file. Every run rewrites it with everything recorded so far today, so it always stays complete and valid."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada día mantiene un archivo. Cada ejecución lo reescribe con todo lo registrado hasta ahora hoy, por lo que siempre permanece completo y válido."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaque jour conserve un fichier. Chaque exécution le réécrit avec tout ce qui a été enregistré aujourd'hui, il reste donc toujours complet et valide."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "प्रत्येक दिन एक फ़ाइल रखता है। हर रन आज अब तक रिकॉर्ड की गई हर चीज़ के साथ इसे फिर से लिखता है, इसलिए यह हमेशा पूर्ण और मान्य रहता है।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "書き出しは1日1ファイルです。実行のたびに今日のこれまでの記録をすべて書き込むため、ファイルは常に完全で有効な状態です。"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada dia mantém um arquivo. Cada execução o reescreve com tudo gravado até agora hoje, então ele sempre permanece completo e válido."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для каждого дня создаётся один файл. При каждом запуске он перезаписывается всеми данными, записанными на сегодня, поэтому всегда остаётся полным и корректным."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每天保留一个文件。每次运行都会将其重写为今天至今记录的所有内容，因此文件始终完整有效。"
+          }
+        }
+      }
+    },
+    "Each day keeps one file. Every run adds only records captured since the last run; GPX and KML always rewrite the full day. Wake-ups are best effort — tap the fallback notification or open the app to catch up.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يحتفظ كل يوم بملف واحد. تضيف كل عملية تشغيل السجلات التي تم التقاطها منذ آخر تشغيل فقط؛ تعيد GPX وKML كتابة اليوم الكامل دائمًا. الاستيقاظ حسب أفضل جهد — انقر فوق الإشعار الاحتياطي أو افتح التطبيق للحاق."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "প্রতিদিন একটি ফাইল থাকে। প্রতিবার চালানোর সময় শেষ চালানোর পরে ক্যাপচার করা রেকর্ডগুলি যুক্ত হয়; GPX এবং KML সর্বদা পুরো দিনটি পুনরায় লেখে। ওয়েক-আপগুলি সর্বোত্তম প্রচেষ্টা — ফিক্স করতে ফলব্যাক বিজ্ঞপ্তি ট্যাপ করুন বা অ্যাপ খুলুন।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Each day keeps one file. Every run adds only records captured since the last run; GPX and KML always rewrite the full day. Wake-ups are best effort — tap the fallback notification or open the app to catch up."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada día mantiene un archivo. Cada ejecución añade solo los registros capturados desde la última; GPX y KML siempre reescriben el día completo. Los despertares son de mejor esfuerzo: toca la notificación alternativa o abre la app para ponerte al día."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaque jour conserve un fichier. Chaque exécution n'ajoute que les enregistrements capturés depuis la dernière ; GPX et KML réécrivent toujours la journée complète. Les réveils sont au mieux-effort — touchez la notification de secours ou ouvrez l'app pour rattraper."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "प्रत्येक दिन एक फ़ाइल रखता है। हर रन केवल पिछले रन के बाद कैप्चर किए गए रिकॉर्ड जोड़ता है; GPX और KML हमेशा पूरे दिन को फिर से लिखते हैं। वेक-अप सर्वोत्तम प्रयास पर हैं — पकड़ने के लिए फ़ॉलबैक सूचना टैप करें या ऐप खोलें।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "書き出しは1日1ファイルです。実行のたびに前回以降に記録されたデータのみを追記します。GPXとKMLは常に一日分を書き直します。起動はベストエフォートです — 予備の通知をタップするか、アプリを開いてください。"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada dia mantém um arquivo. Cada execução adiciona apenas os registros capturados desde a última; GPX e KML sempre reescrevem o dia completo. Os despertares são de melhor esforço — toque na notificação alternativa ou abra o app para atualizar."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для каждого дня создаётся один файл. При каждом запуске добавляются только записи, появившиеся после предыдущего запуска; GPX и KML всегда перезаписывают весь день. Пробуждения не гарантированы — нажмите резервное уведомление или откройте приложение, чтобы наверстать."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每天保留一个文件。每次运行只添加自上次运行以来捕获的记录；GPX 和 KML 始终重写全天。唤醒是尽力而为的——点按后备通知或打开应用以补上。"
+          }
+        }
+      }
+    },
+    "The existing export file could not be merged; the day's file was rewritten instead.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذّر دمج ملف التصدير الحالي؛ تمت إعادة كتابة ملف اليوم بدلًا من ذلك."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "বিদ্যমান এক্সপোর্ট ফাইলটি মার্জ করা যায়নি; পরিবর্তে দিনের ফাইলটি পুনরায় লেখা হয়েছে।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The existing export file could not be merged; the day's file was rewritten instead."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo combinar el archivo de exportación existente; el archivo del día se reescribió en su lugar."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le fichier d'export existant n'a pas pu être fusionné ; le fichier du jour a été réécrit à la place."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "मौजूदा निर्यात फ़ाइल को मर्ज नहीं किया जा सका; इसके बजाय दिन की फ़ाइल फिर से लिखी गई।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "既存の書き出しファイルを結合できませんでした。代わりに今日のファイルを書き直しました。"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível mesclar o arquivo de exportação existente; o arquivo do dia foi reescrito."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось объединить существующий файл экспорта; файл дня был перезаписан."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法合并现有导出文件；已改为重写当天的文件。"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

@@ -91,6 +91,7 @@ interface UpsertScheduleBody {
     hour?: number;
     minute?: number;
     weekday?: number | null;
+    intervalMinutes?: number;
   };
   platform?: string;
   bundleId?: string;
@@ -126,7 +127,11 @@ export async function handleUpsertSchedule(
     return jsonResponse({ ok: true, isEnabled: false });
   }
 
-  if (sched.frequency !== "daily" && sched.frequency !== "weekly") {
+  if (
+    sched.frequency !== "daily"
+    && sched.frequency !== "weekly"
+    && sched.frequency !== "interval"
+  ) {
     return jsonResponse({ error: "Invalid frequency" }, 400);
   }
   if (!isInt(sched.hour, 0, 23)) {
@@ -144,11 +149,23 @@ export async function handleUpsertSchedule(
     weekday = sched.weekday;
   }
 
+  let intervalMinutes: number | null = null;
+  if (sched.frequency === "interval") {
+    if (!isInt(sched.intervalMinutes, 60, 1380)) {
+      return jsonResponse(
+        { error: "Interval schedule requires intervalMinutes in [60,1380]" },
+        400,
+      );
+    }
+    intervalMinutes = sched.intervalMinutes;
+  }
+
   const schedule: Schedule = {
     frequency: sched.frequency as Frequency,
     hour: sched.hour,
     minute: sched.minute,
     ...(weekday !== null ? { weekday } : {}),
+    ...(intervalMinutes !== null ? { intervalMinutes } : {}),
   };
 
   const nowSec = Math.floor(Date.now() / 1000);
@@ -156,14 +173,15 @@ export async function handleUpsertSchedule(
 
   await env.DB.prepare(
     `INSERT INTO schedules
-        (user_id, is_enabled, frequency, hour, minute, weekday, timezone, next_fire_at, updated_at)
-     VALUES (?, 1, ?, ?, ?, ?, ?, ?, ?)
+        (user_id, is_enabled, frequency, hour, minute, weekday, interval_minutes, timezone, next_fire_at, updated_at)
+     VALUES (?, 1, ?, ?, ?, ?, ?, ?, ?, ?)
      ON CONFLICT(user_id) DO UPDATE SET
        is_enabled = 1,
        frequency = excluded.frequency,
        hour = excluded.hour,
        minute = excluded.minute,
        weekday = excluded.weekday,
+       interval_minutes = excluded.interval_minutes,
        timezone = excluded.timezone,
        next_fire_at = excluded.next_fire_at,
        updated_at = excluded.updated_at`,
@@ -173,6 +191,7 @@ export async function handleUpsertSchedule(
     schedule.hour,
     schedule.minute,
     weekday,
+    intervalMinutes,
     timezone,
     nextFireAt,
     nowSec,

@@ -11,6 +11,7 @@ interface DueRow {
   hour: number;
   minute: number;
   weekday: number | null;
+  interval_minutes: number | null;
   timezone: string;
   next_fire_at: number;
   platform: "ios" | "macos";
@@ -42,7 +43,7 @@ export async function handleScheduled(
 
   const due = await env.DB.prepare(
     `SELECT s.user_id, s.is_enabled, s.frequency, s.hour, s.minute, s.weekday,
-            s.timezone, s.next_fire_at,
+            s.interval_minutes, s.timezone, s.next_fire_at,
             d.platform, d.apns_token, d.bundle_id
        FROM schedules s
        JOIN devices d ON d.user_id = s.user_id
@@ -93,6 +94,7 @@ export async function handleScheduled(
           hour: row.hour,
           minute: row.minute,
           ...(row.weekday !== null ? { weekday: row.weekday } : {}),
+          ...(row.interval_minutes !== null ? { intervalMinutes: row.interval_minutes } : {}),
         },
         row.timezone,
         nowSec,

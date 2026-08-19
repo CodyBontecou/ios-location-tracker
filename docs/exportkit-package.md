@@ -22,13 +22,20 @@ iso.me uses the standalone `https://github.com/CodyBontecou/ExportKit` Swift pac
 
 ## Automation
 
-iso.me has a once-per-day export scheduler. `DailyExportScheduler` uses `ExportAutomationKit.AutomationSchedule` and `AutomationScheduleDateMath` for next-run and due-time calculations, mirrors enabled schedules to `worker/scheduled-notifications`, and handles three recovery triggers:
+iso.me has an automatic export scheduler with optional intraday repeats. `DailyExportScheduler` uses `ExportAutomationKit.AutomationSchedule` and `AutomationScheduleDateMath` for once-per-day schedules and mirrors them to `worker/scheduled-notifications`. Interval schedules (every 1–23 hours from a daily anchor) use app-side math in `IntervalExportScheduleDateMath` — the same anchor+24h-clock cycle the worker implements — because the pinned ExportKit `AutomationScheduleFrequency` does not yet express sub-daily repeats. Interval sync sends a wire-compatible upsert payload (`frequency: "interval"`, `intervalMinutes`) from `PushRegistrationManager`.
 
-- a server-side silent APNs push at the selected minute;
-- a local visible fallback notification shortly after the selected minute;
-- app-open catch-up if the scheduled occurrence is overdue.
+The scheduler layers several recovery triggers:
 
-The worker stores only routing and timing metadata (install id, APNs token, bundle id, timezone, hour/minute, and next fire time). It must not store location records, export files, destination folder paths, or filename templates. Tapping the fallback notification retries the exact scheduled fire date only when `lastRun` does not already cover it, preventing duplicate exports when a silent push or background task already completed.
+- a server-side silent APNs push at each occurrence's minute;
+- a local visible fallback notification shortly after each occurrence;
+- app-open catch-up when the scheduled occurrence is overdue.
+
+Interval schedules keep one file per local day. Filenames are normalized with `FilenameTemplate.dayStablePattern` (time tokens collapse to `{date}`; a date token is injected when missing) so every run in a day targets the same file. Two file modes:
+
+- **Rewrite** (default): every run exports the full day so far and overwrites the day's file.
+- **Append**: every run exports only records since the last successful run (cursor in UserDefaults, clamped to the start of the local day) and merges into the day's file. `IsoMeScheduledExportWritePolicy` picks per-format behavior: CSV appends without duplicating the header (`CSVAppendMergeStrategy`), JSON-family formats merge and dedupe arrays (`JSONArrayMergeStrategy`), Markdown merges by section (`ExportKit.MarkdownMergeStrategy`); GPX and KML are XML containers and always rewrite the full day.
+
+The worker stores only routing and timing metadata (install id, APNs token, bundle id, timezone, hour/minute, interval minutes, and next fire time). It must not store location records, export files, destination folder paths, or filename templates. Tapping the fallback notification retries the exact scheduled fire date only when `lastRun` does not already cover it, preventing duplicate exports when a silent push or background task already completed. `lastRun` dedup works per exact fire date, so it generalizes to multiple fires per day unchanged.
 
 ## Preserved behavior
 

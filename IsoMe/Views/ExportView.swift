@@ -458,7 +458,7 @@ struct ExportView: View {
 
     private var dailyExportSection: some View {
         VStack(spacing: 0) {
-            TESectionHeader(title: "DAILY EXPORT")
+            TESectionHeader(title: "AUTO EXPORT")
 
             TECard {
                 VStack(spacing: 0) {
@@ -472,7 +472,28 @@ struct ExportView: View {
                     if dailyScheduler.isEnabled {
                         TERow {
                             HStack {
-                                Text("TIME")
+                                Text("REPEAT")
+                                    .font(TE.mono(.caption, weight: .medium))
+                                    .tracking(1)
+                                    .foregroundStyle(TE.textPrimary)
+                                Spacer()
+                                Picker("", selection: Binding(
+                                    get: { dailyScheduler.intervalHours },
+                                    set: { dailyScheduler.intervalHours = $0 }
+                                )) {
+                                    Text("ONCE DAILY").tag(0)
+                                    ForEach(1...23, id: \.self) { hours in
+                                        Text("EVERY \(hours) H").tag(hours)
+                                    }
+                                }
+                                .labelsHidden()
+                                .tint(TE.accent)
+                            }
+                        }
+
+                        TERow {
+                            HStack {
+                                Text("START")
                                     .font(TE.mono(.caption, weight: .medium))
                                     .tracking(1)
                                     .foregroundStyle(TE.textPrimary)
@@ -485,6 +506,27 @@ struct ExportView: View {
                                         dailyScheduler.hour = comps.hour ?? 21
                                         dailyScheduler.minute = comps.minute ?? 0
                                     }
+                            }
+                        }
+
+                        if dailyScheduler.isIntervalSchedule {
+                            TERow {
+                                HStack {
+                                    Text("FILE MODE")
+                                        .font(TE.mono(.caption, weight: .medium))
+                                        .tracking(1)
+                                        .foregroundStyle(TE.textPrimary)
+                                    Spacer()
+                                    Picker("", selection: Binding(
+                                        get: { dailyScheduler.fileMode },
+                                        set: { dailyScheduler.fileMode = $0 }
+                                    )) {
+                                        Text("REWRITE").tag(ScheduledExportFileMode.rewrite)
+                                        Text("APPEND").tag(ScheduledExportFileMode.append)
+                                    }
+                                    .labelsHidden()
+                                    .tint(TE.accent)
+                                }
                             }
                         }
 
@@ -577,15 +619,28 @@ struct ExportView: View {
             }
             .padding(.horizontal, 16)
 
-            TESectionFooter(text: dailyScheduler.isEnabled
-                ? "iso.me asks iOS and the server-side notification worker to wake near this time. If the export has not completed, tap the fallback notification or open the app to run it."
-                : "Save a fresh export to your folder once per day, automatically.")
+            TESectionFooter(text: footerText(for: dailyScheduler))
         }
         .onAppear {
             var comps = DateComponents()
             comps.hour = dailyScheduler.hour
             comps.minute = dailyScheduler.minute
             dailyTimeBinding = Calendar.current.date(from: comps) ?? Date()
+        }
+    }
+
+    private func footerText(for scheduler: DailyExportScheduler) -> LocalizedStringKey {
+        guard scheduler.isEnabled else {
+            return "Save a fresh export to your folder once per day, automatically."
+        }
+        guard scheduler.isIntervalSchedule else {
+            return "iso.me asks iOS and the server-side notification worker to wake near this time. If the export has not completed, tap the fallback notification or open the app to run it."
+        }
+        switch scheduler.fileMode {
+        case .rewrite:
+            return "Each day keeps one file. Every run rewrites it with everything recorded so far today, so it always stays complete and valid."
+        case .append:
+            return "Each day keeps one file. Every run adds only records captured since the last run; GPX and KML always rewrite the full day. Wake-ups are best effort — tap the fallback notification or open the app to catch up."
         }
     }
 

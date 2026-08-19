@@ -6,13 +6,15 @@
  * fire on ISO weekday 1 = Mon … 7 = Sun.
  */
 
-export type Frequency = "daily" | "weekly";
+export type Frequency = "daily" | "weekly" | "interval";
 
 export interface Schedule {
   frequency: Frequency;
   hour: number;
   minute: number;
   weekday?: number;
+  /** Required for frequency "interval": minutes between fires (60–1380). */
+  intervalMinutes?: number;
 }
 
 export interface ZonedParts {
@@ -79,6 +81,10 @@ export function computeNextFire(schedule: Schedule, tz: string, nowSec: number):
   const nowMs = nowSec * 1000;
   const z = getZonedParts(nowMs, tz);
 
+  if (schedule.frequency === "interval") {
+    return nextIntervalFireMs(schedule, z, tz, nowMs);
+  }
+
   let candidate = zonedTimeToUtcMs(z.year, z.month, z.day, schedule.hour, schedule.minute, tz);
   let daysToAdd = 0;
 
@@ -105,4 +111,49 @@ export function computeNextFire(schedule: Schedule, tz: string, nowSec: number):
   }
 
   return Math.floor(candidate / 1000);
+}
+
+/**
+ * Interval schedules: the cycle resets every 24h at the daily anchor.
+ * Occurrences fire at anchor + k * interval while k * interval < 24h, so
+ * intervals that do not divide 24 (9h, 23h, …) simply end their cycle early
+ * and the next cycle begins at the next daily anchor. Because a cycle's tail
+ * can spill past midnight, candidates from the previous and next anchor days
+ * are considered.
+ */
+function nextIntervalFireMs(
+  schedule: Schedule,
+  z: ZonedParts,
+  tz: string,
+  nowMs: number,
+): number {
+  const intervalMinutes = clampIntervalMinutes(schedule.intervalMinutes);
+
+  let best: number | null = null;
+  for (const dayOffset of [-1, 0, 1]) {
+    const anchorMs = zonedTimeToUtcMs(
+      z.year,
+      z.month,
+      z.day + dayOffset,
+      schedule.hour,
+      schedule.minute,
+      tz,
+    );
+    for (let k = 0; k * intervalMinutes < 24 * 60; k++) {
+      const candidate = anchorMs + k * intervalMinutes * 60000;
+      if (candidate > nowMs && (best === null || candidate < best)) {
+        best = candidate;
+      }
+    }
+  }
+
+  if (best === null) {
+    throw new Error("Interval schedule produced no next fire time");
+  }
+  return Math.floor(best / 1000);
+}
+
+export function clampIntervalMinutes(value: number | undefined): number {
+  const raw = typeof value === "number" && Number.isFinite(value) ? Math.round(value) : 60;
+  return Math.min(1380, Math.max(60, raw));
 }

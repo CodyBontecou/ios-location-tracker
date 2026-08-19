@@ -18,6 +18,9 @@ final class PushRegistrationManager: @unchecked Sendable {
 
     private let logger = Logger(subsystem: "com.bontecou.isome", category: "PushRegistration")
     private let remoteClient: any RemoteScheduleClient
+    private let session: URLSession
+    private let baseURL: URL
+    private let upsertRetryPolicy = RemoteScheduleRetryPolicy()
 
     private static let keychainService = "com.bontecou.isome"
     private static let userIdKeychainAccount = "pushRegistrationUserId"
@@ -27,6 +30,8 @@ final class PushRegistrationManager: @unchecked Sendable {
         baseURL: URL = URL(string: "https://isome-scheduled-notifications.costream.workers.dev")!,
         remoteClient: (any RemoteScheduleClient)? = nil
     ) {
+        self.baseURL = baseURL
+        self.session = session
         self.remoteClient = remoteClient ?? URLSessionRemoteScheduleClient(baseURL: baseURL, session: session)
     }
 
@@ -99,14 +104,37 @@ final class PushRegistrationManager: @unchecked Sendable {
 
     // MARK: - Schedule sync
 
-    func syncSchedule(_ schedule: AutomationSchedule) {
+    func syncSchedule(_ schedule: AutomationSchedule, intervalHours: Int = 0) {
         let timezone = TimeZone.current.identifier
-        Task { await self.postUpsertSchedule(schedule, timezone: timezone) }
+        Task { await self.postUpsertSchedule(schedule, timezone: timezone, intervalHours: intervalHours) }
     }
 
-    private func postUpsertSchedule(_ schedule: AutomationSchedule, timezone: String) async {
+    private func postUpsertSchedule(_ schedule: AutomationSchedule, timezone: String, intervalHours: Int) async {
         var remoteSchedule = schedule
         remoteSchedule.timeZoneIdentifier = timezone
+
+        // Interval schedules need a wire field the ExportKit payload type cannot
+        // express yet, so the body is mirrored app-side (identical camelCase
+        // contract plus `intervalMinutes`) and posted with the same retry policy.
+        if intervalHours > 0 {
+            let body = IntervalScheduleUpsertBody(
+                userId: userId,
+                timezone: timezone,
+                schedule: .init(
+                    isEnabled: remoteSchedule.isEnabled,
+                    hour: remoteSchedule.preferredHour,
+                    minute: remoteSchedule.preferredMinute,
+                    intervalMinutes: intervalHours * 60
+                ),
+                platform: platformString,
+                bundleId: bundleId
+            )
+            await post(label: "schedule", path: RemoteScheduleWorkerContract.scheduleUpsertPath) {
+                try await self.postIntervalScheduleUpsert(body)
+            }
+            return
+        }
+
         let body = RemoteScheduleUpsertPayload(
             userId: userId,
             timezone: timezone,
@@ -116,6 +144,50 @@ final class PushRegistrationManager: @unchecked Sendable {
         )
         await post(label: "schedule", path: RemoteScheduleWorkerContract.scheduleUpsertPath) {
             try await remoteClient.upsertSchedule(body)
+        }
+    }
+
+    /// Wire-compatible mirror of ExportKit's `RemoteScheduleUpsertPayload` that
+    /// can express interval schedules (`frequency: "interval"`).
+    private struct IntervalScheduleUpsertBody: Encodable {
+        struct IntervalSchedule: Encodable {
+            let isEnabled: Bool
+            let frequency = "interval"
+            let hour: Int
+            let minute: Int
+            let weekday: Int? = nil
+            let intervalMinutes: Int
+        }
+
+        let userId: String
+        let timezone: String
+        let schedule: IntervalSchedule
+        let platform: String?
+        let bundleId: String?
+    }
+
+    private func postIntervalScheduleUpsert(_ body: IntervalScheduleUpsertBody) async throws {
+        var request = URLRequest(url: baseURL.appendingPathComponent(RemoteScheduleWorkerContract.scheduleUpsertPath))
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try JSONEncoder().encode(body)
+
+        for attempt in 1...max(1, upsertRetryPolicy.maxAttempts) {
+            do {
+                let (_, response) = try await session.data(for: request)
+                guard let http = response as? HTTPURLResponse else {
+                    throw RemoteScheduleClientError.invalidHTTPResponse
+                }
+                guard (200..<300).contains(http.statusCode) else {
+                    throw RemoteScheduleClientError.unsuccessfulStatusCode(http.statusCode)
+                }
+                return
+            } catch {
+                guard attempt < upsertRetryPolicy.maxAttempts, upsertRetryPolicy.shouldRetry(error) else {
+                    throw error
+                }
+                try await Task.sleep(nanoseconds: upsertRetryPolicy.retryDelayNanoseconds)
+            }
         }
     }
 

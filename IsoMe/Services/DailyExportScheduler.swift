@@ -1,6 +1,7 @@
 import Foundation
 import BackgroundTasks
 import SwiftData
+import ExportKit
 import ExportAutomationKit
 
 /// Schedules and runs a once-per-day automatic export to the user's configured folder.
@@ -40,11 +41,31 @@ final class DailyExportScheduler: ObservableObject {
     private let minuteKey = "dailyExport.minute"
     private let formatKey = "dailyExport.format"
     private let dataKindKey = "dailyExport.dataKind"
+    private let intervalHoursKey = "dailyExport.intervalHours"
+    private let fileModeKey = "dailyExport.fileMode"
+    private let appendCursorKey = "dailyExport.appendCursorDate"
     private let lastRunKey = "dailyExport.lastRunAt"
     private let lastErrorKey = "dailyExport.lastError"
     private let pendingNotificationIdentifierKey = "dailyExport.pendingNotificationIdentifier"
     private let remoteScheduleHasSyncedKey = "dailyExport.remoteScheduleHasSynced"
     private var requestNotificationPermissionOnNextSchedule = false
+
+    /// Hours between scheduled runs. `0` keeps the legacy once-per-day export.
+    @Published var intervalHours: Int {
+        didSet {
+            intervalHours = IntervalExportScheduleDateMath.clampIntervalHours(intervalHours)
+            guard intervalHours != oldValue else { return }
+            defaults.set(intervalHours, forKey: intervalHoursKey)
+            scheduleNextBackgroundRun()
+        }
+    }
+
+    /// How the day's file is kept consistent across interval runs.
+    @Published var fileMode: ScheduledExportFileMode {
+        didSet { defaults.set(fileMode.rawValue, forKey: fileModeKey) }
+    }
+
+    var isIntervalSchedule: Bool { intervalHours > 0 }
 
     @Published var isEnabled: Bool {
         didSet {
@@ -94,6 +115,11 @@ final class DailyExportScheduler: ObservableObject {
         self.format = Self.formatFromRaw(defaults.string(forKey: formatKey))
         self.dataKind = ExportOptions.DataKind(rawValue: defaults.string(forKey: dataKindKey) ?? "")
             ?? .all
+        self.intervalHours = IntervalExportScheduleDateMath.clampIntervalHours(
+            defaults.object(forKey: intervalHoursKey) as? Int ?? 0
+        )
+        self.fileMode = ScheduledExportFileMode(rawValue: defaults.string(forKey: fileModeKey) ?? "")
+            ?? .rewrite
         self.lastRun = defaults.object(forKey: lastRunKey) as? Date
         self.lastError = defaults.string(forKey: lastErrorKey)
     }
@@ -139,12 +165,12 @@ final class DailyExportScheduler: ObservableObject {
 
         guard isEnabled else {
             if defaults.bool(forKey: remoteScheduleHasSyncedKey) {
-                PushRegistrationManager.shared.syncSchedule(automationSchedule)
+                PushRegistrationManager.shared.syncSchedule(automationSchedule, intervalHours: intervalHours)
             }
             return
         }
 
-        PushRegistrationManager.shared.syncSchedule(automationSchedule)
+        PushRegistrationManager.shared.syncSchedule(automationSchedule, intervalHours: intervalHours)
         defaults.set(true, forKey: remoteScheduleHasSyncedKey)
 
         let nextRunDate = nextScheduledTime(after: Date())
@@ -270,18 +296,51 @@ final class DailyExportScheduler: ObservableObject {
             options.format = format
             options.dataKind = dataKind
 
-            let pattern = defaults.string(forKey: "exportFilenamePattern") ?? FilenameTemplate.defaultPattern
+            var pattern = defaults.string(forKey: "exportFilenamePattern") ?? FilenameTemplate.defaultPattern
+            var writeMode: ExportWriteMode = .overwrite
+            var mergeStrategy: (any ExportMergeStrategy)?
+
+            if isIntervalSchedule {
+                // Every run within one local day must resolve to the same file.
+                pattern = FilenameTemplate.dayStablePattern(from: pattern)
+                let policy = IsoMeScheduledExportWritePolicy.resolve(format: format, fileMode: fileMode)
+
+                switch fileMode {
+                case .rewrite:
+                    options.datePreset = .today
+                case .append:
+                    if policy.usesDeltaWindow {
+                        let startOfDay = Calendar.current.startOfDay(for: now)
+                        let cursor = defaults.object(forKey: appendCursorKey) as? Date
+                        options.datePreset = .custom
+                        options.customStart = max(cursor ?? startOfDay, startOfDay)
+                        options.customEnd = now
+                    } else {
+                        // Container formats (GPX/KML) cannot be merged: rewrite
+                        // the full day so the file stays valid and complete.
+                        options.datePreset = .today
+                    }
+                }
+
+                writeMode = policy.writeMode
+                mergeStrategy = policy.mergeStrategy
+            }
 
             let urls = try ExportService.saveToDefaultFolder(
                 visits: visits,
                 points: points,
                 recordingSessions: recordingSessions,
                 options: options,
-                filenamePattern: pattern
+                filenamePattern: pattern,
+                writeMode: writeMode,
+                mergeStrategy: mergeStrategy
             )
 
             ExportToastCenter.shared.show(.success(savedURLs: urls))
             recordSuccess(now)
+            if isIntervalSchedule, fileMode == .append, writeMode == .update {
+                defaults.set(now, forKey: appendCursorKey)
+            }
             if let scheduledFireDate {
                 notificationScheduler.cancelFallbackNotification(fireDate: scheduledFireDate)
             }
@@ -353,7 +412,16 @@ final class DailyExportScheduler: ObservableObject {
     // MARK: - Date math
 
     func nextScheduledTime(after now: Date) -> Date {
-        AutomationScheduleDateMath.calculateNextRunDate(
+        if isIntervalSchedule {
+            return IntervalExportScheduleDateMath.nextOccurrence(
+                anchorHour: hour,
+                anchorMinute: minute,
+                intervalHours: intervalHours,
+                after: now,
+                calendar: Calendar.current
+            ) ?? now
+        }
+        return AutomationScheduleDateMath.calculateNextRunDate(
             schedule: automationSchedule,
             now: now,
             calendar: Calendar.current
@@ -361,7 +429,16 @@ final class DailyExportScheduler: ObservableObject {
     }
 
     private func latestScheduledOccurrence(at now: Date) -> Date? {
-        AutomationScheduleDateMath.latestScheduledOccurrenceDate(
+        if isIntervalSchedule {
+            return IntervalExportScheduleDateMath.latestOccurrence(
+                anchorHour: hour,
+                anchorMinute: minute,
+                intervalHours: intervalHours,
+                at: now,
+                calendar: Calendar.current
+            )
+        }
+        return AutomationScheduleDateMath.latestScheduledOccurrenceDate(
             schedule: automationSchedule,
             now: now,
             calendar: Calendar.current

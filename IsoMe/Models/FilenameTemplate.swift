@@ -109,6 +109,41 @@ struct FilenameTemplate {
         return output
     }
 
+    /// Normalizes a filename pattern so every scheduled run within one local
+    /// calendar day resolves to the same file: unstable time tokens collapse to
+    /// `{date}`, and a date token is injected when the pattern carries none.
+    static func dayStablePattern(from pattern: String) -> String {
+        let normalized = pattern
+            .replacingOccurrences(of: "{datetime}", with: "{date}")
+            .replacingOccurrences(of: "{time}", with: "{date}")
+
+        let dayTokens = [
+            "{date}", "{day}", "{year}", "{month}",
+            "{dayNumber}", "{weekday}", "{monthName}", "{quarter}",
+        ]
+        guard !dayTokens.contains(where: { normalized.contains($0) }) else {
+            return normalized
+        }
+
+        let separator = " - "
+        let directoryPrefix: String
+        var lastComponent: String
+        if let splitIndex = normalized.lastIndex(of: "/") {
+            directoryPrefix = String(normalized[...splitIndex])
+            lastComponent = String(normalized[normalized.index(after: splitIndex)...])
+        } else {
+            directoryPrefix = ""
+            lastComponent = normalized
+        }
+
+        if let dotIndex = lastComponent.lastIndex(of: "."), dotIndex != lastComponent.startIndex {
+            lastComponent = String(lastComponent[..<dotIndex]) + separator + "{date}" + String(lastComponent[dotIndex...])
+        } else {
+            lastComponent += separator + "{date}"
+        }
+        return directoryPrefix + lastComponent
+    }
+
     static func appendingFormatExtensionIfNeeded(
         to rawPath: String,
         format: ExportFormat,

@@ -1920,7 +1920,9 @@ extension ExportService {
         activeTrackingStart: Date? = nil,
         options: ExportOptions,
         selectedFormats: [ExportFormat]? = nil,
-        filenamePattern: String = FilenameTemplate.defaultPattern
+        filenamePattern: String = FilenameTemplate.defaultPattern,
+        writeMode: ExportWriteMode = .overwrite,
+        mergeStrategy: (any ExportMergeStrategy)? = nil
     ) throws -> [URL] {
         let files = try IsoMeExportKitAdapter.plannedFiles(
             visits: visits,
@@ -1931,7 +1933,15 @@ extension ExportService {
             selectedFormats: selectedFormats,
             filenamePattern: filenamePattern
         )
-        guard let urls = try ExportFolderManager.shared.savePlannedFilesToDefaultFolder(files) else {
+        // Merge strategies are keyed by the planned file's format id.
+        let mergeStrategies: [String: any ExportMergeStrategy] = mergeStrategy.map {
+            [options.format.exportKitFormatID: $0]
+        } ?? [:]
+        guard let urls = try ExportFolderManager.shared.savePlannedFilesToDefaultFolder(
+            files,
+            mode: writeMode,
+            mergeStrategies: mergeStrategies
+        ) else {
             throw ExportFolderError.noDefaultFolder
         }
         return urls

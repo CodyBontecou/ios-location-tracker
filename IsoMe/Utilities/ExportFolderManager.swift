@@ -111,6 +111,17 @@ final class ExportFolderManager: ObservableObject {
     /// Save ExportKit-planned files to the default export folder.
     /// - Returns: URLs where the files were saved, or nil if no default folder is set.
     func savePlannedFilesToDefaultFolder(_ files: [PlannedExportFile]) throws -> [URL]? {
+        try savePlannedFilesToDefaultFolder(files, mode: .overwrite, mergeStrategies: [:])
+    }
+
+    /// Save ExportKit-planned files with an explicit write mode and optional
+    /// per-format merge strategies (used by interval scheduled exports).
+    /// - Returns: URLs where the files were saved, or nil if no default folder is set.
+    func savePlannedFilesToDefaultFolder(
+        _ files: [PlannedExportFile],
+        mode: ExportWriteMode,
+        mergeStrategies: [String: any ExportMergeStrategy]
+    ) throws -> [URL]? {
         guard let folderURL = selectedFolderURL else {
             return nil
         }
@@ -125,7 +136,7 @@ final class ExportFolderManager: ObservableObject {
             fileSystem: FileManagerExportFileSystem(),
             safetyPolicy: .rejectTraversalAndAbsolutePaths
         )
-        return try writer.write(files, to: destination, mode: .overwrite).map(\.url)
+        return try writer.write(files, to: destination, mode: mode, mergeStrategies: mergeStrategies).map(\.url)
     }
 
     private func saveBinaryDataToDefaultFolder(data: Data, fileName: String) throws -> URL? {
