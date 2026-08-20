@@ -39,6 +39,23 @@ struct OutingsView: View {
         selectedDayRange.lowerBound.formatted(.dateTime.weekday(.wide).month(.abbreviated).day().year())
     }
 
+    private var dayResetButtonTitle: String {
+        let calendar = Calendar.current
+        guard !calendar.isDateInToday(selectedDate) else {
+            return String(localized: "TODAY")
+        }
+
+        let selectedDay = calendar.startOfDay(for: selectedDate)
+        let today = calendar.startOfDay(for: Date())
+        let dayOffset = calendar.dateComponents([.day], from: selectedDay, to: today).day ?? 0
+        guard dayOffset != 0 else { return String(localized: "TODAY") }
+
+        var formatter = RelativeDateTimeFormatter()
+        formatter.dateTimeStyle = .numeric
+        formatter.unitsStyle = .full
+        return formatter.localizedString(from: DateComponents(day: -dayOffset))
+    }
+
     private var allSessions: [RecordingSessionSummary] {
         viewModel.recordingSessionSummaries(inferenceConfiguration: inferenceConfiguration)
     }
@@ -215,15 +232,23 @@ struct OutingsView: View {
                             Button {
                                 selectedDate = Date()
                             } label: {
-                                Text("TODAY")
+                                Text(dayResetButtonTitle)
                                     .font(TE.mono(.caption2, weight: .bold))
                                     .tracking(1.2)
                                     .foregroundStyle(TE.accent)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.75)
                                     .frame(maxWidth: .infinity)
                                     .frame(height: 34)
                                     .background(TE.accent.opacity(0.10), in: RoundedRectangle(cornerRadius: 4))
                             }
                             .buttonStyle(.plain)
+                            .accessibilityLabel(dayResetButtonTitle)
+                            .accessibilityHint(
+                                Calendar.current.isDateInToday(selectedDate)
+                                    ? ""
+                                    : String(localized: "JUMP TO TODAY")
+                            )
 
                             Button {
                                 moveSelectedDay(by: 1)

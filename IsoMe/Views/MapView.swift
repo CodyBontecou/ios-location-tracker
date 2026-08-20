@@ -117,6 +117,13 @@ struct LocationMapView: View {
         return "\(latitude),\(longitude),\(accuracy)"
     }
 
+    private var currentPlaceSuggestionTaskKey: String {
+        let savedPlaceRevision = viewModel.savedPlaces
+            .map { "\($0.id.uuidString):\($0.updatedAt.timeIntervalSinceReferenceDate)" }
+            .joined(separator: ",")
+        return "\(currentPlaceLookupKey)|saved:\(savedPlaceRevision)"
+    }
+
     private var shouldShowCurrentPlacePrompt: Bool {
         showVisitSuggestions &&
         dismissedCurrentPlaceLookupKey != currentPlaceLookupKey &&
@@ -587,7 +594,7 @@ struct LocationMapView: View {
             .task(id: roadSnappingTaskKey) {
                 await refreshRoadSnappedRoute()
             }
-            .task(id: currentPlaceLookupKey) {
+            .task(id: currentPlaceSuggestionTaskKey) {
                 await refreshCurrentPlaceSuggestion()
             }
             .onReceive(routeReplayTimer) { _ in
@@ -705,6 +712,23 @@ struct LocationMapView: View {
         ))
     }
 
+    private func savedPlaceSuggestion(near location: CLLocation) -> NearbyPlaceSuggestion? {
+        viewModel.savedPlaces
+            .compactMap { place -> NearbyPlaceSuggestion? in
+                let distance = place.distanceMeters(to: location.coordinate)
+                guard distance <= place.radiusMeters else { return nil }
+
+                return NearbyPlaceSuggestion(
+                    id: "saved-\(place.id.uuidString)",
+                    name: place.name,
+                    address: place.address,
+                    coordinate: place.coordinate,
+                    distanceMeters: distance
+                )
+            }
+            .min { lhs, rhs in lhs.distanceMeters < rhs.distanceMeters }
+    }
+
     private func refreshCurrentPlaceSuggestion() async {
         guard showVisitSuggestions else {
             currentPlaceSuggestion = nil
@@ -722,6 +746,13 @@ struct LocationMapView: View {
 
         guard !isCurrentPlacePromptSuppressedInCurrentArea else {
             currentPlaceSuggestion = nil
+            isLoadingCurrentPlace = false
+            currentPlaceLookupFailed = false
+            return
+        }
+
+        if let savedPlaceSuggestion = savedPlaceSuggestion(near: location) {
+            currentPlaceSuggestion = savedPlaceSuggestion
             isLoadingCurrentPlace = false
             currentPlaceLookupFailed = false
             return

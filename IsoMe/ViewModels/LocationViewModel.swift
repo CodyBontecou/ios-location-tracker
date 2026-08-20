@@ -53,6 +53,7 @@ final class LocationViewModel {
     static let automaticPhotoSyncEnabledKey = "automaticPhotoSyncEnabled"
     static let showPhotoMarkersKey = "showPhotoMarkers"
     static let showVisitSuggestionsKey = "showVisitSuggestions"
+    static let defaultSavedPlaceRadiusMeters = 150.0
 
     private let maximumMapPointCount = 2_500
     private let maximumMapPhotoMomentCount = 500
@@ -911,7 +912,12 @@ final class LocationViewModel {
         radiusMeters: Double = 150
     ) -> SavedPlace? {
         let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmedName.isEmpty else { return nil }
+        guard !trimmedName.isEmpty,
+              CLLocationCoordinate2DIsValid(coordinate),
+              coordinate.latitude.isFinite,
+              coordinate.longitude.isFinite else {
+            return nil
+        }
 
         let now = Date()
         let trimmedAddress = address?.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty
@@ -954,6 +960,23 @@ final class LocationViewModel {
 
     // MARK: - Visit Management
 
+    /// A confirmed or corrected place becomes reusable knowledge for future
+    /// automatic visits. Prefer the user's name, then the detected address;
+    /// do not create a saved place for a visit with no meaningful place data.
+    @discardableResult
+    private func rememberConfirmedPlace(for visit: Visit) -> SavedPlace? {
+        let name = (visit.exportLocationName ?? visit.address)?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let name, !name.isEmpty else { return nil }
+
+        return createSavedPlace(
+            name: name,
+            address: visit.address,
+            coordinate: visit.coordinate,
+            radiusMeters: Self.defaultSavedPlaceRadiusMeters
+        )
+    }
+
     func deleteVisit(_ visit: Visit) {
         modelContext.delete(visit)
         try? modelContext.save()
@@ -968,6 +991,9 @@ final class LocationViewModel {
             visit.customName = trimmed
         }
         visit.updatedAt = Date()
+        if visit.isConfirmed {
+            rememberConfirmedPlace(for: visit)
+        }
         try? modelContext.save()
         loadTodayVisits()
         loadAllVisits()
@@ -976,6 +1002,9 @@ final class LocationViewModel {
     func clearVisitName(_ visit: Visit) {
         visit.customName = nil
         visit.updatedAt = Date()
+        if visit.isConfirmed {
+            rememberConfirmedPlace(for: visit)
+        }
         try? modelContext.save()
         loadTodayVisits()
         loadAllVisits()
@@ -993,6 +1022,7 @@ final class LocationViewModel {
         visit.confirmationStatus = .confirmed
         visit.confirmedAt = now
         visit.updatedAt = now
+        rememberConfirmedPlace(for: visit)
         try? modelContext.save()
         loadTodayVisits()
         loadAllVisits()
@@ -1007,7 +1037,12 @@ final class LocationViewModel {
         distanceMeters: Double? = nil
     ) {
         let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmedName.isEmpty else { return }
+        guard !trimmedName.isEmpty,
+              CLLocationCoordinate2DIsValid(coordinate),
+              coordinate.latitude.isFinite,
+              coordinate.longitude.isFinite else {
+            return
+        }
 
         let now = Date()
         visit.preserveOriginalValuesIfNeeded()
@@ -1022,6 +1057,7 @@ final class LocationViewModel {
         visit.placeSource = placeSource
         visit.placeDistanceMeters = distanceMeters
         visit.geocodingCompleted = true
+        rememberConfirmedPlace(for: visit)
 
         try? modelContext.save()
         loadTodayVisits()

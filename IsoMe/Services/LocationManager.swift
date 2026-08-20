@@ -843,6 +843,9 @@ final class LocationManager: NSObject, ObservableObject {
         visit.detectedAddress = match.place.address
         visit.placeSource = .userEntered
         visit.placeDistanceMeters = match.distance
+        visit.confirmationStatus = .confirmed
+        visit.confirmedAt = visit.confirmedAt ?? Date()
+        visit.updatedAt = Date()
         visit.geocodingCompleted = true
     }
 

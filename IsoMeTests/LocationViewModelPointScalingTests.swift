@@ -184,6 +184,62 @@ final class LocationViewModelPointScalingTests: XCTestCase {
         XCTAssertTrue(viewModel.allVisits.isEmpty)
     }
 
+    func testConfirmingVisitRemembersPlaceForFutureAutomaticVisits() throws {
+        let container = try makeInMemoryContainer()
+        let coordinate = CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194)
+        let visit = Visit(
+            latitude: coordinate.latitude,
+            longitude: coordinate.longitude,
+            arrivedAt: fixtureDate(dayOffset: 20),
+            locationName: "Detected Cafe",
+            address: "1 Market St",
+            geocodingCompleted: true
+        )
+        container.mainContext.insert(visit)
+        try container.mainContext.save()
+
+        let viewModel = makeViewModel(container: container)
+        viewModel.confirmVisit(visit)
+
+        let savedPlace = try XCTUnwrap(viewModel.savedPlaces.first)
+        XCTAssertEqual(savedPlace.name, "Detected Cafe")
+        XCTAssertEqual(savedPlace.address, "1 Market St")
+        assertCoordinate(savedPlace.coordinate, equals: coordinate)
+        XCTAssertTrue(savedPlace.contains(coordinate))
+    }
+
+    func testCorrectingVisitRemembersSelectedPlace() throws {
+        let container = try makeInMemoryContainer()
+        let originalCoordinate = CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194)
+        let correctedCoordinate = CLLocationCoordinate2D(latitude: 37.7755, longitude: -122.4188)
+        let visit = Visit(
+            latitude: originalCoordinate.latitude,
+            longitude: originalCoordinate.longitude,
+            arrivedAt: fixtureDate(dayOffset: 20),
+            locationName: "Detected Block",
+            address: "Market St",
+            geocodingCompleted: true
+        )
+        container.mainContext.insert(visit)
+        try container.mainContext.save()
+
+        let viewModel = makeViewModel(container: container)
+        viewModel.correctVisit(
+            visit,
+            name: "Correct Cafe",
+            address: "1 Correct Way",
+            coordinate: correctedCoordinate,
+            placeSource: .appleMaps,
+            distanceMeters: 42
+        )
+
+        let savedPlace = try XCTUnwrap(viewModel.savedPlaces.first)
+        XCTAssertEqual(savedPlace.name, "Correct Cafe")
+        XCTAssertEqual(savedPlace.address, "1 Correct Way")
+        assertCoordinate(savedPlace.coordinate, equals: correctedCoordinate)
+        XCTAssertTrue(savedPlace.contains(correctedCoordinate))
+    }
+
     func testVisitConfirmCorrectAndUndoPreservesOriginalMetadata() throws {
         let container = try makeInMemoryContainer()
         let originalCoordinate = CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194)
