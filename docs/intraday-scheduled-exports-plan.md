@@ -86,10 +86,10 @@ Why rewrite is the safe default: no duplicate-row edge cases (in-progress visits
 - New persisted keys: `dailyExport.intervalHours` (Int; 0 = once daily), `dailyExport.fileMode` (`"rewrite"` | `"append"`; default `rewrite`).
 - `automationSchedule` becomes `.interval` with `intervalHours` when set — everything downstream (`PushRegistrationManager.syncSchedule`, next-run math, BGAppRefresh earliest date) picks it up unchanged.
 - Occurrence de-dup already keys on exact `fireDate` (`hasCompletedScheduledOccurrence`) — works for N fires/day.
-- `runExport` window:
-  - Once daily: unchanged (all-time snapshot, overwrite) — zero behavior change for existing users.
-  - Interval + rewrite: `options.datePreset = .today`, write mode `.overwrite`.
-  - Interval + append: delta window `(lastSuccessfulFire, now]`, write mode `.append`/`.update` with per-format merge strategy; on merge failure for container formats → fall back to rewrite and surface a one-line note in the toast/error log.
+- `runExport` window (updated by the one-file-per-day adaptation):
+  - Once daily: local start-of-day through now, overwrite the dated daily file.
+  - Interval + rewrite: the same full local-day-through-now window, write mode `.overwrite`.
+  - Interval + append: delta window `(lastSuccessfulFire, now]` clamped to local start-of-day, write mode `.append`/`.update` with per-format merge strategy; container formats rewrite the full local day.
 - Appends also update `lastRun` per fire so catch-up, notification retry, and silent-push dedup stay consistent.
 
 ### 4.4 Write path (`ExportFolderManager` / `IsoMeExportKitAdapter`)
@@ -131,7 +131,7 @@ Why rewrite is the safe default: no duplicate-row edge cases (in-progress visits
 2. **Append in v1?** — Yes. Rewrite (default) + Append shipped together; GPX/KML always rewrite the full day.
 3. **Stable export ids** — Deferred. JSON merge dedupes by the first present identity field (`id`, `arrivedAt`, `timestamp`, `tst`, `startedAt`, `started_at`).
 4. **Anchor semantics** — **Anchor-day reset on a 24h clock**: occurrences fire at `anchor + k × interval` for every `k` with `k × interval < 24h`; cycles reset at the next daily anchor and tails can spill past local midnight.
-5. **Once-daily stays all-time** — Confirmed; interval runs use the today-window (rewrite) or the since-last-run window (append).
+5. **All automatic exports are daily files** — Superseded by the one-file-per-day adaptation: once-daily and interval Rewrite runs use the local today window; interval Append uses the since-last-run window clamped to today.
 
 Implementation notes: interval logic lives app-side (`IntervalExportScheduleDateMath`, `IsoMeScheduledExportWritePolicy`, interval upsert mirror in `PushRegistrationManager`) because the pinned ExportKit release cannot yet express sub-daily frequencies; the worker gained `frequency: "interval"` + `interval_minutes` (migration `0002`).
 

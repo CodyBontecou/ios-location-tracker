@@ -154,11 +154,174 @@ final class IntervalScheduledExportTests: XCTestCase {
         )
     }
 
+    func testDayStablePatternDoesNotAcceptCoarseTokensAsADailyIdentity() {
+        XCTAssertEqual(
+            FilenameTemplate.dayStablePattern(from: "exports/{year}/{month}/track-{weekday}"),
+            "exports/{year}/{month}/track-{weekday} - {date}"
+        )
+        XCTAssertEqual(
+            FilenameTemplate.dayStablePattern(from: "   "),
+            FilenameTemplate.defaultPattern
+        )
+    }
+
     func testDayStablePatternLeavesDayStablePatternsAlone() {
         let pattern = "{year}/{year}-{month}/Daily Track - {date}"
         XCTAssertEqual(FilenameTemplate.dayStablePattern(from: pattern), pattern)
         let defaultPattern = "iso.me - {day} {date} - {type}"
         XCTAssertEqual(FilenameTemplate.dayStablePattern(from: defaultPattern), defaultPattern)
+    }
+
+    func testDayStablePatternResolvesToOnePathPerLocalCalendarDay() {
+        let cal = Calendar.current
+        let morning = cal.date(from: DateComponents(year: 2030, month: 5, day: 4, hour: 1))!
+        let evening = cal.date(from: DateComponents(year: 2030, month: 5, day: 4, hour: 22))!
+        let tomorrow = cal.date(from: DateComponents(year: 2030, month: 5, day: 5, hour: 1))!
+        let pattern = FilenameTemplate.dayStablePattern(from: "exports/{year}/track-{time}")
+
+        let morningPath = FilenameTemplate.resolve(
+            pattern: pattern, dataKind: .points, format: .csv, date: morning
+        )
+        let eveningPath = FilenameTemplate.resolve(
+            pattern: pattern, dataKind: .points, format: .csv, date: evening
+        )
+        let tomorrowPath = FilenameTemplate.resolve(
+            pattern: pattern, dataKind: .points, format: .csv, date: tomorrow
+        )
+
+        XCTAssertEqual(morningPath, eveningPath)
+        XCTAssertNotEqual(morningPath, tomorrowPath)
+    }
+
+    func testAggregatePlannerUsesTheScheduledFilenameDate() throws {
+        let cal = Calendar.current
+        let scheduledDate = cal.date(from: DateComponents(year: 2030, month: 5, day: 4, hour: 23, minute: 59))!
+        var options = ExportOptions()
+        options.dataKind = .points
+        options.format = .csv
+
+        let files = try IsoMeExportKitAdapter.plannedFiles(
+            visits: [],
+            points: [],
+            options: options,
+            filenamePattern: "track-{date}",
+            aggregateFilenameDate: scheduledDate
+        )
+        let expectedPath = FilenameTemplate.resolve(
+            pattern: "track-{date}",
+            dataKind: .points,
+            format: .csv,
+            date: scheduledDate
+        )
+
+        XCTAssertEqual(files.map(\.relativePath), [expectedPath])
+    }
+
+    // MARK: - Automatic export plans
+
+    func testRewriteUsesTheSameFullLocalDayForOnceDailyAndIntervalSchedules() {
+        let now = local(2026, 5, 4, 18, 30)
+        var baseOptions = ExportOptions()
+        baseOptions.dataKind = .all
+        baseOptions.format = .csv
+        baseOptions.splitByDay = true // Manual Export preference must not leak into Auto Export.
+
+        let plans = [0, 3].map { intervalHours in
+            IsoMeScheduledExportPlan.resolve(
+                baseOptions: baseOptions,
+                filenamePattern: "exports/{year}/track",
+                intervalHours: intervalHours,
+                fileMode: .rewrite,
+                appendCursor: local(2026, 5, 4, 12),
+                now: now,
+                calendar: calendar
+            )
+        }
+
+        for plan in plans {
+            XCTAssertEqual(plan.options.datePreset, .custom)
+            XCTAssertEqual(plan.options.customStart, local(2026, 5, 4, 0))
+            XCTAssertEqual(plan.options.customEnd, now)
+            XCTAssertFalse(plan.options.splitByDay)
+            XCTAssertEqual(plan.filenamePattern, "exports/{year}/track - {date}")
+            XCTAssertEqual(plan.filenameDate, now)
+            XCTAssertEqual(plan.effectiveFileMode, .rewrite)
+            XCTAssertEqual(plan.writeMode, .overwrite)
+            XCTAssertNil(plan.mergeStrategy)
+            XCTAssertFalse(plan.shouldAdvanceAppendCursor)
+        }
+    }
+
+    func testOnceDailyIgnoresAHiddenPersistedAppendMode() {
+        var baseOptions = ExportOptions()
+        baseOptions.format = .json
+        let plan = IsoMeScheduledExportPlan.resolve(
+            baseOptions: baseOptions,
+            filenamePattern: "track-{datetime}",
+            intervalHours: 0,
+            fileMode: .append,
+            appendCursor: local(2026, 5, 4, 12),
+            now: local(2026, 5, 4, 18),
+            calendar: calendar
+        )
+
+        XCTAssertEqual(plan.effectiveFileMode, .rewrite)
+        XCTAssertEqual(plan.options.customStart, local(2026, 5, 4, 0))
+        XCTAssertEqual(plan.writeMode, .overwrite)
+        XCTAssertFalse(plan.shouldAdvanceAppendCursor)
+    }
+
+    func testIntervalAppendUsesDeltaWindowClampedToTheLocalDay() {
+        var baseOptions = ExportOptions()
+        baseOptions.format = .csv
+        let now = local(2026, 5, 4, 18)
+
+        let sameDay = IsoMeScheduledExportPlan.resolve(
+            baseOptions: baseOptions,
+            filenamePattern: "track",
+            intervalHours: 3,
+            fileMode: .append,
+            appendCursor: local(2026, 5, 4, 12),
+            now: now,
+            calendar: calendar
+        )
+        XCTAssertEqual(sameDay.options.customStart, local(2026, 5, 4, 12))
+        XCTAssertEqual(sameDay.options.customEnd, now)
+        XCTAssertEqual(sameDay.writeMode, .update)
+        XCTAssertNotNil(sameDay.mergeStrategy)
+        XCTAssertTrue(sameDay.shouldAdvanceAppendCursor)
+
+        let priorDay = IsoMeScheduledExportPlan.resolve(
+            baseOptions: baseOptions,
+            filenamePattern: "track",
+            intervalHours: 3,
+            fileMode: .append,
+            appendCursor: local(2026, 5, 3, 23),
+            now: now,
+            calendar: calendar
+        )
+        XCTAssertEqual(priorDay.options.customStart, local(2026, 5, 4, 0))
+    }
+
+    func testContainerAppendPlanRewritesTheCompleteLocalDay() {
+        for format in [ExportFormat.gpx, .kml] {
+            var baseOptions = ExportOptions()
+            baseOptions.format = format
+            let plan = IsoMeScheduledExportPlan.resolve(
+                baseOptions: baseOptions,
+                filenamePattern: "track-{time}",
+                intervalHours: 3,
+                fileMode: .append,
+                appendCursor: local(2026, 5, 4, 12),
+                now: local(2026, 5, 4, 18),
+                calendar: calendar
+            )
+
+            XCTAssertEqual(plan.options.customStart, local(2026, 5, 4, 0))
+            XCTAssertEqual(plan.writeMode, .overwrite)
+            XCTAssertNil(plan.mergeStrategy)
+            XCTAssertFalse(plan.shouldAdvanceAppendCursor)
+        }
     }
 
     // MARK: - Write policy

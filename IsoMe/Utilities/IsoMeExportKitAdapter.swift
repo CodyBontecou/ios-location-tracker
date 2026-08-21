@@ -165,6 +165,7 @@ enum IsoMeExportKitAdapter {
         options: ExportOptions,
         selectedFormats: [ExportFormat]? = nil,
         filenamePattern: String = FilenameTemplate.defaultPattern,
+        aggregateFilenameDate: Date? = nil,
         forceSplitByDay: Bool? = nil
     ) throws -> [PlannedExportFile] {
         let formats = normalizedFormats(selectedFormats ?? [options.format])
@@ -196,7 +197,8 @@ enum IsoMeExportKitAdapter {
                     for: snapshot,
                     filenamePattern: filenamePattern,
                     format: format,
-                    usedNames: &formatUsedNames
+                    usedNames: &formatUsedNames,
+                    aggregateDateOverride: aggregateFilenameDate
                 )
                 let fileName = uniqueFilenameAcrossFormats(plannedName, in: &globalUsedNames, format: format)
                 return PlannedExportFile(
@@ -733,16 +735,20 @@ enum IsoMeExportKitAdapter {
         filenamePattern: String,
         format: ExportFormat,
         usedNames: inout Set<String>,
+        aggregateDateOverride: Date? = nil,
         safetyPolicy: ExportPathSafetyPolicy = .rejectTraversalAndAbsolutePaths
     ) throws -> String {
         let outing = snapshot.isSplitOuting ? snapshot.outings.first : nil
         let patternIncludesTitle = filenamePattern.contains("{title}") || filenamePattern.contains("{name}")
         let patternIncludesTime = filenamePattern.contains("{time}") || filenamePattern.contains("{datetime}")
+        let filenameDate = snapshot.isSplitByDay || snapshot.isSplitOuting
+            ? snapshot.exportDate
+            : (aggregateDateOverride ?? snapshot.exportDate)
         var fileName = try IsoMeExportPathPlanner.plannedRelativePath(
             pattern: filenamePattern,
             dataKind: snapshot.dataKind,
             format: format,
-            date: snapshot.exportDate,
+            date: filenameDate,
             title: outing?.title,
             safetyPolicy: safetyPolicy
         )

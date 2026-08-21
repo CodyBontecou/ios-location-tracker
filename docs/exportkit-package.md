@@ -30,17 +30,17 @@ The scheduler layers several recovery triggers:
 - a local visible fallback notification shortly after each occurrence;
 - app-open catch-up when the scheduled occurrence is overdue.
 
-Interval schedules keep one file per local day. Filenames are normalized with `FilenameTemplate.dayStablePattern` (time tokens collapse to `{date}`; a date token is injected when missing) so every run in a day targets the same file. Two file modes:
+All automatic schedules keep one aggregate file per local calendar day, independent of the manual Export tab's split toggle. `IsoMeScheduledExportPlan` applies an explicit local start-of-day-through-now window, uses the same captured run date for aggregate filename resolution, and normalizes filenames with `FilenameTemplate.dayStablePattern` (time tokens collapse to `{date}`; an explicit date token is injected when missing, even when coarser tokens such as `{year}` are present). Once-daily runs always use Rewrite. Interval runs offer two update modes:
 
-- **Rewrite** (default): every run exports the full day so far and overwrites the day's file.
-- **Append**: every run exports only records since the last successful run (cursor in UserDefaults, clamped to the start of the local day) and merges into the day's file. `IsoMeScheduledExportWritePolicy` picks per-format behavior: CSV appends without duplicating the header (`CSVAppendMergeStrategy`), JSON-family formats merge and dedupe arrays (`JSONArrayMergeStrategy`), Markdown merges by section (`ExportKit.MarkdownMergeStrategy`); GPX and KML are XML containers and always rewrite the full day.
+- **Rewrite** (default): every run exports the full day so far and overwrites the dated daily file.
+- **Append**: every run exports only records since the last successful run (cursor in UserDefaults, clamped to the start of the local day) and merges into the dated daily file. `IsoMeScheduledExportWritePolicy` picks per-format behavior: CSV appends without duplicating the header (`CSVAppendMergeStrategy`), JSON-family formats merge and dedupe arrays (`JSONArrayMergeStrategy`), Markdown merges by section (`ExportKit.MarkdownMergeStrategy`); GPX and KML are XML containers and always rewrite the full day.
 
 The worker stores only routing and timing metadata (install id, APNs token, bundle id, timezone, hour/minute, interval minutes, and next fire time). It must not store location records, export files, destination folder paths, or filename templates. Tapping the fallback notification retries the exact scheduled fire date only when `lastRun` does not already cover it, preventing duplicate exports when a silent push or background task already completed. `lastRun` dedup works per exact fire date, so it generalizes to multiple fires per day unchanged.
 
 ## Preserved behavior
 
 - Existing JSON/CSV/Markdown/OwnTracks/Overland/GPX/KML/GeoJSON renderers remain in `ExportService` and are reused by ExportKit renderers.
-- `ExportOptions` filters, field toggles, date ranges, time-of-day windows, and split-by-day behavior are unchanged.
+- Manual `ExportOptions` filters, field toggles, date ranges, time-of-day windows, and split-by-day behavior are unchanged; Auto Export uses its fixed daily aggregate plan.
 - Existing filename tokens (`{date}`, `{datetime}`, `{time}`, `{day}`, `{type}`, `{format}`) and sanitizing are preserved, with additional date tokens (`{year}`, `{month}`, `{dayNumber}`, `{weekday}`, `{monthName}`, `{quarter}`) and `/` subfolders supported.
 - Default folder bookmarks remain managed by `ExportFolderManager`.
 - Export purchase gating, UI labels, webhook settings, app intents, and import logic remain app-specific.

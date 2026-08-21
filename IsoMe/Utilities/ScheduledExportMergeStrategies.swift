@@ -1,7 +1,7 @@
 import Foundation
 import ExportKit
 
-/// How interval scheduled exports keep the day's file consistent.
+/// How repeated automatic exports update the current day's file.
 enum ScheduledExportFileMode: String, CaseIterable {
     /// Re-export the full day so far and overwrite the day's file (default).
     case rewrite
@@ -21,7 +21,62 @@ enum ScheduledExportMergeError: LocalizedError {
     }
 }
 
-/// Per-format append policy for interval scheduled exports.
+/// A deterministic file/window plan for one automatic export run.
+///
+/// Repeat timing only controls when runs occur. Every automatic export uses a
+/// single aggregate file for the current local date; the manual Export tab's
+/// split preference is deliberately ignored. Append remains an interval-only
+/// update mode, while once-daily runs always rewrite the complete day so far.
+struct IsoMeScheduledExportPlan {
+    let options: ExportOptions
+    let filenamePattern: String
+    let filenameDate: Date
+    let effectiveFileMode: ScheduledExportFileMode
+    let writeMode: ExportWriteMode
+    let mergeStrategy: (any ExportMergeStrategy)?
+    let shouldAdvanceAppendCursor: Bool
+
+    static func resolve(
+        baseOptions: ExportOptions,
+        filenamePattern: String,
+        intervalHours: Int,
+        fileMode: ScheduledExportFileMode,
+        appendCursor: Date?,
+        now: Date,
+        calendar: Calendar = .current
+    ) -> IsoMeScheduledExportPlan {
+        var options = baseOptions
+        let startOfDay = calendar.startOfDay(for: now)
+        let effectiveFileMode: ScheduledExportFileMode = intervalHours > 0 ? fileMode : .rewrite
+        let policy = IsoMeScheduledExportWritePolicy.resolve(
+            format: options.format,
+            fileMode: effectiveFileMode
+        )
+
+        options.datePreset = .custom
+        options.customEnd = now
+        options.splitByDay = false
+
+        if policy.usesDeltaWindow {
+            let cursor = max(appendCursor ?? startOfDay, startOfDay)
+            options.customStart = min(cursor, now)
+        } else {
+            options.customStart = startOfDay
+        }
+
+        return IsoMeScheduledExportPlan(
+            options: options,
+            filenamePattern: FilenameTemplate.dayStablePattern(from: filenamePattern),
+            filenameDate: now,
+            effectiveFileMode: effectiveFileMode,
+            writeMode: policy.writeMode,
+            mergeStrategy: policy.mergeStrategy,
+            shouldAdvanceAppendCursor: policy.usesDeltaWindow
+        )
+    }
+}
+
+/// Per-format append policy for repeated automatic exports.
 ///
 /// Row formats (CSV) and JSON payloads can be extended incrementally with a
 /// merge strategy; GPX and KML are XML containers and are always fully

@@ -4,7 +4,7 @@ import SwiftData
 import ExportKit
 import ExportAutomationKit
 
-/// Schedules and runs a once-per-day automatic export to the user's configured folder.
+/// Schedules and runs automatic daily-file exports to the user's configured folder.
 ///
 /// Reliability: iOS does not guarantee `BGAppRefreshTask` fires at the requested time.
 /// The scheduler layers several best-effort triggers:
@@ -50,7 +50,7 @@ final class DailyExportScheduler: ObservableObject {
     private let remoteScheduleHasSyncedKey = "dailyExport.remoteScheduleHasSynced"
     private var requestNotificationPermissionOnNextSchedule = false
 
-    /// Hours between scheduled runs. `0` keeps the legacy once-per-day export.
+    /// Hours between scheduled runs. `0` means once per day.
     /// Must already be clamped (0…23) when set — `scheduleNextBackgroundRun()`
     /// runs synchronously from `didSet`, so it must not self-assign here.
     @Published var intervalHours: Int {
@@ -61,7 +61,7 @@ final class DailyExportScheduler: ObservableObject {
         }
     }
 
-    /// How the day's file is kept consistent across interval runs.
+    /// How repeated runs update the current day's file.
     @Published var fileMode: ScheduledExportFileMode {
         didSet { defaults.set(fileMode.rawValue, forKey: fileModeKey) }
     }
@@ -212,7 +212,7 @@ final class DailyExportScheduler: ObservableObject {
 
     // MARK: - Foreground, notification, and server-triggered runs
 
-    /// Run the daily export if today's scheduled time has passed and we haven't run since.
+    /// Run the automatic export if the latest scheduled time has passed and we haven't run since.
     @discardableResult
     func runIfDue(triggeredByScheduledWake: Bool = false) async -> RunOutcome {
         guard isEnabled else { return .skippedDisabled }
@@ -293,53 +293,34 @@ final class DailyExportScheduler: ObservableObject {
             let points = try context.fetch(FetchDescriptor<LocationPoint>())
             let recordingSessions = try context.fetch(FetchDescriptor<RecordingSession>())
 
-            var options = ExportOptions()
-            options.format = format
-            options.dataKind = dataKind
+            var baseOptions = ExportOptions()
+            baseOptions.format = format
+            baseOptions.dataKind = dataKind
 
-            var pattern = defaults.string(forKey: "exportFilenamePattern") ?? FilenameTemplate.defaultPattern
-            var writeMode: ExportWriteMode = .overwrite
-            var mergeStrategy: (any ExportMergeStrategy)?
-
-            if isIntervalSchedule {
-                // Every run within one local day must resolve to the same file.
-                pattern = FilenameTemplate.dayStablePattern(from: pattern)
-                let policy = IsoMeScheduledExportWritePolicy.resolve(format: format, fileMode: fileMode)
-
-                switch fileMode {
-                case .rewrite:
-                    options.datePreset = .today
-                case .append:
-                    if policy.usesDeltaWindow {
-                        let startOfDay = Calendar.current.startOfDay(for: now)
-                        let cursor = defaults.object(forKey: appendCursorKey) as? Date
-                        options.datePreset = .custom
-                        options.customStart = max(cursor ?? startOfDay, startOfDay)
-                        options.customEnd = now
-                    } else {
-                        // Container formats (GPX/KML) cannot be merged: rewrite
-                        // the full day so the file stays valid and complete.
-                        options.datePreset = .today
-                    }
-                }
-
-                writeMode = policy.writeMode
-                mergeStrategy = policy.mergeStrategy
-            }
+            let plan = IsoMeScheduledExportPlan.resolve(
+                baseOptions: baseOptions,
+                filenamePattern: defaults.string(forKey: "exportFilenamePattern") ?? FilenameTemplate.defaultPattern,
+                intervalHours: intervalHours,
+                fileMode: fileMode,
+                appendCursor: defaults.object(forKey: appendCursorKey) as? Date,
+                now: now,
+                calendar: Calendar.current
+            )
 
             let urls = try ExportService.saveToDefaultFolder(
                 visits: visits,
                 points: points,
                 recordingSessions: recordingSessions,
-                options: options,
-                filenamePattern: pattern,
-                writeMode: writeMode,
-                mergeStrategy: mergeStrategy
+                options: plan.options,
+                filenamePattern: plan.filenamePattern,
+                filenameDate: plan.filenameDate,
+                writeMode: plan.writeMode,
+                mergeStrategy: plan.mergeStrategy
             )
 
             ExportToastCenter.shared.show(.success(savedURLs: urls))
             recordSuccess(now)
-            if isIntervalSchedule, fileMode == .append, writeMode == .update {
+            if plan.shouldAdvanceAppendCursor {
                 defaults.set(now, forKey: appendCursorKey)
             }
             if let scheduledFireDate {

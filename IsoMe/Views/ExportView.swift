@@ -509,10 +509,24 @@ struct ExportView: View {
                             }
                         }
 
+                        TERow {
+                            HStack {
+                                Text("FILE LAYOUT")
+                                    .font(TE.mono(.caption, weight: .medium))
+                                    .tracking(1)
+                                    .foregroundStyle(TE.textPrimary)
+                                Spacer()
+                                Text("ONE FILE PER DAY")
+                                    .font(TE.mono(.caption2, weight: .medium))
+                                    .multilineTextAlignment(.trailing)
+                                    .foregroundStyle(TE.accent)
+                            }
+                        }
+
                         if dailyScheduler.isIntervalSchedule {
                             TERow {
                                 HStack {
-                                    Text("FILE MODE")
+                                    Text("UPDATE MODE")
                                         .font(TE.mono(.caption, weight: .medium))
                                         .tracking(1)
                                         .foregroundStyle(TE.textPrimary)
@@ -631,12 +645,13 @@ struct ExportView: View {
 
     private func footerText(for scheduler: DailyExportScheduler) -> LocalizedStringKey {
         guard scheduler.isEnabled else {
-            return "Save a fresh export to your folder once per day, automatically."
+            return "Automatically save one dated file for each local calendar day."
         }
-        guard scheduler.isIntervalSchedule else {
-            return "iso.me asks iOS and the server-side notification worker to wake near this time. If the export has not completed, tap the fallback notification or open the app to run it."
-        }
-        switch scheduler.fileMode {
+
+        let effectiveFileMode: ScheduledExportFileMode = scheduler.isIntervalSchedule
+            ? scheduler.fileMode
+            : .rewrite
+        switch effectiveFileMode {
         case .rewrite:
             return "Each day keeps one file. Every run rewrites it with everything recorded so far today, so it always stays complete and valid."
         case .append:

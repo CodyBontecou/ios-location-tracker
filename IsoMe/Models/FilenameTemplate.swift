@@ -109,19 +109,20 @@ struct FilenameTemplate {
         return output
     }
 
-    /// Normalizes a filename pattern so every scheduled run within one local
-    /// calendar day resolves to the same file: unstable time tokens collapse to
-    /// `{date}`, and a date token is injected when the pattern carries none.
+    /// Normalizes an automatic-export filename pattern so every run within one
+    /// local calendar day resolves to the same path and different days cannot
+    /// collapse into a rolling file. Unstable time tokens become `{date}`, and
+    /// an explicit date token is injected when the pattern carries none.
     static func dayStablePattern(from pattern: String) -> String {
-        let normalized = pattern
+        let trimmed = pattern.trimmingCharacters(in: .whitespacesAndNewlines)
+        let source = trimmed.isEmpty ? defaultPattern : pattern
+        let normalized = source
             .replacingOccurrences(of: "{datetime}", with: "{date}")
             .replacingOccurrences(of: "{time}", with: "{date}")
 
-        let dayTokens = [
-            "{date}", "{day}", "{year}", "{month}",
-            "{dayNumber}", "{weekday}", "{monthName}", "{quarter}",
-        ]
-        guard !dayTokens.contains(where: { normalized.contains($0) }) else {
+        // Coarser or repeating tokens such as {year}, {month}, and {weekday}
+        // are not enough: automatic exports must have a distinct path per date.
+        guard !normalized.contains("{date}") else {
             return normalized
         }
 
@@ -136,7 +137,9 @@ struct FilenameTemplate {
             lastComponent = normalized
         }
 
-        if let dotIndex = lastComponent.lastIndex(of: "."), dotIndex != lastComponent.startIndex {
+        if lastComponent.isEmpty {
+            lastComponent = "{date} - {type}"
+        } else if let dotIndex = lastComponent.lastIndex(of: "."), dotIndex != lastComponent.startIndex {
             lastComponent = String(lastComponent[..<dotIndex]) + separator + "{date}" + String(lastComponent[dotIndex...])
         } else {
             lastComponent += separator + "{date}"

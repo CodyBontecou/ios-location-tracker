@@ -1921,6 +1921,7 @@ extension ExportService {
         options: ExportOptions,
         selectedFormats: [ExportFormat]? = nil,
         filenamePattern: String = FilenameTemplate.defaultPattern,
+        filenameDate: Date? = nil,
         writeMode: ExportWriteMode = .overwrite,
         mergeStrategy: (any ExportMergeStrategy)? = nil
     ) throws -> [URL] {
@@ -1931,7 +1932,8 @@ extension ExportService {
             activeTrackingStart: activeTrackingStart,
             options: options,
             selectedFormats: selectedFormats,
-            filenamePattern: filenamePattern
+            filenamePattern: filenamePattern,
+            aggregateFilenameDate: filenameDate
         )
         // Merge strategies are keyed by the planned file's format id.
         let mergeStrategies: [String: any ExportMergeStrategy] = mergeStrategy.map {

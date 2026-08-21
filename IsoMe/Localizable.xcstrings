@@ -45392,66 +45392,66 @@
         }
       }
     },
-    "Save a fresh export to your folder once per day, automatically.": {
+    "Automatically save one dated file for each local calendar day.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "احفظ تصديرًا جديدًا إلى مجلدك مرة واحدة يوميًا تلقائيًا."
+            "value": "احفظ تلقائيًا ملفًا واحدًا مؤرخًا لكل يوم تقويمي محلي."
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "স্বয়ংক্রিয়ভাবে প্রতিদিন একবার আপনার ফোল্ডারে একটি নতুন রপ্তানি সংরক্ষণ করুন।"
+            "value": "প্রতিটি স্থানীয় ক্যালেন্ডার দিনের জন্য স্বয়ংক্রিয়ভাবে একটি তারিখযুক্ত ফাইল সংরক্ষণ করুন।"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Save a fresh export to your folder once per day, automatically."
+            "value": "Automatically save one dated file for each local calendar day."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Guarde una nueva exportación en su carpeta una vez al día, de forma automática."
+            "value": "Guarda automáticamente un archivo fechado por cada día natural local."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enregistrez automatiquement une nouvelle exportation dans votre dossier une fois par jour."
+            "value": "Enregistrez automatiquement un fichier daté pour chaque jour civil local."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "प्रति दिन एक बार स्वचालित रूप से अपने फ़ोल्डर में एक ताज़ा निर्यात सहेजें।"
+            "value": "हर स्थानीय कैलेंडर दिन के लिए एक दिनांकित फ़ाइल अपने आप सहेजें।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "1 日に 1 回、新しいエクスポートをフォルダーに自動的に保存します。"
+            "value": "ローカルの暦日ごとに、日付付きファイルを1つ自動保存します。"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Salve uma nova exportação em sua pasta uma vez por dia, automaticamente."
+            "value": "Salve automaticamente um arquivo datado para cada dia do calendário local."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Автоматически сохраняйте новый экспорт в свою папку один раз в день."
+            "value": "Автоматически сохраняйте по одному датированному файлу на каждый локальный календарный день."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "每天自动将新导出的内容保存到您的文件夹中一次。"
+            "value": "按本地日历日自动保存一个带日期的文件。"
           }
         }
       }
@@ -60767,66 +60767,130 @@
         }
       }
     },
-    "FILE MODE": {
+    "FILE LAYOUT": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "وضع الملف"
+            "value": "تخطيط الملف"
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "ফাইল মোড"
+            "value": "ফাইল বিন্যাস"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "FILE MODE"
+            "value": "FILE LAYOUT"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "MODO DE ARCHIVO"
+            "value": "DISEÑO DE ARCHIVO"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "MODE DE FICHIER"
+            "value": "ORGANISATION DES FICHIERS"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "फ़ाइल मोड"
+            "value": "फ़ाइल लेआउट"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ファイルモード"
+            "value": "ファイル構成"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "MODO DE ARQUIVO"
+            "value": "ORGANIZAÇÃO DOS ARQUIVOS"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "РЕЖИМ ФАЙЛА"
+            "value": "СТРУКТУРА ФАЙЛОВ"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "文件模式"
+            "value": "文件布局"
+          }
+        }
+      }
+    },
+    "UPDATE MODE": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "وضع التحديث"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "আপডেট মোড"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UPDATE MODE"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MODO DE ACTUALIZACIÓN"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MODE DE MISE À JOUR"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपडेट मोड"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "更新モード"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MODO DE ATUALIZAÇÃO"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "РЕЖИМ ОБНОВЛЕНИЯ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "更新模式"
           }
         }
       }
