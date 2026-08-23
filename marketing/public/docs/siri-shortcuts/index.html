@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Siri &amp; Shortcuts — iso.me Docs</title>
+  <meta name="description" content="Nine actions for tracking, stats, renaming, and exports.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://isome.isolated.tech/docs/siri-shortcuts/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/docs/docs.css">
+</head>
+<body>
+  <nav class="top" aria-label="Primary navigation">
+    <div class="nav-inner">
+      <a href="/" class="brand" aria-label="iso.me home">
+        <img src="/app-icon-28.png" srcset="/app-icon-28.png 1x, /app-icon-84.png 3x" alt="" width="26" height="26">
+        <span class="brand-dot" aria-hidden="true"></span>
+        ISO.ME
+      </a>
+      <div class="nav-links">
+        <a href="/#features">Features</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/docs/" aria-current="page"__DOCS_CURRENT__>Docs</a>
+        <a href="/terms">Terms</a>
+        <a href="https://apps.apple.com/us/app/iso-me/id6761960794" class="btn">Download</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <header class="doc-head">
+    <span class="eyebrow">§ Docs · Guide 9 of 11</span>
+    <h1>Siri &amp; Shortcuts</h1>
+    <p class="lede">iso.me exposes nine App Intents that work in the Shortcuts app, from Siri, and from automations like the Action Button — including exports handed straight to other apps.</p>
+    <div class="meta-strip">
+      <div><div class="k">Platform</div><div class="v">iOS 17+</div></div>
+      <div><div class="k">Updated</div><div class="v">August 22, 2026</div></div>
+      <div><div class="k">Reading</div><div class="v">3 min</div></div>
+      <div><div class="k">Back to</div><div class="v"><a href="/docs/" aria-current="page">All docs</a></div></div>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="doc-card">
+<h2>Nine actions</h2>
+<p>Every action runs without opening the app. Find them in the Shortcuts app under iso.me, or just talk to Siri.</p>
+<table>
+<tr><th>Action</th><th>What it does</th><th>Siri phrase example</th></tr>
+<tr><td><strong>Start Tracking</strong></td><td>Begins a recording session.</td><td>“Start iso.me”</td></tr>
+<tr><td><strong>Stop Tracking</strong></td><td>Ends the session — even if the app isn't running.</td><td>“Stop tracking with iso.me”</td></tr>
+<tr><td><strong>Rename Current Outing</strong></td><td>Sets the active outing's name (parameter: name).</td><td>“Name my iso.me outing”</td></tr>
+<tr><td><strong>Today's Distance</strong></td><td>Returns how far you've moved today.</td><td>“How far have I gone with iso.me?”</td></tr>
+<tr><td><strong>Today's Tracking Duration</strong></td><td>Returns how long the session has run.</td><td>“iso.me tracking duration”</td></tr>
+<tr><td><strong>Today's Visits</strong></td><td>Returns today's visit count.</td><td>“How many visits today in iso.me?”</td></tr>
+<tr><td><strong>Export Today's Data</strong></td><td>Produces a file of today's visits and route (parameter: format, default JSON).</td><td>“Export today's data from iso.me”</td></tr>
+<tr><td><strong>Export Today's Outings</strong></td><td>Same, for outings.</td><td>“Export today's iso.me outings”</td></tr>
+<tr><td><strong>Export Yesterday's Data</strong></td><td>Yesterday's visits and route as a file.</td><td>“Export yesterday's iso.me tracks”</td></tr>
+</table>
+
+<h2>Automation ideas</h2>
+<ul>
+<li>Bind <strong>Start Tracking</strong> to the <strong>Action Button</strong> for one-press recording.</li>
+<li>An automation that runs <strong>Export Today's Data</strong> every evening and hands the file to another shortcut — your own export pipeline.</li>
+<li>Ask Siri for <strong>Today's Visits</strong> or <strong>Distance</strong> as a daily digest.</li>
+<li>Rename an outing mid-hike: “Name my iso.me outing Ridge Trail.”</li>
+</ul>
+<p>Export actions produce a file in your chosen format that Shortcuts can save, message, or pass to other apps.</p>
+    </div>
+    <nav class="pager" aria-label="Guides">
+      <a class="prev" href="/docs/webhooks/"><span class="dir">← Previous</span><span class="title">Webhooks &amp; self-hosting</span></a>
+      <a class="next" href="/docs/apple-watch/"><span class="dir">Next →</span><span class="title">Apple Watch</span></a>
+    </nav>
+  </div>
+
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="dot"></span>
+        © 2026 ISO.ME · BUILT WITH CARE
+      </div>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/docs/" aria-current="page">Docs</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+  </footer>
+<!-- Cloudflare Web Analytics -->
+<script>
+(function () {
+  var productionHosts = {
+    'instareply.isolated.tech': true,
+    'voxboard.isolated.tech': true,
+    'healthmd.isolated.tech': true,
+    'isome.isolated.tech': true,
+    'gitsyncmd.isolated.tech': true,
+    'timemd.isolated.tech': true,
+    'imghost.isolated.tech': true
+  };
+
+  if (!productionHosts[window.location.hostname]) {
+    return;
+  }
+
+  function loadCloudflareBeacon() {
+    if (document.querySelector('script[src="https://static.cloudflareinsights.com/beacon.min.js"]')) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.defer = true;
+    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    script.setAttribute('data-cf-beacon', '{"token":"090f363070334cddad5c5cc1509b8807"}');
+    document.head.appendChild(script);
+  }
+
+  fetch('https://img-host.costream.workers.dev/analytics-gate', {
+    cache: 'no-store',
+    mode: 'cors',
+    credentials: 'omit'
+  })
+    .then(function (response) {
+      return response.ok ? response.json() : { track: false };
+    })
+    .then(function (gate) {
+      if (gate && gate.track) {
+        loadCloudflareBeacon();
+      }
+    })
+    .catch(function () {
+      // Fail closed so excluded IPs are not accidentally tracked.
+    });
+})();
+</script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

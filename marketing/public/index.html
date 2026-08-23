@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>iso.me — Private Location Journal for iPhone</title>
-  <meta name="description" content="iso.me is a private location journal for iPhone and Apple Watch. Automatically record visits and routes on-device, with no account, no iso.me servers, and optional export when you need your history.">
+  <meta name="description" content="iso.me is a private location journal for iPhone and Apple Watch. Automatically record visits and routes on-device, with no account, no iso.me location servers, and optional export in eight formats when you need your history.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://isome.isolated.tech/">
   <meta name="theme-color" content="#f5f4ef">
   <meta name="application-name" content="iso.me">
 
   <meta property="og:title" content="iso.me — Private Location Journal for iPhone">
-  <meta property="og:description" content="Automatically build a private timeline of places and routes. No account, no iso.me location server, no analytics SDKs. Export your location history when needed.">
+  <meta property="og:description" content="Automatically build a private timeline of places and routes. No account, no iso.me location server, no ads. Export your location history when needed.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://isome.isolated.tech/">
   <meta property="og:site_name" content="iso.me">
@@ -44,7 +44,7 @@
         "operatingSystem": "iOS, watchOS",
         "applicationCategory": "LifestyleApplication",
         "description": "A private location journal for iPhone that automatically records visits and routes on-device, with no account required and optional export.",
-        "softwareVersion": "Updated June 2026",
+        "softwareVersion": "Updated August 2026",
         "author": {
           "@type": "Person",
           "name": "Cody Bontecou",
@@ -63,13 +63,15 @@
         },
         "featureList": [
           "Automatic visit detection",
-          "Route recording and map visualization",
+          "Daily timeline with outings and route replay",
           "On-device location history",
-          "JSON, CSV, and Markdown export",
+          "JSON, CSV, Markdown, GeoJSON, GPX, KML, OwnTracks, and Overland export",
           "Round-trip import for backups",
-          "Apple Watch companion",
-          "Live Activity and Dynamic Island status",
-          "Siri and Shortcuts support"
+          "Independent Apple Watch tracking with offline sync",
+          "Watch complications, Live Activity, and Dynamic Island",
+          "Siri and Shortcuts automation",
+          "Optional scheduled automatic exports",
+          "Optional webhook delivery to OwnTracks, Overland, and Dawarich"
         ],
         "isAccessibleForFree": true
       },
@@ -114,7 +116,7 @@
             "name": "Can I export or import my history?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. Export is available as JSON, CSV, or Markdown, with filters for visits and route points. Import can restore a previously exported history on a device."
+              "text": "Yes. Export supports JSON, CSV, Markdown, GeoJSON, GPX, KML, OwnTracks, and Overland for visits, route points, and outings. Import can restore a prior export, and importing is free."
             }
           },
           {
@@ -122,7 +124,7 @@
             "name": "Does iso.me work with Apple Watch?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "iso.me includes Apple Watch support for glanceable tracking controls and status alongside the iPhone app."
+              "text": "Yes — and the Watch app records independently. It keeps its own GPS session, works without your iPhone nearby, and queues routes offline until it can sync them back. Watch complications also show today's visits, distance, and tracking status."
             }
           },
           {
@@ -130,7 +132,7 @@
             "name": "Does iso.me sync with iCloud?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "The app is designed around local, on-device storage. Treat export and import as the portable backup path unless the app itself shows a sync feature on your device."
+              "text": "No. iso.me stores your journal locally and does not sync through iCloud. Export and import are the portable backup path, and the Apple Watch syncs directly with your iPhone rather than through the cloud."
             }
           },
           {
@@ -138,7 +140,31 @@
             "name": "What is free and what is Pro?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "The app is free to download and tracking is free. Export is the paid Pro feature, offered as an optional one-time unlock in the app. The current U.S. App Store price shown by the source is $9.99, with regional pricing and taxes handled by Apple."
+              "text": "The app is free to download; tracking, the timeline, the Watch app, widgets, and import are free. Pro is a one-time unlock that covers in-app export in all eight formats, scheduled automatic exports, and webhook delivery. The current U.S. App Store price is $9.99, with regional pricing and taxes handled by Apple."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does iso.me work with OwnTracks, Overland, or Dawarich?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The optional webhook feature can POST your points and visits in OwnTracks or Overland formats — plus JSON, CSV, Markdown, GeoJSON, GPX, and KML — to any endpoint you configure, with API-key, bearer, or basic authentication. It is a Pro feature, off by default, and nothing is sent until you set it up."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What can Siri and Shortcuts do?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "iso.me exposes nine actions: start and stop tracking, rename the current outing, ask for today's distance, tracking duration, or visit count, and export today's or yesterday's data as a file. They work in the Shortcuts app, from Siri, and from automations such as the Action Button."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can exports run automatically?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Auto Export saves your day to a folder you pick, once daily or as often as every hour, keeping one consistent dated file per day. Wake-ups are best effort: background refresh plus a scheduling service that sends timing-only pushes and never sees your location."
             }
           },
           {
@@ -1075,6 +1101,22 @@
     }
     .footer-links a:hover { color: var(--ink); text-decoration: none; }
 
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      background: var(--card);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .cap-grid .readout-row { padding: 15px 24px; }
+    .cap-grid .readout-row .v.pro { color: var(--accent); }
+
+    @media (max-width: 760px) {
+      .cap-grid { grid-template-columns: 1fr; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .ticker-track { animation: none; }
@@ -1152,6 +1194,7 @@
         <a href="#use-cases">Use cases</a>
         <a href="#pricing">Pricing</a>
         <a href="/blog/">Blog</a>
+        <a href="/docs/">Docs</a>
         <a href="#faq">FAQ</a>
         <a href="https://apps.apple.com/us/app/iso-me/id6761960794" class="btn btn-primary">Download</a>
       </div>
@@ -1162,12 +1205,12 @@
     <header class="hero">
       <div class="wrap hero-inner">
         <div class="hero-copy">
-          <span class="eyebrow">Updated June 2026 · iOS &amp; Apple Watch</span>
+          <span class="eyebrow">Updated August 2026 · iOS &amp; Apple Watch</span>
           <h1>
             Your <span class="accent">private location journal</span>, built automatically.
           </h1>
           <p class="lede">
-            iso.me quietly records the places you visit and the routes you choose, then keeps that history on your iPhone. No account. No iso.me location server. No analytics SDKs. Export your timeline when you need a copy.
+            iso.me quietly records the places you visit and the routes you choose, then keeps that history on your iPhone. No account. No iso.me location server. No ads. Export your timeline whenever you need a copy.
           </p>
           <div class="hero-actions">
             <a href="https://apps.apple.com/us/app/iso-me/id6761960794" class="btn btn-primary">
@@ -1179,7 +1222,7 @@
             <a href="#inside" class="btn btn-ghost">See how it works</a>
           </div>
           <p class="hero-note">
-            Free download and free tracking. Export is an optional one-time Pro unlock; the source currently lists $9.99 in the U.S. App Store, with regional pricing handled by Apple.
+            Free download and free tracking. In-app export, scheduled auto-exports, and webhook delivery are an optional one-time Pro unlock ($9.99 in the U.S. App Store; regional pricing handled by Apple).
           </p>
           <div class="hero-stats" aria-label="iso.me product facts">
             <div class="hero-stat">
@@ -1192,7 +1235,7 @@
             </div>
             <div class="hero-stat">
               <div class="v">$9.99</div>
-              <div class="k">Export unlock</div>
+              <div class="k">Pro unlock</div>
             </div>
           </div>
         </div>
@@ -1240,20 +1283,20 @@
         <span>Google Timeline alternative</span>
         <span>No accounts</span>
         <span>No iso.me location servers</span>
-        <span>Trips · walks · daily places</span>
-        <span>JSON · CSV · Markdown export</span>
-        <span>Apple Watch companion</span>
+        <span>Daily timeline &amp; outings</span>
+        <span>Eight export formats</span>
+        <span>Independent Apple Watch tracking</span>
         <span>Optional Apple geocoding</span>
-        <span>Battery-aware tracking</span>
+        <span>Scheduled auto-exports</span>
         <span>Private location journal</span>
         <span>Google Timeline alternative</span>
         <span>No accounts</span>
         <span>No iso.me location servers</span>
-        <span>Trips · walks · daily places</span>
-        <span>JSON · CSV · Markdown export</span>
-        <span>Apple Watch companion</span>
+        <span>Daily timeline &amp; outings</span>
+        <span>Eight export formats</span>
+        <span>Independent Apple Watch tracking</span>
         <span>Optional Apple geocoding</span>
-        <span>Battery-aware tracking</span>
+        <span>Scheduled auto-exports</span>
       </div>
     </div>
 
@@ -1295,7 +1338,7 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
           </div>
           <h3>Private by default</h3>
-          <p>No iso.me account, no server-side location archive, and no analytics SDKs according to the current privacy policy.</p>
+          <p>No iso.me account, no server-side location archive, no ads, and no third-party analytics SDKs. The optional first-party telemetry is spelled out in the privacy policy.</p>
           <div class="feature-tag">● Local</div>
         </div>
 
@@ -1315,7 +1358,7 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           </div>
           <h3>Export and import</h3>
-          <p>Take visits and route points out as JSON, CSV, or Markdown, then import an export later when you need a local restore.</p>
+          <p>Export visits, points, and outings as JSON, CSV, Markdown, GeoJSON, GPX, KML, OwnTracks, or Overland — split per day, named by template, or scheduled to run automatically. Importing a prior export is free.</p>
           <div class="feature-tag">● Portable</div>
         </div>
 
@@ -1325,8 +1368,38 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
           </div>
           <h3>Glanceable on Apple devices</h3>
-          <p>Apple Watch, Live Activity, Dynamic Island, Siri, and Shortcuts support make tracking visible without opening the app.</p>
+          <p>The Watch app records routes on its own — even without your phone nearby — while Live Activity with a live map snapshot, Dynamic Island, watch complications, and nine Shortcuts actions keep status glanceable.</p>
           <div class="feature-tag">● iOS</div>
+        </div>
+
+        <div class="feature">
+          <div class="feature-num">07</div>
+          <div class="feature-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          </div>
+          <h3>Daily timeline &amp; outings</h3>
+          <p>Visits and movement sessions merge into one day view. Infer outings from older GPS data, rename them, add notes, and replay any route with a scrubber and moving playhead.</p>
+          <div class="feature-tag">● Timeline</div>
+        </div>
+
+        <div class="feature">
+          <div class="feature-num">08</div>
+          <div class="feature-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <h3>Correct and curate</h3>
+          <p>Confirm or correct detected visits with nearby-business suggestions, undo any change, and save places that automatically name future visits.</p>
+          <div class="feature-tag">● Control</div>
+        </div>
+
+        <div class="feature">
+          <div class="feature-num">09</div>
+          <div class="feature-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </div>
+          <h3>Photos on the map</h3>
+          <p>Optionally connect your Photos library to place geotagged pictures on the map and link them to visits and outings. Photo files never leave your library.</p>
+          <div class="feature-tag">● Opt-in</div>
         </div>
       </div>
     </section>
@@ -1361,7 +1434,7 @@
           <div>
             <div class="label">Export</div>
             <h3>Own a portable copy of your location history.</h3>
-            <p>Export JSON for tools, CSV for spreadsheets, or Markdown for a human-readable travel and place journal.</p>
+            <p>Export JSON for tools, GPX or GeoJSON for maps, CSV for spreadsheets, or Markdown for a human-readable travel and place journal.</p>
           </div>
         </article>
         <article class="case-card">
@@ -1431,9 +1504,10 @@
           <h3>Take your history with you.</h3>
           <p>Your location journal should not be trapped in an app. Export visits, route points, or both, then keep a backup, analyze it privately, or turn it into a written travel log.</p>
           <ul class="checklist">
-            <li>JSON, CSV, and Markdown formats</li>
-            <li>Filters for date ranges, times, and fields</li>
-            <li>Import support for restoring an export</li>
+            <li>Eight formats, from JSON and CSV to GPX and OwnTracks</li>
+            <li>Filters for dates, times, fields, and accuracy</li>
+            <li>Per-day files, name templates, and scheduled runs</li>
+            <li>Free import for restoring an export</li>
           </ul>
         </div>
         <div class="showcase-img">
@@ -1504,13 +1578,41 @@
       </div>
     </section>
 
+    <section class="wrap" id="capabilities" style="padding-block: 40px 76px;">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">§ 03 &nbsp;Everything in the box</span>
+          <h2>The full capability ledger.</h2>
+        </div>
+        <div class="section-meta">
+          Included · Free<br>Pro · One-time unlock
+        </div>
+      </div>
+      <div class="cap-grid" role="list" aria-label="Feature availability">
+        <div class="readout-row" role="listitem"><span class="k">Daily timeline &amp; outings</span><span class="v on">Included</span></div>
+        <div class="readout-row" role="listitem"><span class="k">Route replay &amp; road-matched paths</span><span class="v on">Included</span></div>
+        <div class="readout-row" role="listitem"><span class="k">Visit correction, undo &amp; saved places</span><span class="v on">Included</span></div>
+        <div class="readout-row" role="listitem"><span class="k">Photo moments on the map (opt-in)</span><span class="v on">Included</span></div>
+        <div class="readout-row" role="listitem"><span class="k">Manual &amp; past visit entry</span><span class="v on">Included</span></div>
+        <div class="readout-row" role="listitem"><span class="k">Live Activity with live map snapshot</span><span class="v on">Included</span></div>
+        <div class="readout-row" role="listitem"><span class="k">Independent Apple Watch tracking</span><span class="v on">Included</span></div>
+        <div class="readout-row" role="listitem"><span class="k">Watch complications — four families</span><span class="v on">Included</span></div>
+        <div class="readout-row" role="listitem"><span class="k">Siri &amp; Shortcuts — nine actions</span><span class="v on">Included</span></div>
+        <div class="readout-row" role="listitem"><span class="k">Import a prior export</span><span class="v">Free</span></div>
+        <div class="readout-row" role="listitem"><span class="k">Export — eight formats incl. GPX &amp; OwnTracks</span><span class="v pro">Pro</span></div>
+        <div class="readout-row" role="listitem"><span class="k">Per-day files &amp; filename templates</span><span class="v pro">Pro</span></div>
+        <div class="readout-row" role="listitem"><span class="k">Scheduled auto-exports — daily or 1–23 h</span><span class="v pro">Pro</span></div>
+        <div class="readout-row" role="listitem"><span class="k">Webhooks — OwnTracks · Overland · Dawarich</span><span class="v pro">Pro</span></div>
+      </div>
+    </section>
+
     <section class="trust wrap" id="trust">
       <div class="trust-card">
         <div class="trust-copy">
           <span class="eyebrow">§ 04 &nbsp;Trust and support</span>
           <h2>Built by Cody Bontecou at isolated.tech.</h2>
           <p>
-            iso.me is an independent app, not a data broker product. The site makes no fabricated ratings claims; the honest proof is simpler: a current App Store listing, visible support, a privacy policy that says no analytics or server-side location storage, and an export path for your data.
+            iso.me is an independent app, not a data broker product. The site makes no fabricated ratings claims; the honest proof is simpler: a current App Store listing, visible support, a privacy policy that spells out every network request the app can make, and an export path for your data.
           </p>
           <p style="margin-top:16px;">
             Need help, want to report a bug, or have a question before installing? Email <a href="mailto:cody.bontecou@gmail.com">cody.bontecou@gmail.com</a>.
@@ -1523,7 +1625,7 @@
           </div>
           <div class="readout-row">
             <span class="k">Freshness</span>
-            <span class="v on">Updated June 2026</span>
+            <span class="v on">Updated August 2026</span>
           </div>
           <div class="readout-row">
             <span class="k">Ratings claim</span>
@@ -1552,7 +1654,7 @@
         <div class="pricing-side">
           <h2>Install it first. Unlock export only when it matters.</h2>
           <p>
-            iso.me is free to download, and private visit and route tracking is free. Pro is an optional one-time unlock for export features. The current U.S. App Store source shows $9.99; Apple may adjust final pricing by region, tax, or storefront.
+            iso.me is free to download, and private visit and route tracking is free. Pro is an optional one-time unlock for data portability: in-app export in all eight formats, scheduled auto-exports, and webhook delivery. The current U.S. App Store source shows $9.99; Apple may adjust final pricing by region, tax, or storefront.
           </p>
           <ul class="anti-features">
             <li>No subscription required for tracking</li>
@@ -1573,9 +1675,12 @@
           </div>
           <ul class="pc-features">
             <li><span class="k">Download the app</span><span class="v">Free</span></li>
-            <li><span class="k">Private tracking</span><span class="v">Free</span></li>
-            <li><span class="k">JSON · CSV · MD export</span><span class="v">Pro</span></li>
-            <li><span class="k">Import from backup</span><span class="v">Pro</span></li>
+            <li><span class="k">Tracking, timeline &amp; outings</span><span class="v">Free</span></li>
+            <li><span class="k">Apple Watch, widgets, Shortcuts</span><span class="v">Free</span></li>
+            <li><span class="k">Import from backup</span><span class="v">Free</span></li>
+            <li><span class="k">Export — all eight formats</span><span class="v">Pro</span></li>
+            <li><span class="k">Scheduled auto-exports</span><span class="v">Pro</span></li>
+            <li><span class="k">Webhook delivery</span><span class="v">Pro</span></li>
             <li><span class="k">Apple payments</span><span class="v">Handled by App Store</span></li>
           </ul>
           <div class="pc-cta">
@@ -1613,19 +1718,31 @@
           </details>
           <details>
             <summary>Can I export or import my history?</summary>
-            <p>Yes. Export supports JSON, CSV, and Markdown for visits and route points. Import can restore a prior export, which makes export the safest portable backup path.</p>
+            <p>Yes. Export supports JSON, CSV, Markdown, GeoJSON, GPX, KML, OwnTracks, and Overland for visits, route points, and outings. Import can restore a prior export, and importing is free.</p>
           </details>
           <details>
             <summary>Does iso.me work with Apple Watch?</summary>
-            <p>Yes. iso.me includes Apple Watch support for glanceable tracking controls and status alongside the iPhone app.</p>
+            <p>Yes — and the Watch app records independently. It keeps its own GPS session, works without your iPhone nearby, and queues routes offline until it can sync them back. Watch complications also show today's visits, distance, and tracking status.</p>
           </details>
           <details>
             <summary>Does iso.me sync with iCloud?</summary>
-            <p>iso.me is designed around local, on-device storage. Treat export and import as the portable backup path unless the app itself shows a sync feature on your device.</p>
+            <p>No. iso.me stores your journal locally and does not sync through iCloud. Export and import are the portable backup path, and the Apple Watch syncs directly with your iPhone rather than through the cloud.</p>
           </details>
           <details>
             <summary>What is free and what is Pro?</summary>
-            <p>The app is free to download and tracking is free. Export is the paid Pro feature, offered as an optional one-time unlock in the app. The current U.S. App Store source shows $9.99, with regional pricing and taxes handled by Apple.</p>
+            <p>The app is free to download; tracking, the timeline, the Watch app, widgets, and import are free. Pro is a one-time unlock that covers in-app export in all eight formats, scheduled automatic exports, and webhook delivery. The current U.S. App Store price is $9.99, with regional pricing and taxes handled by Apple.</p>
+          </details>
+          <details>
+            <summary>Does iso.me work with OwnTracks, Overland, or Dawarich?</summary>
+            <p>Yes. The optional webhook feature can POST your points and visits in OwnTracks or Overland formats — plus JSON, CSV, Markdown, GeoJSON, GPX, and KML — to any endpoint you configure, with API-key, bearer, or basic authentication. It is a Pro feature, off by default, and nothing is sent until you set it up.</p>
+          </details>
+          <details>
+            <summary>What can Siri and Shortcuts do?</summary>
+            <p>iso.me exposes nine actions: start and stop tracking, rename the current outing, ask for today's distance, tracking duration, or visit count, and export today's or yesterday's data as a file. They work in the Shortcuts app, from Siri, and from automations such as the Action Button.</p>
+          </details>
+          <details>
+            <summary>Can exports run automatically?</summary>
+            <p>Yes. Auto Export saves your day to a folder you pick, once daily or as often as every hour, keeping one consistent dated file per day. Wake-ups are best effort: background refresh plus a scheduling service that sends timing-only pushes and never sees your location.</p>
           </details>
           <details>
             <summary>Is iso.me a Google Timeline alternative?</summary>

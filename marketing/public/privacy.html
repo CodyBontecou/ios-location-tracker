@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy — iso.me</title>
-  <meta name="description" content="iso.me privacy policy: location history is stored on-device, with no account, no server-side location storage, and optional Apple geocoding.">
+  <meta name="description" content="iso.me privacy policy: location history is stored on-device with no account and no server-side location archive. Optional Apple services, first-party onboarding analytics, user-configured webhooks, and export-scheduling metadata are disclosed in full.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://isome.isolated.tech/privacy">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -262,6 +262,7 @@
       <div class="nav-links">
         <a href="/#features">Features</a>
         <a href="/#pricing">Pricing</a>
+        <a href="/docs/">Docs</a>
         <a href="/terms">Terms</a>
         <a href="https://apps.apple.com/us/app/iso-me/id6761960794" class="btn">Download</a>
       </div>
@@ -274,11 +275,11 @@
     <div class="meta-strip">
       <div>
         <div class="k">Effective</div>
-        <div class="v">April 8, 2026</div>
+        <div class="v">August 22, 2026</div>
       </div>
       <div>
         <div class="k">Updated</div>
-        <div class="v">June 2026</div>
+        <div class="v">August 22, 2026</div>
       </div>
       <div>
         <div class="k">Scope</div>
@@ -291,35 +292,44 @@
     <div class="doc-card">
       <p>iso.me ("the App") is built with privacy as a core principle. This policy explains how the App handles your information.</p>
 
-      <h2>Data Collection</h2>
-      <p>iso.me does <strong>not</strong> collect, transmit, or store any personal data on external servers. All location data, visit history, and route information is stored exclusively on your device.</p>
+      <h2>Data Collection and Storage</h2>
+      <p>By default, all location data — visits, routes, saved places, and photo associations — is stored exclusively on your device. There is no iso.me account, and no iso.me server keeps a copy of your location history.</p>
+      <p>A small set of optional or auxiliary features do communicate over the network. Each is listed under <strong>Network Requests</strong> below, together with exactly what is sent and where.</p>
 
       <h2>Location Data</h2>
       <p>The App uses your device's location services to:</p>
       <ul>
         <li>Automatically detect places you visit</li>
         <li>Record detailed routes when tracking is enabled</li>
+        <li>Feed optional surfaces such as the Apple Watch app, widgets, and Live Activities</li>
       </ul>
-      <p>This data never leaves your device. It is not sent to iso.me's developers, any third-party service, or any server of any kind.</p>
+      <p>Your location history stays on your device unless you deliberately enable a feature that sends it elsewhere. The only such feature is optional <strong>webhook delivery</strong> (see Network Requests), which posts your data to a destination you configure yourself.</p>
 
       <h2>Network Requests</h2>
-      <p>The App may make network requests in the following limited circumstances:</p>
+      <p>The App may make network requests in the following circumstances:</p>
       <ul>
-        <li><strong>Geocoding (optional):</strong> If you enable network geocoding in Settings, the App may send coordinates to Apple's geocoding service to retrieve human-readable addresses. This is an Apple system service and is governed by Apple's privacy policy.</li>
-        <li><strong>App Store:</strong> If you make a purchase, the transaction is handled entirely by Apple's App Store. iso.me does not process or store payment information.</li>
+        <li><strong>Apple system services (optional):</strong> if readable place names are enabled, coordinates are sent to Apple's geocoding service. Place search, nearby-business suggestions, road-matched route lines, and lock-screen map snapshots also use Apple Maps services. These requests are handled by Apple and governed by Apple's privacy policy.</li>
+        <li><strong>First-party onboarding analytics (on by default):</strong> the App reports a limited allowlist of onboarding and purchase events — such as which onboarding step you viewed or whether a purchase succeeded — to iso.me's own analytics endpoint hosted on Cloudflare Workers. Each report includes a random install identifier, the app version, and coarse status such as your permission choice. Reports never include coordinates, visits, routes, addresses, place names, photos, or anything you type. Deleting the App removes the local install identifier.</li>
+        <li><strong>Webhook delivery (off by default, Pro):</strong> if you configure a webhook, the App posts your location points and visits, in your chosen format, directly to the endpoint you specify. Credentials are stored in the iOS Keychain; iso.me never sees your endpoint or your data.</li>
+        <li><strong>Scheduled export wake-ups (only if enabled, Pro):</strong> if you enable automatic exports, the App registers a random install identifier, an Apple push token, your time zone, and your schedule time with iso.me's scheduling endpoint so the App can be woken at the right moment. This service stores timing metadata only — never location records, export contents, folder names, or file names.</li>
+        <li><strong>App Store:</strong> purchases are handled entirely by Apple's App Store. iso.me does not process or store payment information.</li>
       </ul>
 
       <h2>Data Export</h2>
-      <p>You can export your data at any time in JSON, CSV, or Markdown format. Exported files are generated locally on your device. What you do with exported data is your responsibility.</p>
+      <p>You can export visits, route points, and outings at any time as JSON, CSV, Markdown, GeoJSON, GPX, KML, OwnTracks, or Overland. Exported files are generated locally on your device. What you do with exported data is your responsibility.</p>
 
       <h2>Analytics and Tracking</h2>
-      <p>iso.me does not include any analytics SDKs, crash reporters, or advertising frameworks. There are no user accounts, no sign-ups, and no tracking pixels.</p>
+      <p>iso.me contains no third-party analytics SDKs, no advertising frameworks, and no trackers from other companies. The only telemetry is the first-party onboarding analytics described under Network Requests: a short allowlist of funnel events with a random install identifier and no location content. This website (not the App) additionally uses Cloudflare Web Analytics, which does not use cookies and does not track you across other sites.</p>
 
       <h2>Third-Party Services</h2>
-      <p>iso.me does not share data with any third parties. The App does not integrate with any third-party analytics, advertising, or data-collection services.</p>
+      <ul>
+        <li><strong>Apple:</strong> geocoding, Maps search and directions, map snapshots, push notifications, and App Store purchases are Apple system services governed by Apple's privacy policy.</li>
+        <li><strong>Cloudflare:</strong> hosts iso.me's own analytics ingest and export-scheduling endpoints (as described above), plus this website. Cloudflare processes data as our infrastructure provider.</li>
+        <li><strong>Destinations you choose:</strong> webhook delivery and file exports go only to endpoints and folders you configure yourself.</li>
+      </ul>
 
       <h2>Data Deletion</h2>
-      <p>You can delete all your data at any time from within the App's Settings. Deleting the App also removes all stored data permanently, as no data exists outside your device.</p>
+      <p>You can delete all locally stored data at any time from within the App's Settings. Deleting the App also removes all location history and the local analytics install identifier from that device, unless you exported or backed data up first. Already-delivered analytics events cannot be recalled, but they contain no location data and no identifiers beyond the now-deleted random install ID.</p>
 
       <h2>Children's Privacy</h2>
       <p>iso.me does not knowingly collect information from children under 13. Since no personal data is collected or transmitted, the App does not pose data-collection risks to minors.</p>

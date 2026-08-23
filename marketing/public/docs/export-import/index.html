@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Export &amp; import — iso.me Docs</title>
+  <meta name="description" content="Eight export formats, filters, filename templates, and free import for restores.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://isome.isolated.tech/docs/export-import/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/docs/docs.css">
+</head>
+<body>
+  <nav class="top" aria-label="Primary navigation">
+    <div class="nav-inner">
+      <a href="/" class="brand" aria-label="iso.me home">
+        <img src="/app-icon-28.png" srcset="/app-icon-28.png 1x, /app-icon-84.png 3x" alt="" width="26" height="26">
+        <span class="brand-dot" aria-hidden="true"></span>
+        ISO.ME
+      </a>
+      <div class="nav-links">
+        <a href="/#features">Features</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/docs/" aria-current="page"__DOCS_CURRENT__>Docs</a>
+        <a href="/terms">Terms</a>
+        <a href="https://apps.apple.com/us/app/iso-me/id6761960794" class="btn">Download</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <header class="doc-head">
+    <span class="eyebrow">§ Docs · Guide 6 of 11</span>
+    <h1>Export &amp; import</h1>
+    <p class="lede">Your journal is yours. Export visits, points, and outings in eight formats with precise filtering, split per-day files and templated names — then import a prior export back, for free.</p>
+    <div class="meta-strip">
+      <div><div class="k">Platform</div><div class="v">iOS 17+</div></div>
+      <div><div class="k">Updated</div><div class="v">August 22, 2026</div></div>
+      <div><div class="k">Reading</div><div class="v">5 min</div></div>
+      <div><div class="k">Back to</div><div class="v"><a href="/docs/" aria-current="page">All docs</a></div></div>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="doc-card">
+<div class="callout pro"><p><strong>Free vs Pro.</strong> Building and previewing exports is free. Writing export files (from the app's Export tab or an outing's page) is the Pro unlock, along with automatic exports and webhooks. <strong>Importing a prior export is free.</strong></p></div>
+
+<h2>Eight formats</h2>
+<table>
+<tr><th>Format</th><th>Best for</th></tr>
+<tr><td><strong>JSON</strong></td><td>Lossless backups, scripts, and tooling.</td></tr>
+<tr><td><strong>CSV</strong></td><td>Spreadsheets and analysis.</td></tr>
+<tr><td><strong>Markdown</strong></td><td>Human-readable journals — single outings export as a front-matter page with visits and route points.</td></tr>
+<tr><td><strong>GeoJSON</strong></td><td>Mapping tools and GIS.</td></tr>
+<tr><td><strong>GPX</strong></td><td>GPS tools and route viewers; visits become waypoints, routes become tracks.</td></tr>
+<tr><td><strong>KML</strong></td><td>Google Earth and Earth-compatible viewers.</td></tr>
+<tr><td><strong>OwnTracks</strong></td><td>OwnTracks-ecosystem tools (route points).</td></tr>
+<tr><td><strong>Overland</strong></td><td>Overland-ecosystem tools (route points).</td></tr>
+</table>
+<p>Choose any mix of formats in one export; each becomes its own file. OwnTracks and Overland formats carry route points (visits exports in those slots fall back to JSON).</p>
+
+<h2>What gets exported</h2>
+<ul>
+<li><strong>Data</strong>: visits, route points, outings, or all of it.</li>
+<li><strong>Date range</strong>: all time (default), today, yesterday, last 7 or 30 days, this month, or a custom range.</li>
+<li><strong>Time of day</strong> (off by default): keep only records between two times — windows that cross midnight work too.</li>
+<li><strong>Filters</strong>: only completed visits, minimum visit duration, exclude GPS glitches, and a maximum-accuracy cap (≤ 10 / 25 / 50 / 100 m).</li>
+<li><strong>Fields</strong>: per-format toggles for names, addresses, durations, coordinates, notes, altitude, speed, accuracy, and glitch flags.</li>
+</ul>
+<p>Your entire setup — formats, data kind, filters, field toggles — is remembered between launches.</p>
+
+<h2>Filename templates</h2>
+<p>File names come from a template you control. These tokens are available:</p>
+<p><code>{date}</code> <code>{year}</code> <code>{month}</code> <code>{dayNumber}</code> <code>{weekday}</code> <code>{monthName}</code> <code>{quarter}</code> <code>{datetime}</code> <code>{time}</code> <code>{day}</code> <code>{type}</code> <code>{title}</code> <code>{name}</code> <code>{format}</code></p>
+<ul>
+<li>Use <code>/</code> in a template to build dated subfolders.</li>
+<li>Built-in presets: <em>Readable</em> (default) <code>iso.me - {day} {date} - {type}</code>, <em>Compact</em>, and <em>Dated</em> <code>{year}/{year}-{month}/Daily Track - {date}</code>.</li>
+<li>A live preview shows the resolved path as you type.</li>
+</ul>
+
+<h2>Output layout</h2>
+<ul>
+<li><strong>Single file</strong> (default) or <strong>one file per day</strong> — handy for journals and incremental backups.</li>
+<li>Exporting <em>outings</em> produces one file per outing automatically.</li>
+<li>Collisions are auto-suffixed so nothing overwrites.</li>
+</ul>
+
+<h2>Saving and sharing</h2>
+<p>Pick a <strong>default folder</strong> (with auto-save on by default) and exports land there silently with a confirmation toast; otherwise the standard share sheet appears. The <strong>Preview</strong> button renders everything without writing — free, and a good way to sanity-check filters. Single outings can also be exported straight from their detail page.</p>
+
+<h2>Import</h2>
+<p>Settings → <strong>Import file</strong> restores a prior export. JSON, CSV, and Markdown round-trip fully, including correction history and glitch flags. GPX, KML, and GeoJSON are one-way <em>map</em> formats and can't be imported. Importing is free.</p>
+    </div>
+    <nav class="pager" aria-label="Guides">
+      <a class="prev" href="/docs/photos/"><span class="dir">← Previous</span><span class="title">Photos on the map</span></a>
+      <a class="next" href="/docs/automatic-exports/"><span class="dir">Next →</span><span class="title">Automatic exports</span></a>
+    </nav>
+  </div>
+
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="dot"></span>
+        © 2026 ISO.ME · BUILT WITH CARE
+      </div>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/docs/" aria-current="page">Docs</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+  </footer>
+<!-- Cloudflare Web Analytics -->
+<script>
+(function () {
+  var productionHosts = {
+    'instareply.isolated.tech': true,
+    'voxboard.isolated.tech': true,
+    'healthmd.isolated.tech': true,
+    'isome.isolated.tech': true,
+    'gitsyncmd.isolated.tech': true,
+    'timemd.isolated.tech': true,
+    'imghost.isolated.tech': true
+  };
+
+  if (!productionHosts[window.location.hostname]) {
+    return;
+  }
+
+  function loadCloudflareBeacon() {
+    if (document.querySelector('script[src="https://static.cloudflareinsights.com/beacon.min.js"]')) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.defer = true;
+    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    script.setAttribute('data-cf-beacon', '{"token":"090f363070334cddad5c5cc1509b8807"}');
+    document.head.appendChild(script);
+  }
+
+  fetch('https://img-host.costream.workers.dev/analytics-gate', {
+    cache: 'no-store',
+    mode: 'cors',
+    credentials: 'omit'
+  })
+    .then(function (response) {
+      return response.ok ? response.json() : { track: false };
+    })
+    .then(function (gate) {
+      if (gate && gate.track) {
+        loadCloudflareBeacon();
+      }
+    })
+    .catch(function () {
+      // Fail closed so excluded IPs are not accidentally tracked.
+    });
+})();
+</script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>
