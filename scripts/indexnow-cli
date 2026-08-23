@@ -1,0 +1,211 @@
+#!/usr/bin/env python3
+"""indexnow — CLI for the IndexNow protocol (https://www.indexnow.org).
+
+Subcommands:
+  init <host> [--dir DIR]        Generate an API key and write the host key file.
+  submit-sitemap <host> [...]    Submit sitemap URLs with recent <lastmod> to IndexNow.
+  submit <urls...> --host H      Submit explicit URLs.
+
+The IndexNow key file must be hosted at https://<host>/<key>.txt (contents = key).
+Submit endpoints: api.indexnow.org (fan-out to Bing/Yandex/Seznam/etc).
+Google does not participate in IndexNow.
+"""
+import argparse
+import json
+import secrets
+import sys
+import urllib.request
+import urllib.error
+import xml.etree.ElementTree as ET
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+
+ENDPOINT = "https://api.indexnow.org/IndexNow"
+NS = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
+
+
+def http_json(url, payload):
+    req = urllib.request.Request(
+        url,
+        data=json.dumps(payload).encode(),
+        headers={"Content-Type": "application/json; charset=utf-8",
+                 "User-Agent": "indexnow-cli/1.0"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return resp.status, resp.read().decode(errors="replace")
+    except urllib.error.HTTPError as e:
+        return e.code, e.read().decode(errors="replace")
+    except urllib.error.URLError as e:
+        return 0, str(e)
+
+
+def http_get(url):
+    req = urllib.request.Request(url, headers={"User-Agent": "indexnow-cli/1.0"})
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        return resp.read().decode(errors="replace")
+
+
+def parse_date(s):
+    if not s:
+        return None
+    s = s.strip()
+    for fmt in ("%Y-%m-%d", "%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%dT%H:%M:%S+00:00", "%Y-%m-%dT%H:%M:%SZ"):
+        try:
+            d = datetime.strptime(s, fmt)
+            if d.tzinfo is None:
+                d = d.replace(tzinfo=timezone.utc)
+            return d
+        except ValueError:
+            continue
+    try:  # last resort: ISO with arbitrary offset
+        return datetime.fromisoformat(s.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def load_key(host, key_arg, key_dir):
+    if key_arg:
+        return key_arg
+    env = __import__("os").environ.get("INDEXNOW_KEY")
+    if env:
+        return env
+    # discover a key file "<key>.txt" whose contents match its name
+    for d in key_dir:
+        p = Path(d)
+        if not p.is_dir():
+            continue
+        for f in p.glob("*.txt"):
+            try:
+                if f.read_text().strip() == f.stem:
+                    return f.stem
+            except OSError:
+                continue
+    sys.exit(f"error: no IndexNow key found for {host}. "
+             f"Run `indexnow init {host}` first or pass --key.")
+
+
+def fetch_sitemap(host, sitemap_url):
+    url = sitemap_url or f"https://{host}/sitemap.xml"
+    print(f"fetching {url}")
+    return url, http_get(url)
+
+
+def cmd_init(args):
+    key = secrets.token_hex(16)
+    out = Path(args.dir) / f"{key}.txt"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(key)
+    print(f"key generated: {key}")
+    print(f"key file written: {out}")
+    print(f"deploy it so it serves at https://{args.host}/{key}.txt (contents must equal the key)")
+    print(f"then submit: indexnow submit-sitemap {args.host} --key {key} --confirm")
+
+
+def cmd_submit_sitemap(args):
+    key = load_key(args.host, args.key, args.key_dir)
+    key_location = f"https://{args.host}/{key}.txt"
+
+    # sanity: key file should be live
+    try:
+        live = http_get(key_location).strip()
+        if live != key:
+            print(f"warning: {key_location} serves {live!r} != key; engines may reject", file=sys.stderr)
+    except Exception as e:
+        print(f"warning: could not verify key file at {key_location} ({e})", file=sys.stderr)
+
+    _, xml_text = fetch_sitemap(args.host, args.sitemap)
+    root = ET.fromstring(xml_text)
+    cutoff = datetime.now(timezone.utc) - timedelta(days=args.recent_days) if args.recent_days else None
+
+    entries = []
+    for url_el in root.findall(f"{NS}url"):
+        loc = url_el.findtext(f"{NS}loc")
+        if not loc:
+            continue
+        lastmod = parse_date(url_el.findtext(f"{NS}lastmod"))
+        entries.append((loc.strip(), lastmod))
+
+    if cutoff:
+        selected = [loc for loc, lm in entries if lm and lm >= cutoff]
+        skipped = len(entries) - len(selected)
+    else:
+        selected = [loc for loc, _ in entries]
+        skipped = 0
+
+    print(f"sitemap: {len(entries)} urls; {len(selected)} within last {args.recent_days or '∞'} days"
+          + (f" ({skipped} older skipped)" if skipped else ""))
+    if not selected:
+        print("nothing to submit")
+        return
+
+    for u in selected:
+        print(f"  {u}")
+    if not args.confirm:
+        print("\ndry run (pass --confirm to submit)")
+        return
+
+    payload = {"host": args.host, "key": key, "keyLocation": key_location, "urlList": selected}
+    status, body = http_json(args.endpoint, payload)
+    if status == 200:
+        print(f"submitted {len(selected)} urls — HTTP {status} (accepted)")
+    elif status == 202:
+        print(f"submitted {len(selected)} urls — HTTP {status} (accepted, key validation pending)")
+    else:
+        print(f"submission failed — HTTP {status}\n{body}", file=sys.stderr)
+        sys.exit(1)
+
+
+def cmd_submit(args):
+    key = load_key(args.host, args.key, args.key_dir)
+    payload = {"host": args.host, "key": key,
+               "keyLocation": f"https://{args.host}/{key}.txt",
+               "urlList": args.urls}
+    if not args.confirm:
+        print(f"would submit {len(args.urls)} urls (pass --confirm)")
+        for u in args.urls:
+            print(f"  {u}")
+        return
+    status, body = http_json(args.endpoint, payload)
+    print(f"HTTP {status} {body}".strip())
+    sys.exit(0 if status in (200, 202) else 1)
+
+
+def main():
+    ap = argparse.ArgumentParser(prog="indexnow", description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    sub = ap.add_subparsers(dest="cmd", required=True)
+
+    p = sub.add_parser("init", help="generate a key + host key file")
+    p.add_argument("host")
+    p.add_argument("--dir", default=".", help="directory for the key file (default: cwd)")
+    p.set_defaults(fn=cmd_init)
+
+    p = sub.add_parser("submit-sitemap", help="submit sitemap URLs with recent lastmod")
+    p.add_argument("host")
+    p.add_argument("--sitemap", help="sitemap URL (default: https://<host>/sitemap.xml)")
+    p.add_argument("--recent-days", type=int, default=None,
+                   help="only submit URLs whose lastmod is within N days (default: all)")
+    p.add_argument("--key", help="IndexNow key (default: INDEXNOW_KEY or discovered <key>.txt)")
+    p.add_argument("--key-dir", action="append", default=["public", ".", "marketing/public"],
+                   help="directories to discover a hosted key file in (repeatable)")
+    p.add_argument("--endpoint", default=ENDPOINT)
+    p.add_argument("--confirm", action="store_true", help="actually submit (default: dry run)")
+    p.set_defaults(fn=cmd_submit_sitemap)
+
+    p = sub.add_parser("submit", help="submit explicit URLs")
+    p.add_argument("urls", nargs="+")
+    p.add_argument("--host", required=True)
+    p.add_argument("--key")
+    p.add_argument("--key-dir", action="append", default=["public", ".", "marketing/public"])
+    p.add_argument("--endpoint", default=ENDPOINT)
+    p.add_argument("--confirm", action="store_true")
+    p.set_defaults(fn=cmd_submit)
+
+    args = ap.parse_args()
+    args.fn(args)
+
+
+if __name__ == "__main__":
+    main()
