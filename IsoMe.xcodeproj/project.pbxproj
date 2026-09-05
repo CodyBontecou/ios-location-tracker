@@ -95,6 +95,7 @@
 		AB000001212F0EE1000000E1 /* IsoMeEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0EE0000000E1 /* IsoMeEntities.swift */; };
 		AB000001212F0DD1000000D1 /* IsoMeExportIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0DD0000000D1 /* IsoMeExportIntents.swift */; };
 		AB000001212F0AA1000000A1 /* IsoMeReadIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0AA0000000A1 /* IsoMeReadIntents.swift */; };
+		AB000001212F0BB100000B1 /* IsoMeRenameIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0BB000000B1 /* IsoMeRenameIntents.swift */; };
 		C5F68C85D33E49FB8E0846D5 /* WebhookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E900BDC375415EB884300D /* WebhookManager.swift */; };
 		B4BEE4EDDABA4EBEA161EC3D /* WebhookSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24650F0FA6274DB58B9869F5 /* WebhookSettingsView.swift */; };
 		F3601C83F23A13A26444AD47 /* SharedLocationDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FE2A7AF0F63FFD8AE276F3 /* SharedLocationDataTests.swift */; };
@@ -105,6 +106,7 @@
 		AB000001212F0DD1000000D2 /* ExportDataIntentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0DD0000000D2 /* ExportDataIntentTests.swift */; };
 		AB000001212F0AA1000000A2 /* GetCurrentOutingNameIntentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0AA0000000A2 /* GetCurrentOutingNameIntentTests.swift */; };
 		AB000001212F0CC100000C2 /* GetVisitsGetMovementsIntentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0CC000000C2 /* GetVisitsGetMovementsIntentTests.swift */; };
+		AB000001212F0BB100000B2 /* RenameIntentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0BB000000B2 /* RenameIntentsTests.swift */; };
 		6A1234567890ABCDEF000002 /* LocationViewModelPointScalingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1234567890ABCDEF000001 /* LocationViewModelPointScalingTests.swift */; };
 		D2A10003212F000100000003 /* RemotePastVisitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A10003212F000000000003 /* RemotePastVisitTests.swift */; };
 		B2000005212F000100000005 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000001212F000000000001 /* Localizable.xcstrings */; };
@@ -231,6 +233,7 @@
 		AB000001212F0EE0000000E1 /* IsoMeEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeEntities.swift; sourceTree = "<group>"; };
 		AB000001212F0DD0000000D1 /* IsoMeExportIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeExportIntents.swift; sourceTree = "<group>"; };
 		AB000001212F0AA0000000A1 /* IsoMeReadIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeReadIntents.swift; sourceTree = "<group>"; };
+		AB000001212F0BB000000B1 /* IsoMeRenameIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeRenameIntents.swift; sourceTree = "<group>"; };
 		9DE47A9C94C8FC4C2E32835B /* SessionPathMapView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SessionPathMapView.swift; sourceTree = "<group>"; };
 		E4E900BDC375415EB884300D /* WebhookManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebhookManager.swift; sourceTree = "<group>"; };
 		24650F0FA6274DB58B9869F5 /* WebhookSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebhookSettingsView.swift; sourceTree = "<group>"; };
@@ -303,6 +306,7 @@
 		AB000001212F0DD0000000D2 /* ExportDataIntentTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExportDataIntentTests.swift; sourceTree = "<group>"; };
 		AB000001212F0AA0000000A2 /* GetCurrentOutingNameIntentTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GetCurrentOutingNameIntentTests.swift; sourceTree = "<group>"; };
 		AB000001212F0CC000000C2 /* GetVisitsGetMovementsIntentTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GetVisitsGetMovementsIntentTests.swift; sourceTree = "<group>"; };
+		AB000001212F0BB000000B2 /* RenameIntentsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RenameIntentsTests.swift; sourceTree = "<group>"; };
 		6A1234567890ABCDEF000001 /* LocationViewModelPointScalingTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationViewModelPointScalingTests.swift; sourceTree = "<group>"; };
 		D2A10003212F000000000003 /* RemotePastVisitTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RemotePastVisitTests.swift; sourceTree = "<group>"; };
 		B1000001212F000000000001 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -494,6 +498,7 @@
 				AB000001212F0EE0000000E1 /* IsoMeEntities.swift */,
 				AB000001212F0DD0000000D1 /* IsoMeExportIntents.swift */,
 				AB000001212F0AA0000000A1 /* IsoMeReadIntents.swift */,
+				AB000001212F0BB000000B1 /* IsoMeRenameIntents.swift */,
 				5F000002212F000000000001 /* DailyExportScheduler.swift */,
 				5F000005212F000000000001 /* IntervalExportScheduleDateMath.swift */,
 				D6000002212F000000000002 /* DailyExportNotificationScheduler.swift */,
@@ -613,6 +618,7 @@
 				AB000001212F0DD0000000D2 /* ExportDataIntentTests.swift */,
 				AB000001212F0AA0000000A2 /* GetCurrentOutingNameIntentTests.swift */,
 				AB000001212F0CC000000C2 /* GetVisitsGetMovementsIntentTests.swift */,
+				AB000001212F0BB000000B2 /* RenameIntentsTests.swift */,
 				6A1234567890ABCDEF000001 /* LocationViewModelPointScalingTests.swift */,
 				D2A10003212F000000000003 /* RemotePastVisitTests.swift */,
 				5F000007212F000000000001 /* IntervalScheduledExportTests.swift */,
@@ -895,6 +901,7 @@
 				AB000001212F0EE1000000E1 /* IsoMeEntities.swift in Sources */,
 				AB000001212F0DD1000000D1 /* IsoMeExportIntents.swift in Sources */,
 				AB000001212F0AA1000000A1 /* IsoMeReadIntents.swift in Sources */,
+				AB000001212F0BB100000B1 /* IsoMeRenameIntents.swift in Sources */,
 				F1000001212F000100000001 /* FilenameTemplate.swift in Sources */,
 				5F000002212F000100000001 /* DailyExportScheduler.swift in Sources */,
 				5F000005212F000100000001 /* IntervalExportScheduleDateMath.swift in Sources */,
@@ -964,6 +971,7 @@
 				AB000001212F0DD1000000D2 /* ExportDataIntentTests.swift in Sources */,
 				AB000001212F0AA1000000A2 /* GetCurrentOutingNameIntentTests.swift in Sources */,
 				AB000001212F0CC100000C2 /* GetVisitsGetMovementsIntentTests.swift in Sources */,
+				AB000001212F0BB100000B2 /* RenameIntentsTests.swift in Sources */,
 				6A1234567890ABCDEF000002 /* LocationViewModelPointScalingTests.swift in Sources */,
 				D2A10003212F000100000003 /* RemotePastVisitTests.swift in Sources */,
 			);
