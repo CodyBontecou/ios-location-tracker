@@ -110,43 +110,21 @@ struct SettingsView: View {
             TECard {
                 VStack(spacing: 0) {
                     if storeManager.isPurchased {
-                        TERow(showDivider: false) {
-                            if dynamicTypeSize.isAccessibilitySize {
-                                VStack(alignment: .leading, spacing: 8) {
-                                    HStack(alignment: .firstTextBaseline, spacing: 8) {
-                                        Circle()
-                                            .fill(TE.success)
-                                            .frame(width: 6, height: 6)
-                                        Text("EXPORT UNLOCKED")
-                                            .font(TE.mono(.caption, weight: .semibold))
-                                            .tracking(0.5)
-                                            .foregroundStyle(TE.textPrimary)
-                                            .fixedSize(horizontal: false, vertical: true)
-                                    }
-
-                                    Text("PURCHASED")
-                                        .font(TE.mono(.caption2, weight: .medium))
-                                        .tracking(0.5)
-                                        .foregroundStyle(TE.success)
-                                        .fixedSize(horizontal: false, vertical: true)
-                                }
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            } else {
-                                HStack {
-                                    Circle()
-                                        .fill(TE.success)
-                                        .frame(width: 6, height: 6)
-                                    Text("EXPORT UNLOCKED")
-                                        .font(TE.mono(.caption, weight: .semibold))
-                                        .tracking(1)
-                                        .foregroundStyle(TE.textPrimary)
-                                    Spacer()
-                                    Text("PURCHASED")
-                                        .font(TE.mono(.caption2, weight: .medium))
-                                        .tracking(1)
-                                        .foregroundStyle(TE.success)
-                                }
+                        TERow {
+                            settingsButton(
+                                "PURCHASES & FAMILY",
+                                icon: storeManager.isFamilyUnlocked ? "person.3.fill" : "checkmark.seal.fill"
+                            ) {
+                                showingPaywall = true
                             }
+                        }
+
+                        TERow(showDivider: false) {
+                            settingsValueRow(
+                                title: "CURRENT PLAN",
+                                value: currentPurchasePlanName,
+                                valueColor: TE.success
+                            )
                         }
                     } else {
                         TERow {
@@ -165,10 +143,22 @@ struct SettingsView: View {
             }
             .padding(.horizontal, 16)
 
-            if !storeManager.isPurchased {
-                TESectionFooter(text: "Tracking is free and unlimited. Unlock data export with a one-time purchase.")
+            if storeManager.isPurchased {
+                TESectionFooter(text: "Export is unlocked forever. Manage your plan or Apple Family Sharing here.")
+            } else {
+                TESectionFooter(text: "Tracking is free and unlimited. Choose an Individual or Family one-time purchase for data export.")
             }
         }
+    }
+
+    private var currentPurchasePlanName: String {
+        if storeManager.isFamilyUnlocked {
+            return String(localized: "Family Lifetime").uppercased()
+        }
+        if storeManager.isIndividualUnlocked {
+            return String(localized: "Individual Lifetime").uppercased()
+        }
+        return String(localized: "Lifetime Export active").uppercased()
     }
 
     // MARK: - Tracking Section

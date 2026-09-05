@@ -16,7 +16,11 @@ struct ContentView: View {
                 if hasCompletedOnboarding {
                     Group {
                         #if DEBUG
-                        if ProcessInfo.processInfo.arguments.contains("--demo-webhook-settings") {
+                        if ProcessInfo.processInfo.arguments.contains("--review-upgrade-paywall") {
+                            PaywallView(storeManager: .shared, context: .settings)
+                        } else if ProcessInfo.processInfo.arguments.contains("--review-paywall") {
+                            PaywallView(storeManager: .shared, context: .export)
+                        } else if ProcessInfo.processInfo.arguments.contains("--demo-webhook-settings") {
                             NavigationStack {
                                 WebhookSettingsView()
                             }
