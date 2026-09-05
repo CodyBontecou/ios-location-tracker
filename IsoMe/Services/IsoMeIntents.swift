@@ -67,6 +67,7 @@ enum IsoMeIntentError: Swift.Error, CustomLocalizedStringResourceConvertible {
     case noLocationPermission
     case emptyOutingName
     case noActiveOuting
+    case invalidDateRange
 
     var localizedStringResource: LocalizedStringResource {
         switch self {
@@ -76,6 +77,8 @@ enum IsoMeIntentError: Swift.Error, CustomLocalizedStringResourceConvertible {
             return "Enter a name for the current outing."
         case .noActiveOuting:
             return "IsoMe is not currently recording an outing."
+        case .invalidDateRange:
+            return "The start date must be before the end date."
         }
     }
 }
@@ -267,10 +270,49 @@ enum IsoMeExportFormat: String, AppEnum {
     }
 }
 
-private struct ExportRunner {
+struct ExportRunner {
     @MainActor
     static func run(range: ClosedRange<Date>, format: IsoMeExportFormat) throws -> IntentFile {
         try run(range: range, dataKind: .all, format: format)
+    }
+
+    /// Testability seam: mirrors `run(range:dataKind:format:)` but lets callers
+    /// inject a `ModelContext` (e.g. an in-memory container in unit tests)
+    /// instead of opening the on-disk intent store. Omitting `context` keeps
+    /// production call sites on the real store.
+    @MainActor
+    static func run(
+        range: ClosedRange<Date>,
+        dataKind: ExportOptions.DataKind,
+        format: IsoMeExportFormat,
+        context: ModelContext? = nil
+    ) throws -> IntentFile {
+        let resolvedContext = context ?? IntentSupport.makeContext()
+        var visitDescriptor = FetchDescriptor<Visit>(
+            predicate: #Predicate { $0.arrivedAt >= range.lowerBound && $0.arrivedAt <= range.upperBound }
+        )
+        visitDescriptor.sortBy = [SortDescriptor(\.arrivedAt, order: .forward)]
+
+        let visits = (try? resolvedContext.fetch(visitDescriptor)) ?? []
+        let points = try fetchPoints(for: dataKind, range: range, context: resolvedContext)
+        let recordingSessions = try fetchRecordingSessions(for: dataKind, context: resolvedContext)
+        let activeTrackingStart = SharedLocationData.load()?.trackingStartTime
+
+        var options = ExportOptions()
+        options.dataKind = dataKind
+        options.format = format.format
+        options.datePreset = .custom
+        options.customStart = range.lowerBound
+        options.customEnd = range.upperBound
+
+        let rendered = try ExportService.render(
+            visits: visits,
+            points: points,
+            recordingSessions: recordingSessions,
+            activeTrackingStart: activeTrackingStart,
+            options: options
+        )
+        return IntentFile(data: rendered.data, filename: rendered.fileName, type: format.contentType)
     }
 
     @MainActor
@@ -279,7 +321,7 @@ private struct ExportRunner {
     }
 
     @MainActor
-    private static func run(
+    static func run(
         range: ClosedRange<Date>,
         dataKind: ExportOptions.DataKind,
         format: IsoMeExportFormat
