@@ -26008,7 +26008,7 @@
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "অনুমিত আন্দোলন"
+            "value": "অনুমিত মুভমেন্ট"
           }
         },
         "en": {
@@ -26026,19 +26026,19 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "MOUVEMENT DÉDUIT"
+            "value": "DÉPLACEMENT DÉDUIT"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "अनुमानित गति"
+            "value": "अनुमानित मूवमेंट"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "推定された動き"
+            "value": "推定された移動"
           }
         },
         "pt-BR": {
@@ -26050,7 +26050,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "ПРЕДПОЛАГАЕМОЕ ДВИЖЕНИЕ"
+            "value": "ПРЕДПОЛАГАЕМОЕ ПЕРЕМЕЩЕНИЕ"
           }
         },
         "zh-Hans": {
@@ -32537,7 +32537,7 @@
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "আন্দোলন"
+            "value": "মুভমেন্ট"
           }
         },
         "en": {
@@ -32555,19 +32555,19 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "MOUVEMENT"
+            "value": "DÉPLACEMENT"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आंदोलन"
+            "value": "मूवमेंट"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "動き"
+            "value": "移動"
           }
         },
         "pt-BR": {
@@ -32579,7 +32579,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "ДВИЖЕНИЕ"
+            "value": "ПЕРЕМЕЩЕНИЕ"
           }
         },
         "zh-Hans": {
@@ -32665,7 +32665,7 @@
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "আন্দোলন, %@"
+            "value": "মুভমেন্ট, %@"
           }
         },
         "en": {
@@ -32683,19 +32683,19 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Mouvement, %@"
+            "value": "Déplacement, %@"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आंदोलन, %@"
+            "value": "मूवमेंट, %@"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "動き、 %@"
+            "value": "移動、 %@"
           }
         },
         "pt-BR": {
@@ -32707,7 +32707,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Движение, %@"
+            "value": "Перемещение, %@"
           }
         },
         "zh-Hans": {
