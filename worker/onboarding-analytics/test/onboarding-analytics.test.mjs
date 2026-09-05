@@ -83,25 +83,34 @@ test("accepts onboarding events and stores coarse columns", async () => {
   assert.equal(JSON.parse(payloadJson).properties.onboardingStep, "permissions");
 });
 
-test("accepts paywall and purchase events with source context", async () => {
-  const { db, response, json } = await postEvents({
-    installId,
-    eventId: "00000000-0000-4000-8000-000000000201",
-    eventName: "onboarding_purchase_finished",
-    properties: baseProperties({
-      paywallContext: "settings",
-      productId: "com.bontecou.isome.lifetime",
-      purchaseOutcome: "succeeded",
-    }),
-  });
+test("accepts paywall and purchase events for every lifetime plan", async () => {
+  const productIds = [
+    "com.bontecou.isome.lifetime.individual",
+    "com.bontecou.isome.lifetime",
+    "com.bontecou.isome.lifetime.family.upgrade",
+  ];
 
-  assert.equal(response.status, 200);
-  assert.deepEqual(json, { ok: true, accepted: 1 });
+  for (const [index, productId] of productIds.entries()) {
+    const eventSuffix = String(201 + index).padStart(12, "0");
+    const { db, response, json } = await postEvents({
+      installId,
+      eventId: `00000000-0000-4000-8000-${eventSuffix}`,
+      eventName: "onboarding_purchase_finished",
+      properties: baseProperties({
+        paywallContext: "settings",
+        productId,
+        purchaseOutcome: "succeeded",
+      }),
+    });
 
-  const payload = JSON.parse(db.statements[0].values.at(-1));
-  assert.equal(payload.eventName, "onboarding_purchase_finished");
-  assert.equal(payload.properties.paywallContext, "settings");
-  assert.equal(payload.properties.productId, "com.bontecou.isome.lifetime");
+    assert.equal(response.status, 200);
+    assert.deepEqual(json, { ok: true, accepted: 1 });
+
+    const payload = JSON.parse(db.statements[0].values.at(-1));
+    assert.equal(payload.eventName, "onboarding_purchase_finished");
+    assert.equal(payload.properties.paywallContext, "settings");
+    assert.equal(payload.properties.productId, productId);
+  }
 });
 
 test("rejects onboardingStep values outside the coarse allowlist", async () => {

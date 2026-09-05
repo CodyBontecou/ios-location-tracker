@@ -60,7 +60,11 @@ const AUTHORIZATION_STATUSES = new Set([
 const AUTHORIZATION_REQUEST_KINDS = new Set(["when_in_use", "always", "settings"]);
 const TRACKING_INTENTS = new Set(["start_immediately", "later", "unavailable"]);
 const PAYWALL_CONTEXTS = new Set(["export", "settings", "webhook", "onboarding"]);
-const PRODUCT_IDS = new Set(["com.bontecou.isome.lifetime"]);
+const PRODUCT_IDS = new Set([
+  "com.bontecou.isome.lifetime.individual",
+  "com.bontecou.isome.lifetime",
+  "com.bontecou.isome.lifetime.family.upgrade",
+]);
 const PURCHASE_OUTCOMES = new Set([
   "started",
   "succeeded",

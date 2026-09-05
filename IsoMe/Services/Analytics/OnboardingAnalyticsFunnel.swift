@@ -119,7 +119,7 @@ extension OnboardingAnalyticsClient {
 
     func trackPurchaseStarted(
         context: OnboardingAnalyticsPaywallContext,
-        productId: OnboardingAnalyticsProductID = .lifetimeUnlock
+        productId: OnboardingAnalyticsProductID
     ) {
         track(OnboardingAnalyticsEvent(
             name: .purchaseStarted,
@@ -135,7 +135,7 @@ extension OnboardingAnalyticsClient {
         outcome: OnboardingAnalyticsPurchaseOutcome,
         context: OnboardingAnalyticsPaywallContext,
         errorCategory: OnboardingAnalyticsErrorCategory? = nil,
-        productId: OnboardingAnalyticsProductID = .lifetimeUnlock
+        productId: OnboardingAnalyticsProductID
     ) {
         track(OnboardingAnalyticsEvent(
             name: .purchaseFinished,
@@ -150,7 +150,7 @@ extension OnboardingAnalyticsClient {
 
     func trackRestoreStarted(
         context: OnboardingAnalyticsPaywallContext,
-        productId: OnboardingAnalyticsProductID = .lifetimeUnlock
+        productId: OnboardingAnalyticsProductID? = nil
     ) {
         track(OnboardingAnalyticsEvent(
             name: .restoreStarted,
@@ -166,7 +166,7 @@ extension OnboardingAnalyticsClient {
         outcome: OnboardingAnalyticsPurchaseOutcome,
         context: OnboardingAnalyticsPaywallContext,
         errorCategory: OnboardingAnalyticsErrorCategory? = nil,
-        productId: OnboardingAnalyticsProductID = .lifetimeUnlock
+        productId: OnboardingAnalyticsProductID? = nil
     ) {
         track(OnboardingAnalyticsEvent(
             name: .restoreFinished,

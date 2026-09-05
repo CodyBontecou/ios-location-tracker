@@ -273,7 +273,9 @@ nonisolated enum OnboardingAnalyticsPaywallContext: String, CaseIterable, Sendab
 }
 
 nonisolated enum OnboardingAnalyticsProductID: String, CaseIterable, Sendable {
-    case lifetimeUnlock = "com.bontecou.isome.lifetime"
+    case individualLifetime = "com.bontecou.isome.lifetime.individual"
+    case familyLifetime = "com.bontecou.isome.lifetime"
+    case familyLifetimeUpgrade = "com.bontecou.isome.lifetime.family.upgrade"
 }
 
 nonisolated enum OnboardingAnalyticsPurchaseOutcome: String, CaseIterable, Sendable {
