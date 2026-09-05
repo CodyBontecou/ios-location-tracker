@@ -3,15 +3,6 @@ import Foundation
 
 // MARK: - Flexible Export
 
-// TODO(cycle-2): consolidate ExportTodayDataIntent / ExportTodayOutingsIntent /
-// ExportYesterdayDataIntent presets onto this flexible intent, and wire an
-// AppShortcut phrase for it (phrase wiring and preset consolidation are
-// deliberately deferred to a later cycle).
-// TODO(cycle-2): once consolidated, deduplicate the body shared between
-// ExportRunner.run(range:dataKind:format:) and its context-injectable
-// overload in IsoMeIntents.swift (kept duplicated this cycle because the fleet
-// protocol forbids touching the original method body).
-
 /// App-intent mirror of `ExportOptions.DataKind` so Shortcuts can pick which
 /// slice of IsoMe data a custom-range export includes.
 enum IsoMeExportDataKind: String, AppEnum {

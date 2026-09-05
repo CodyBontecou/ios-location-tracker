@@ -261,14 +261,18 @@ enum IsoMeExportFormat: String, AppEnum {
 
 struct ExportRunner {
     @MainActor
-    static func run(range: ClosedRange<Date>, format: IsoMeExportFormat) throws -> IntentFile {
-        try run(range: range, dataKind: .all, format: format)
+    static func run(
+        range: ClosedRange<Date>,
+        dataKind: ExportOptions.DataKind,
+        format: IsoMeExportFormat
+    ) throws -> IntentFile {
+        try run(range: range, dataKind: dataKind, format: format, context: nil)
     }
 
-    /// Testability seam: mirrors `run(range:dataKind:format:)` but lets callers
-    /// inject a `ModelContext` (e.g. an in-memory container in unit tests)
-    /// instead of opening the on-disk intent store. Omitting `context` keeps
-    /// production call sites on the real store.
+    /// Testability seam: lets callers inject a `ModelContext` (e.g. an
+    /// in-memory container in unit tests) instead of opening the on-disk
+    /// intent store. Omitting `context` keeps production call sites on the
+    /// real store.
     @MainActor
     static func run(
         range: ClosedRange<Date>,
@@ -285,46 +289,6 @@ struct ExportRunner {
         let visits = (try? resolvedContext.fetch(visitDescriptor)) ?? []
         let points = try fetchPoints(for: dataKind, range: range, context: resolvedContext)
         let recordingSessions = try fetchRecordingSessions(for: dataKind, context: resolvedContext)
-        let activeTrackingStart = SharedLocationData.load()?.trackingStartTime
-
-        var options = ExportOptions()
-        options.dataKind = dataKind
-        options.format = format.format
-        options.datePreset = .custom
-        options.customStart = range.lowerBound
-        options.customEnd = range.upperBound
-
-        let rendered = try ExportService.render(
-            visits: visits,
-            points: points,
-            recordingSessions: recordingSessions,
-            activeTrackingStart: activeTrackingStart,
-            options: options
-        )
-        return IntentFile(data: rendered.data, filename: rendered.fileName, type: format.contentType)
-    }
-
-    @MainActor
-    static func runOutings(range: ClosedRange<Date>, format: IsoMeExportFormat) throws -> IntentFile {
-        try run(range: range, dataKind: .outings, format: format)
-    }
-
-    @MainActor
-    static func run(
-        range: ClosedRange<Date>,
-        dataKind: ExportOptions.DataKind,
-        format: IsoMeExportFormat
-    ) throws -> IntentFile {
-        let context = IntentSupport.makeContext()
-
-        var visitDescriptor = FetchDescriptor<Visit>(
-            predicate: #Predicate { $0.arrivedAt >= range.lowerBound && $0.arrivedAt <= range.upperBound }
-        )
-        visitDescriptor.sortBy = [SortDescriptor(\.arrivedAt, order: .forward)]
-
-        let visits = (try? context.fetch(visitDescriptor)) ?? []
-        let points = try fetchPoints(for: dataKind, range: range, context: context)
-        let recordingSessions = try fetchRecordingSessions(for: dataKind, context: context)
         let activeTrackingStart = SharedLocationData.load()?.trackingStartTime
 
         var options = ExportOptions()
@@ -372,51 +336,6 @@ struct ExportRunner {
         var descriptor = FetchDescriptor<RecordingSession>()
         descriptor.sortBy = [SortDescriptor(\.startedAt, order: .forward)]
         return try context.fetch(descriptor)
-    }
-}
-
-struct ExportTodayDataIntent: AppIntent {
-    static var title: LocalizedStringResource = "Export Today's Data"
-    static var description = IntentDescription("Export today's IsoMe visits and route as a file.")
-    static var openAppWhenRun: Bool = false
-
-    @Parameter(title: "Format", default: .json)
-    var format: IsoMeExportFormat
-
-    @MainActor
-    func perform() async throws -> some IntentResult & ReturnsValue<IntentFile> {
-        let file = try ExportRunner.run(range: IntentSupport.todayRange(), format: format)
-        return .result(value: file)
-    }
-}
-
-struct ExportTodayOutingsIntent: AppIntent {
-    static var title: LocalizedStringResource = "Export Today's Outings"
-    static var description = IntentDescription("Export today's IsoMe outings as a file.")
-    static var openAppWhenRun: Bool = false
-
-    @Parameter(title: "Format", default: .json)
-    var format: IsoMeExportFormat
-
-    @MainActor
-    func perform() async throws -> some IntentResult & ReturnsValue<IntentFile> {
-        let file = try ExportRunner.runOutings(range: IntentSupport.todayRange(), format: format)
-        return .result(value: file)
-    }
-}
-
-struct ExportYesterdayDataIntent: AppIntent {
-    static var title: LocalizedStringResource = "Export Yesterday's Data"
-    static var description = IntentDescription("Export yesterday's IsoMe visits and route as a file.")
-    static var openAppWhenRun: Bool = false
-
-    @Parameter(title: "Format", default: .json)
-    var format: IsoMeExportFormat
-
-    @MainActor
-    func perform() async throws -> some IntentResult & ReturnsValue<IntentFile> {
-        let file = try ExportRunner.run(range: IntentSupport.yesterdayRange(), format: format)
-        return .result(value: file)
     }
 }
 
@@ -480,31 +399,31 @@ struct IsoMeAppShortcuts: AppShortcutsProvider {
             systemImageName: "mappin.and.ellipse"
         )
         AppShortcut(
-            intent: ExportTodayDataIntent(),
+            intent: ExportDataIntent(),
             phrases: [
-                "Export today's data from \(.applicationName)",
-                "Export today's \(.applicationName) tracks",
+                "Export \(.applicationName) data",
+                "Export data from \(.applicationName)",
             ],
-            shortTitle: "Export Today",
+            shortTitle: "Export Data",
             systemImageName: "square.and.arrow.up"
         )
         AppShortcut(
-            intent: ExportTodayOutingsIntent(),
+            intent: RenameVisitIntent(),
             phrases: [
-                "Export today's outings from \(.applicationName)",
-                "Export today's \(.applicationName) outings",
+                "Rename a visit in \(.applicationName)",
+                "Name my \(.applicationName) visit",
             ],
-            shortTitle: "Export Outings",
-            systemImageName: "figure.walk"
+            shortTitle: "Rename Visit",
+            systemImageName: "pencil"
         )
         AppShortcut(
-            intent: ExportYesterdayDataIntent(),
+            intent: RenameMovementIntent(),
             phrases: [
-                "Export yesterday's data from \(.applicationName)",
-                "Export yesterday's \(.applicationName) tracks",
+                "Rename a movement in \(.applicationName)",
+                "Name my \(.applicationName) movement",
             ],
-            shortTitle: "Export Yesterday",
-            systemImageName: "square.and.arrow.up"
+            shortTitle: "Rename Movement",
+            systemImageName: "pencil"
         )
     }
 }
