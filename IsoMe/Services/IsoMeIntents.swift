@@ -45,20 +45,6 @@ enum IntentSupport {
         if h > 0 { return "\(h)h" }
         return "\(m)m"
     }
-
-    static func todayRange(now: Date = Date()) -> ClosedRange<Date> {
-        let cal = Calendar.current
-        let start = cal.startOfDay(for: now)
-        return start...now
-    }
-
-    static func yesterdayRange(now: Date = Date()) -> ClosedRange<Date> {
-        let cal = Calendar.current
-        let startOfToday = cal.startOfDay(for: now)
-        let startOfYesterday = cal.date(byAdding: .day, value: -1, to: startOfToday)!
-        let endOfYesterday = Date(timeIntervalSinceReferenceDate: startOfToday.timeIntervalSinceReferenceDate.nextDown)
-        return startOfYesterday...endOfYesterday
-    }
 }
 
 // MARK: - Errors
