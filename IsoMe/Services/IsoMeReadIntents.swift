@@ -8,13 +8,18 @@ import SwiftData
 ///
 /// Split out of the intent itself so that:
 /// (a) unit tests can inject an in-memory `ModelContext` instead of the on-disk store, and
-/// (b) the rename work (and future read intents) can reuse the same
-///     active-session resolution instead of duplicating the fetch.
+/// (b) the rename work (and future read intents) reuses the same
+///     active-session resolution — `activeSession(context:)` — instead of
+///     duplicating the fetch.
 @MainActor
 enum CurrentOutingReader {
-    static func currentOutingName(context: ModelContext) throws -> String {
-        // Mirror RenameCurrentOutingIntent's active-session lookup exactly:
-        // one open (endedAt == nil) session, newest first.
+    /// The outing IsoMe is currently recording: the one open
+    /// (`endedAt == nil`) session, newest `startedAt` first, limit 1.
+    ///
+    /// The single active-session lookup shared by `currentOutingName` and
+    /// `RenameSupport.renameActiveSession`. Throws
+    /// `IsoMeIntentError.noActiveOuting` when no session is open.
+    static func activeSession(context: ModelContext) throws -> RecordingSession {
         var descriptor = FetchDescriptor<RecordingSession>(
             predicate: #Predicate { session in
                 session.endedAt == nil
@@ -26,6 +31,11 @@ enum CurrentOutingReader {
         guard let activeSession = try context.fetch(descriptor).first else {
             throw IsoMeIntentError.noActiveOuting
         }
+        return activeSession
+    }
+
+    static func currentOutingName(context: ModelContext) throws -> String {
+        let activeSession = try activeSession(context: context)
 
         if let customName = activeSession.normalizedCustomName {
             return customName

@@ -11,7 +11,10 @@ import SwiftData
 ///     on-disk store (mirrors `CurrentOutingReader` in `IsoMeReadIntents.swift`
 ///     and `ExportRunner`'s context-injectable overload in `IsoMeIntents.swift`), and
 /// (b) `RenameCurrentOutingIntent`, `RenameVisitIntent`, and
-///     `RenameMovementIntent` all reuse the same trim/validate/persist logic.
+///     `RenameMovementIntent` all reuse the same trim/validate/persist logic,
+///     and (c) the active-outing rename resolves its session through the
+///     shared `CurrentOutingReader.activeSession(context:)` helper in
+///     `IsoMeReadIntents.swift` instead of a duplicated fetch.
 @MainActor
 enum RenameSupport {
     /// Renames a visit by id. Trims the name, rejects empty names, writes
@@ -62,30 +65,20 @@ enum RenameSupport {
     }
 
     /// The extracted logic of `RenameCurrentOutingIntent`: rename the outing
-    /// IsoMe is currently recording (open session, newest `startedAt` first,
-    /// limit 1). Returns the trimmed name for the dialog.
+    /// IsoMe is currently recording. The active session (one open session,
+    /// newest `startedAt` first, limit 1) comes from the shared
+    /// `CurrentOutingReader.activeSession(context:)` helper. Returns the
+    /// trimmed name for the dialog.
     ///
     /// Throws `emptyOutingName` (not the generic `emptyName`) and
     /// `noActiveOuting` to keep `RenameCurrentOutingIntent`'s user-facing
     /// error wording byte-for-byte identical to before the extraction.
-    // TODO(cycle-3): dedupe this active-session fetch with `CurrentOutingReader`
-    // in `IsoMeReadIntents.swift` (a different lane's file this cycle); a
-    // shared `activeSession(context:)` helper would serve both call sites.
+    /// Empty names are rejected BEFORE any fetch.
     static func renameActiveSession(to name: String, context: ModelContext) throws -> String {
         let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedName.isEmpty else { throw IsoMeIntentError.emptyOutingName }
 
-        var descriptor = FetchDescriptor<RecordingSession>(
-            predicate: #Predicate { session in
-                session.endedAt == nil
-            }
-        )
-        descriptor.sortBy = [SortDescriptor(\.startedAt, order: .reverse)]
-        descriptor.fetchLimit = 1
-
-        guard let activeSession = try context.fetch(descriptor).first else {
-            throw IsoMeIntentError.noActiveOuting
-        }
+        let activeSession = try CurrentOutingReader.activeSession(context: context)
 
         activeSession.customName = trimmedName
         try context.save()
