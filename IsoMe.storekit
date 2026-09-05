@@ -1,0 +1,87 @@
+{
+  "identifier" : "IsoMeStore",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "10.00",
+      "familyShareable" : false,
+      "internalID" : "A50A1E75-7217-443E-8CF5-E36B64D1D64F",
+      "localizations" : [
+        {
+          "description" : "Unlock iso.me data export forever for your Apple ID.",
+          "displayName" : "iso.me Individual Lifetime",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.bontecou.isome.lifetime.individual",
+      "referenceName" : "Individual Lifetime Export",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "20.00",
+      "familyShareable" : true,
+      "internalID" : "86F588B9-F970-4411-A550-487F4E68195D",
+      "localizations" : [
+        {
+          "description" : "Unlock iso.me data export forever and share it with your Apple Family.",
+          "displayName" : "iso.me Family Lifetime",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.bontecou.isome.lifetime",
+      "referenceName" : "Family Lifetime Export",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "10.00",
+      "familyShareable" : true,
+      "internalID" : "D081C3E1-934A-46E2-9952-13609560B334",
+      "localizations" : [
+        {
+          "description" : "Upgrade an Individual Lifetime purchase to Apple Family Sharing.",
+          "displayName" : "iso.me Family Upgrade",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.bontecou.isome.lifetime.family.upgrade",
+      "referenceName" : "Family Lifetime Upgrade",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}
