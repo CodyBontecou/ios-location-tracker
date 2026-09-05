@@ -62,13 +62,16 @@ struct GetCurrentOutingNameIntent: AppIntent {
 // GetMovementsIntent return the cycle-1 entities for a date range, defaulting
 // to today, so Shortcuts can chain "Get Name" / repeat-with-each over results.
 
-/// Pure count-summary dialog builders for the read intents below.
+/// Pure count-summary dialog text for the read intents below.
 ///
-/// Kept as internal static helpers — mirroring `CurrentOutingReader` and
-/// `ExportDataParameterResolution` — so unit tests can pin the 0 / 1 / N
-/// wording without running `perform()`, which reads the on-disk store.
+/// Returns `LocalizedStringResource` rather than `IntentDialog` because
+/// `IntentDialog` is opaque in the SDK (no public value accessor), while a
+/// resource can be rendered in unit tests via `String(localized:)` — keeping
+/// the wording pinned without running `perform()`, which reads the on-disk
+/// store. Mirrors the `CurrentOutingReader` / `ExportDataParameterResolution`
+/// seam pattern.
 enum ReadIntentsDialogs {
-    static func visitCount(_ count: Int) -> IntentDialog {
+    static func visitCount(_ count: Int) -> LocalizedStringResource {
         switch count {
         case 0: return "No visits found."
         case 1: return "1 visit found."
@@ -78,7 +81,7 @@ enum ReadIntentsDialogs {
 
     /// Plural wording follows `MovementEntity.typeDisplayRepresentation`
     /// ("Movement") and the app's "outings" vocabulary.
-    static func movementCount(_ count: Int) -> IntentDialog {
+    static func movementCount(_ count: Int) -> LocalizedStringResource {
         switch count {
         case 0: return "No movements found."
         case 1: return "1 movement found."
@@ -102,7 +105,7 @@ struct GetVisitsIntent: AppIntent {
     func perform() async throws -> some IntentResult & ProvidesDialog & ReturnsValue<[VisitEntity]> {
         let range = try ExportDataParameterResolution.dateRange(start: startDate, end: endDate)
         let visits = try VisitQuery.fetch(context: IntentSupport.makeContext(), arrivedWithin: range)
-        return .result(value: visits, dialog: ReadIntentsDialogs.visitCount(visits.count))
+        return .result(value: visits, dialog: IntentDialog(ReadIntentsDialogs.visitCount(visits.count)))
     }
 }
 
@@ -121,6 +124,6 @@ struct GetMovementsIntent: AppIntent {
     func perform() async throws -> some IntentResult & ProvidesDialog & ReturnsValue<[MovementEntity]> {
         let range = try ExportDataParameterResolution.dateRange(start: startDate, end: endDate)
         let movements = try MovementQuery.fetch(context: IntentSupport.makeContext(), startedWithin: range)
-        return .result(value: movements, dialog: ReadIntentsDialogs.movementCount(movements.count))
+        return .result(value: movements, dialog: IntentDialog(ReadIntentsDialogs.movementCount(movements.count)))
     }
 }
