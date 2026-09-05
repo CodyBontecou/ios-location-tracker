@@ -8,10 +8,8 @@ import SwiftData
 ///
 /// Split out of the intent itself so that:
 /// (a) unit tests can inject an in-memory `ModelContext` instead of the on-disk store, and
-/// (b) the cycle-2 rename work (and future read intents) can reuse the same
+/// (b) the rename work (and future read intents) can reuse the same
 ///     active-session resolution instead of duplicating the fetch.
-// TODO(cycle-2): Get Visits / Get Movements (entity-returning read intents) land after the
-// entities lane; they can reuse this seam for their "current outing" scoping.
 @MainActor
 enum CurrentOutingReader {
     static func currentOutingName(context: ModelContext) throws -> String {
