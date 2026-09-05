@@ -95,7 +95,7 @@ final class ExportDataIntentTests: XCTestCase {
     /// - a stored session that starts in-range but ends past the range's upper
     ///   bound, owning one in-range point and one out-of-range point.
     private static let range: ClosedRange<Date> =
-        Self.base.addingTimeInterval(-3_600)...Self.base.addingTimeInterval(3_600)
+        ExportDataIntentTests.base.addingTimeInterval(-3_600)...ExportDataIntentTests.base.addingTimeInterval(3_600)
 
     @MainActor
     private func makeSeededContext() throws -> ModelContext {

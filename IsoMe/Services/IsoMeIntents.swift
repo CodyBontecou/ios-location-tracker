@@ -278,23 +278,24 @@ struct ExportRunner {
 
     /// Testability seam: mirrors `run(range:dataKind:format:)` but lets callers
     /// inject a `ModelContext` (e.g. an in-memory container in unit tests)
-    /// instead of opening the on-disk intent store. The default argument keeps
+    /// instead of opening the on-disk intent store. Omitting `context` keeps
     /// production call sites on the real store.
     @MainActor
     static func run(
         range: ClosedRange<Date>,
         dataKind: ExportOptions.DataKind,
         format: IsoMeExportFormat,
-        context: ModelContext = IntentSupport.makeContext()
+        context: ModelContext? = nil
     ) throws -> IntentFile {
+        let resolvedContext = context ?? IntentSupport.makeContext()
         var visitDescriptor = FetchDescriptor<Visit>(
             predicate: #Predicate { $0.arrivedAt >= range.lowerBound && $0.arrivedAt <= range.upperBound }
         )
         visitDescriptor.sortBy = [SortDescriptor(\.arrivedAt, order: .forward)]
 
-        let visits = (try? context.fetch(visitDescriptor)) ?? []
-        let points = try fetchPoints(for: dataKind, range: range, context: context)
-        let recordingSessions = try fetchRecordingSessions(for: dataKind, context: context)
+        let visits = (try? resolvedContext.fetch(visitDescriptor)) ?? []
+        let points = try fetchPoints(for: dataKind, range: range, context: resolvedContext)
+        let recordingSessions = try fetchRecordingSessions(for: dataKind, context: resolvedContext)
         let activeTrackingStart = SharedLocationData.load()?.trackingStartTime
 
         var options = ExportOptions()
