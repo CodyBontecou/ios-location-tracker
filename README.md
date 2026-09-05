@@ -42,9 +42,13 @@ iOS lock screen widget via Live Activities and watchOS complications for quick t
 
 Tracking is free and unlimited — visits, continuous routes, watch app, Live Activities, widgets. No subscription, no ads, no usage caps.
 
-The one paid feature is **export**: a one-time **$9.99** unlock for JSON, CSV, and Markdown export of your visits and location points. Lifetime, no recurring charge.
+The one paid feature is **export**, offered as lifetime purchases with no recurring charge:
 
-The split is on purpose: tracking is the commodity, but a clean, lossless export of your full history is the part that's worth paying for once. It also keeps the privacy promise free at the door — you never have to pay to keep your data on your device.
+- **Individual Lifetime — $10** for one Apple ID
+- **Family Lifetime — $20** with Apple Family Sharing for up to five family members
+- **Family Upgrade — $10** for Individual Lifetime owners who later want Family Sharing
+
+Everyone who bought the original `com.bontecou.isome.lifetime` unlock is grandfathered into Family Lifetime automatically. The split is on purpose: tracking is the commodity, but a clean, lossless export of your full history is the part that's worth paying for once. It also keeps the privacy promise free at the door — you never have to pay to keep your data on your device.
 
 ## Tech Stack
 

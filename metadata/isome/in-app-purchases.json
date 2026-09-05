@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "appId": "6761960794",
+  "baseTerritory": "USA",
+  "products": [
+    {
+      "ascId": "6807491383",
+      "versionId": "2d07a3f4-33c6-4436-b053-ca23cf2adb96",
+      "productId": "com.bontecou.isome.lifetime.individual",
+      "referenceName": "Individual Lifetime Export",
+      "priceUSD": "10.00",
+      "familySharable": false,
+      "localizations": {
+        "en-US": { "name": "iso.me Individual Lifetime", "description": "Export forever with your Apple ID." },
+        "ar-SA": { "name": "iso.me فردي مدى الحياة", "description": "صدّر بياناتك دائمًا باستخدام حساب Apple." },
+        "es-ES": { "name": "iso.me Individual de por vida", "description": "Exporta para siempre con tu Apple ID." },
+        "fr-FR": { "name": "iso.me Individuel à vie", "description": "Exportez à vie avec votre identifiant Apple." },
+        "hi": { "name": "iso.me इंडिविजुअल लाइफ़टाइम", "description": "अपने Apple ID से हमेशा एक्सपोर्ट करें।" },
+        "ja": { "name": "iso.me 個人向け永久書き出し", "description": "Apple IDでデータをいつでも書き出せます。" },
+        "pt-BR": { "name": "iso.me Individual vitalício", "description": "Exporte para sempre com seu ID Apple." },
+        "ru": { "name": "iso.me Личный навсегда", "description": "Экспорт навсегда для вашего Apple ID." },
+        "zh-Hans": { "name": "iso.me 个人终身导出", "description": "使用你的 Apple ID 永久导出数据。" }
+      }
+    },
+    {
+      "ascId": "6761962715",
+      "versionId": "8d860bfe-4e01-42e3-b6b2-9968982e1a12",
+      "productId": "com.bontecou.isome.lifetime",
+      "referenceName": "Family Lifetime Export",
+      "priceUSD": "20.00",
+      "familySharable": true,
+      "grandfathersExistingOwners": true,
+      "localizations": {
+        "en-US": { "name": "iso.me Family Lifetime", "description": "Share data export with your Apple Family." },
+        "ar-SA": { "name": "iso.me للعائلة مدى الحياة", "description": "شارك تصدير البيانات مع عائلتك على Apple." },
+        "es-ES": { "name": "iso.me Familiar de por vida", "description": "Comparte la exportación con tu familia Apple." },
+        "fr-FR": { "name": "iso.me Famille à vie", "description": "Partagez l’export avec votre famille Apple." },
+        "hi": { "name": "iso.me फ़ैमिली लाइफ़टाइम", "description": "परिवार के साथ डेटा एक्सपोर्ट शेयर करें।" },
+        "ja": { "name": "iso.me ファミリー永久書き出し", "description": "Appleファミリーとデータ書き出しを共有できます。" },
+        "pt-BR": { "name": "iso.me Família vitalício", "description": "Compartilhe exportações com a família." },
+        "ru": { "name": "iso.me Семейный навсегда", "description": "Делитесь экспортом с семьёй Apple." },
+        "zh-Hans": { "name": "iso.me 家庭终身导出", "description": "与 Apple 家庭成员共享数据导出。" }
+      }
+    },
+    {
+      "ascId": "6807491599",
+      "versionId": "e16e68a9-0765-45af-b6d0-0feb834d9602",
+      "productId": "com.bontecou.isome.lifetime.family.upgrade",
+      "referenceName": "Family Lifetime Upgrade",
+      "priceUSD": "10.00",
+      "familySharable": true,
+      "requiresProductId": "com.bontecou.isome.lifetime.individual",
+      "localizations": {
+        "en-US": { "name": "iso.me Family Upgrade", "description": "Upgrade Individual to Apple Family Sharing." },
+        "ar-SA": { "name": "ترقية العائلة من iso.me", "description": "رقِّ الخطة الفردية إلى المشاركة العائلية." },
+        "es-ES": { "name": "Mejora familiar de iso.me", "description": "Mejora Individual para compartir En familia." },
+        "fr-FR": { "name": "Passage Famille iso.me", "description": "Passez d’Individuel au partage familial." },
+        "hi": { "name": "iso.me फ़ैमिली अपग्रेड", "description": "इंडिविजुअल में फ़ैमिली शेयरिंग जोड़ें।" },
+        "ja": { "name": "iso.me ファミリーアップグレード", "description": "個人向けからファミリー共有へアップグレード。" },
+        "pt-BR": { "name": "Upgrade Família iso.me", "description": "Adicione compartilhamento ao Individual." },
+        "ru": { "name": "Семейное улучшение iso.me", "description": "Добавьте Семейный доступ к личному плану." },
+        "zh-Hans": { "name": "iso.me 家庭共享升级", "description": "将个人终身版升级为支持家人共享。" }
+      }
+    }
+  ]
+}
