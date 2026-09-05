@@ -6,7 +6,7 @@ import UniformTypeIdentifiers
 // MARK: - Helpers
 
 @MainActor
-private enum IntentSupport {
+enum IntentSupport {
     /// A dedicated container for intent-side reads. Uses the same on-disk store as the app.
     static let modelContainer: ModelContainer = {
         let schema = Schema([Visit.self, LocationPoint.self, RecordingSession.self, PhotoMoment.self, SavedPlace.self])
