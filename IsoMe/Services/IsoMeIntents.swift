@@ -68,6 +68,8 @@ enum IsoMeIntentError: Swift.Error, CustomLocalizedStringResourceConvertible {
     case emptyOutingName
     case noActiveOuting
     case invalidDateRange
+    case emptyName
+    case itemNotFound
 
     var localizedStringResource: LocalizedStringResource {
         switch self {
@@ -79,6 +81,10 @@ enum IsoMeIntentError: Swift.Error, CustomLocalizedStringResourceConvertible {
             return "IsoMe is not currently recording an outing."
         case .invalidDateRange:
             return "The start date must be before the end date."
+        case .emptyName:
+            return "Enter a name."
+        case .itemNotFound:
+            return "That IsoMe item couldn't be found."
         }
     }
 }
@@ -131,24 +137,7 @@ struct RenameCurrentOutingIntent: AppIntent {
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmedName.isEmpty else { throw IsoMeIntentError.emptyOutingName }
-
-        let context = IntentSupport.makeContext()
-        var descriptor = FetchDescriptor<RecordingSession>(
-            predicate: #Predicate { session in
-                session.endedAt == nil
-            }
-        )
-        descriptor.sortBy = [SortDescriptor(\.startedAt, order: .reverse)]
-        descriptor.fetchLimit = 1
-
-        guard let activeSession = try context.fetch(descriptor).first else {
-            throw IsoMeIntentError.noActiveOuting
-        }
-
-        activeSession.customName = trimmedName
-        try context.save()
+        let trimmedName = try RenameSupport.renameActiveSession(to: name, context: IntentSupport.makeContext())
         return .result(dialog: "Current outing renamed to \(trimmedName).")
     }
 }
